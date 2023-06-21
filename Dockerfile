@@ -16,4 +16,4 @@ WORKDIR /app
 COPY --from=frontend /app/frontend/dist ./frontend/dist
 COPY --from=backend app/backend .
 EXPOSE 3000
-CMD ["node", "server.js"]
+CMD ["node", "app.js"]
