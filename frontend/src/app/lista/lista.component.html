@@ -1,0 +1,34 @@
+<h2>Lista dos carros cadastrados</h2>
+<p-button styleClass="p-button-link" (click)="cadastrar()">Cadastrar/Editar</p-button>
+<p-table 
+[value]="dadosFormulario" [rows]="10" [paginator]="true" 
+[showCurrentPageReport]="true" currentPageReportTemplate="{first} a {last} de {totalRecords}" 
+[rowsPerPageOptions]="[10, 20, 40]" selectionMode="single" 
+[(selection)]="dadoSelecionado" dataKey="Matricula">
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="Modelo">Modelo do carro <p-sortIcon field="Modelo"></p-sortIcon></th>
+            <th pSortableColumn="Marca">Marca do carro <p-sortIcon field="Marca"></p-sortIcon></th>
+            <th pSortableColumn="Ano">Ano do carro <p-sortIcon field="Ano"></p-sortIcon></th>
+            <th pSortableColumn="Aluno">Nome do aluno/servidor <p-sortIcon field="Aluno"></p-sortIcon></th>
+            <th pSortableColumn="Matricula">Matrícula <p-sortIcon field="Matricula"></p-sortIcon></th>
+            <th pSortableColumn="codigoEtiqueta">Código da etiqueta <p-sortIcon field="codigoEtiqueta"></p-sortIcon></th>
+            <th pSortableColumn="CNHvalida">CNH válida <p-sortIcon field="CNHvalida"></p-sortIcon></th>
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-dados>
+        <tr [pSelectableRow]="dadosFormulario">
+            <td> {{ dados.Modelo }} </td>
+            <td> {{ dados.Marca }}</td>
+            <td> {{ dados.Ano }} </td>
+            <td> {{ dados.Aluno }} </td>
+            <td> {{ dados.Matricula }} </td>
+            <td> {{ dados.codigoEtiqueta }} </td>
+            <td> {{ dados.CNHvalida }} </td>
+            <td>
+                <p-button (click)="deletarDados(dados.Matricula)" icon="pi pi-times" label="Excluir" styleClass="p-button-danger"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
