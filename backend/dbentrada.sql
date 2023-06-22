@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 24/05/2023 às 21:47
+-- Tempo de geração: 22/06/2023 às 12:48
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -51,6 +51,18 @@ CREATE TABLE `carro` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `login`
+--
+
+CREATE TABLE `login` (
+  `idlogin` int(11) NOT NULL,
+  `usuario` varchar(150) NOT NULL,
+  `senha` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura stand-in para view `vwalunocarro`
 -- (Veja abaixo para a visão atual)
 --
@@ -91,6 +103,12 @@ ALTER TABLE `carro`
   ADD KEY `fk_matricula` (`matriculaRel`);
 
 --
+-- Índices de tabela `login`
+--
+ALTER TABLE `login`
+  ADD PRIMARY KEY (`idlogin`);
+
+--
 -- AUTO_INCREMENT para tabelas despejadas
 --
 
@@ -98,7 +116,13 @@ ALTER TABLE `carro`
 -- AUTO_INCREMENT de tabela `carro`
 --
 ALTER TABLE `carro`
-  MODIFY `idCarro` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCarro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de tabela `login`
+--
+ALTER TABLE `login`
+  MODIFY `idlogin` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restrições para tabelas despejadas
