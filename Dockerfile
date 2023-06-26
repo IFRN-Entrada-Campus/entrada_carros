@@ -8,6 +8,7 @@ RUN npm run build
 FROM node:18 AS backend
 WORKDIR /app/backend
 COPY backend/package.json .
+COPY backend/dbentrada.sql /app/dbentrada.sql
 RUN npm install
 COPY backend .
 
