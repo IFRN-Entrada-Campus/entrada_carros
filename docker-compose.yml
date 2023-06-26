@@ -3,10 +3,8 @@ services:
   db:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
       MYSQL_DATABASE: dbentrada
-      MYSQL_USER: root
-      MYSQL_PASSWORD: ''
     volumes:
       - db_data:/var/lib/mysql
 
