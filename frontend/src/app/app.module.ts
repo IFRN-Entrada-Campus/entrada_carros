@@ -3,12 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NoopAnimationPlayer } from '@angular/animations';
+import { MqttModule } from 'ngx-mqtt';
 
 import { AppComponent } from './app.component';
 import { ListaComponent } from './lista/lista.component';
 import { FormsComponent } from './forms/forms.component';
 import { DadosService } from './dados.service';
+import { MqttComponent } from './mqtt/mqtt.component';
 
 /* Imports do primeng  */
 import { InputTextModule } from 'primeng/inputtext';
@@ -19,11 +20,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { InputNumberModule } from 'primeng/inputnumber';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     ListaComponent,
-    FormsComponent
+    FormsComponent,
+    MqttComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,12 @@ import { InputNumberModule } from 'primeng/inputnumber';
     TableModule,
     ButtonModule,
     HttpClientModule,
-    InputNumberModule
+    InputNumberModule,
+    MqttModule.forRoot({
+      hostname: 'test.mosquitto.org',
+      port: 8080,
+      protocol: 'wss',
+    }),
   ],
   providers: [DadosService],
   bootstrap: [AppComponent]

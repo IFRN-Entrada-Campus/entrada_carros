@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { concatMap } from 'rxjs';
 import { DadosService } from '../dados.service';
 import { Router } from '@angular/router';
 
@@ -35,5 +34,9 @@ export class ListaComponent implements OnInit{
 
   cadastrar(): void {
     this.router.navigate(['/forms']);
+  }
+
+  mqtt(): void {
+    this.router.navigate(['/mqtt']);
   }
 }
