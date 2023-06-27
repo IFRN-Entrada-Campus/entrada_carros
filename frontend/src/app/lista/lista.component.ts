@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { concatMap } from 'rxjs';
 import { DadosService } from '../dados.service';
 import { Router } from '@angular/router';
 

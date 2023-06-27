@@ -1,0 +1,8 @@
+<h2> Mensagens Recebidas</h2>
+<ul>
+    <li *ngFor="let mensagem of mensagensRecebidas">{{ mensagem }}</li>
+</ul>
+
+<label>Mensagem para envio:</label>
+<input pInputText [(ngModel)]="mensagemEnvio">
+<p-button (click)="mandarMensagem()" label="Enviar"></p-button>
