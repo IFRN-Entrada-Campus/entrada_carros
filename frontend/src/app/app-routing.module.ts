@@ -8,7 +8,7 @@ const routes: Routes = [
     { path:'lista', component: ListaComponent },
     { path:'forms', component: FormsComponent },
     { path:'', component: ListaComponent },
-    { path:'mqtt', component: MqttComponent }
+    { path:'mqtt', component: MqttComponent },
 ];
 
 @NgModule({

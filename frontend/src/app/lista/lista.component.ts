@@ -35,4 +35,8 @@ export class ListaComponent implements OnInit{
   cadastrar(): void {
     this.router.navigate(['/forms']);
   }
+
+  mqtt(): void {
+    this.router.navigate(['/mqtt']);
+  }
 }
