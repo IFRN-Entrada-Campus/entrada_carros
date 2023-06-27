@@ -21,7 +21,7 @@ export class MqttComponent implements OnInit{
   }
 
   mandarMensagem(): void {
-    this.servicoMqtt.enviarMensagem('carroo77/resposta', this.mensagemEnvio);
+    this.servicoMqtt.enviarMensagem('carro77/pedido', this.mensagemEnvio);
     this.mensagemEnvio = '';
   }
 }

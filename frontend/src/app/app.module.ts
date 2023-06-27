@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { MqttModule } from 'ngx-mqtt';
 
 import { AppComponent } from './app.component';
 import { ListaComponent } from './lista/lista.component';
@@ -37,7 +38,12 @@ import { InputNumberModule } from 'primeng/inputnumber';
     TableModule,
     ButtonModule,
     HttpClientModule,
-    InputNumberModule
+    InputNumberModule,
+    MqttModule.forRoot({
+      hostname: 'test.mosquitto.org',
+      port: 8080,
+      protocol: 'wss',
+    }),
   ],
   providers: [DadosService],
   bootstrap: [AppComponent]

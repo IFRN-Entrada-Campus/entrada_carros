@@ -12,10 +12,9 @@ export class ReqresmqttService {
 
   connect(): void {
     this.servicoMqtt.connect({
-      hostname: 'test.mosquitto.org/',
+      hostname: 'test.mosquitto.org',
       port: 8080,
-      path: 'mqtt',
-      protocol: 'ws',
+      protocol: 'wss',
     });
   }
 
