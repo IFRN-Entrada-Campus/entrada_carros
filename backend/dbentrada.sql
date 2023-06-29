@@ -41,21 +41,21 @@ CREATE TABLE `aluno` (
 DELIMITER $$
 CREATE TRIGGER `log_alunodelete` AFTER DELETE ON `aluno` FOR EACH ROW BEGIN
   INSERT INTO logs (operacao, usuario, dataoperacao, detalhe)
-  VALUES ('DELETE', USER(), NOW(), CONCAT('Registro afetado: ', OLD.matriculaAluno, ', tabela aluno'));
+  VALUES ('DELETE', USER(), NOW(), CONCAT('Registro deletado:',' matriculaAluno=', OLD.matriculaAluno, ' noAluno=', OLD.noAluno, '. Tabela aluno'));
 END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `log_alunoinsert` AFTER INSERT ON `aluno` FOR EACH ROW BEGIN
   INSERT INTO logs (operacao, usuario, dataoperacao, detalhe)
-  VALUES ('INSERT', USER(), NOW(), CONCAT('Registro afetado: ', NEW.matriculaAluno, ', tabela aluno'));
+  VALUES ('INSERT', USER(), NOW(), CONCAT('Registro inserido:', ' matriculaAluno=', NEW.matriculaAluno, ' noAluno=', NEW.noAluno, '. Tabela aluno'));
 END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `log_alunoupdate` AFTER UPDATE ON `aluno` FOR EACH ROW BEGIN
   INSERT INTO logs (operacao, usuario, dataoperacao, detalhe)
-  VALUES ('UPDATE', USER(), NOW(), CONCAT('Registro afetado: ', OLD.matriculaAluno, '-', NEW.matriculaAluno, ', tabela aluno'));
+  VALUES ('UPDATE', USER(), NOW(), CONCAT('Registro afetado:', ' matriculaAluno=', OLD.matriculaAluno, ' noAluno=', OLD.noAluno, '->', ' matriculaAluno=', NEW.matriculaAluno, ' noAluno=', NEW.noAluno, '. Tabela aluno'));
 END
 $$
 DELIMITER ;
@@ -82,18 +82,18 @@ CREATE TABLE `carro` (
 DELIMITER $$
 CREATE TRIGGER `log_carrodelete` AFTER DELETE ON `carro` FOR EACH ROW BEGIN
   INSERT INTO logs (operacao, usuario, dataoperacao, detalhe)
-  VALUES ('DELETE', USER(), NOW(), CONCAT('Registro afetado: ', OLD.idCarro, ', tabela carro'));
+  VALUES ('DELETE', USER(), NOW(), CONCAT('Registro deletado: idCarro=', OLD.idCarro, ', marcaCarro=', OLD.marcaCarro, ', modeloCarro=', OLD.modeloCarro, ', anoCarro=', OLD.anoCarro, ', validaCnh=', OLD.validaCnh, ', codigoEtiqueta=', OLD.codigoEtiqueta, ', matriculaRel=', OLD.matriculaRel, '. Tabela carro'));
 END
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `log_carroinsert` AFTER INSERT ON `carro` FOR EACH ROW INSERT INTO logs (operacao, usuario, dataoperacao, detalhe)
-VALUES ('INSERT', USER(), NOW(), CONCAT('Registro afetado: ', NEW.idCarro, ', tabela carro'))
+VALUES ('INSERT', USER(), NOW(), CONCAT('Registro inserido: idCarro=', NEW.idCarro, ', marcaCarro=', NEW.marcaCarro, ', modeloCarro=', NEW.modeloCarro, ', anoCarro=', NEW.anoCarro, ', validaCnh=', NEW.validaCnh, ', codigoEtiqueta=', NEW.codigoEtiqueta, ', matriculaRel=', NEW.matriculaRel, '. Tabela carro'));
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `log_carroupdate` AFTER UPDATE ON `carro` FOR EACH ROW INSERT INTO logs (operacao, usuario, dataoperacao, detalhe)
-VALUES ('UPDATE', USER(), NOW(), CONCAT('Registro afetado: ', OLD.idCarro, '-', NEW.idCarro, ', tabela carro'))
+VALUES ('UPDATE', USER(), NOW(), CONCAT('Registro afetado: idCarro=', OLD.idCarro, ', marcaCarro=', OLD.marcaCarro, ', modeloCarro=', OLD.modeloCarro, ', anoCarro=', OLD.anoCarro, ', validaCnh=', OLD.validaCnh, ', codigoEtiqueta=', OLD.codigoEtiqueta, ', matriculaRel=', OLD.matriculaRel, ' -> idCarro=', NEW.idCarro, ', marcaCarro=', NEW.marcaCarro, ', modeloCarro=', NEW.modeloCarro, ', anoCarro=', NEW.anoCarro, ', validaCnh=', NEW.validaCnh, ', codigoEtiqueta=', NEW.codigoEtiqueta, ', matriculaRel=', NEW.matriculaRel, '. Tabela carro'));
 $$
 DELIMITER ;
 
@@ -213,7 +213,7 @@ DELIMITER $$
 --
 -- Eventos
 --
-CREATE DEFINER=`root`@`localhost` EVENT `event_deleta_logs` ON SCHEDULE EVERY 1 DAY STARTS '2023-06-26 19:31:12' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM logs WHERE dataoperacao < NOW() - INTERVAL 30 DAY$$
+CREATE DEFINER=`root`@`localhost` EVENT `event_deleta_logs` ON SCHEDULE EVERY 1 DAY STARTS CURRENT_TIMESTAMP() ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM logs WHERE dataoperacao < NOW() - INTERVAL 30 DAY$$
 
 DELIMITER ;
 COMMIT;
