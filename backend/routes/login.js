@@ -17,7 +17,7 @@ con.connect(function(erroConexao) {
 });
 
 router.post('/', function(req, res) {
-    const usuario = req.body.login;
+    const usuario = req.body.usuario;
     const senha = req.body.senha;
     
     const sql = 'SELECT * FROM login WHERE usuario = ?';
@@ -89,3 +89,4 @@ router.post('/novo', function(req, res) {
         });
     });
 });
+module.exports = router;
