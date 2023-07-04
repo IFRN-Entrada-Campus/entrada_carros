@@ -4,7 +4,7 @@ const mysql = require('mysql');
 const bcrypt = require('bcrypt');
 
 var con = mysql.createConnection({
-    host: 'db',
+    host: 'localhost',
     user: 'root',
     password: '',
     database: 'dbentrada',
@@ -24,12 +24,12 @@ router.post('/', function(req, res) {
     con.query(sql, [usuario], function(erroComandoSQL, result) {
         if (erroComandoSQL) {
             console.error('Erro ao executar consulta:', erroComandoSQL);
-            res.status(500).send('Erro do servidor');
+            res.status(500).json({message: 'Erro do servidor'});
             return;
         }
 
         if (result.length === 0) {
-            res.status(401).send('Credenciais inválidas');
+            res.status(401).json({message: 'Credenciais inválidas'});
             return;
         }
 
@@ -38,16 +38,16 @@ router.post('/', function(req, res) {
         bcrypt.compare(senha, user.senha, function(erro, result) {
             if (erro) {
                 console.error('Erro ao verificar senha:', erro);
-                res.status(500).send('Erro do servidor');
+                res.status(500).json({message: 'Erro do servidor'});
                 return;
             }
 
             if (!result) {
-                res.status(401).send('Credenciais inválidas');
+                res.status(401).json({message: 'Credenciais inválidas'});
                 return;
             }
 
-            res.status(200).send('Login bem-sucedido');
+            res.status(200).json({message: 'Login bem-sucedido'});
         });
     });
 });

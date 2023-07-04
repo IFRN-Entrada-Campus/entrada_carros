@@ -13,6 +13,10 @@ export class LoginService {
     return this.http.post('http://localhost:3000/login', {usuario: user, senha: password});
   }
 
+  logout(): void {
+    this.autenticado = false;
+  }
+
   isAutenticado(): boolean {
     if (this.autenticado) {
       return true;
