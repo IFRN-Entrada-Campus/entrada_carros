@@ -18,6 +18,7 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { HttpClientModule } from '@angular/common/http';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -26,7 +27,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
     AppComponent,
     ListaComponent,
     FormsComponent,
-    MqttComponent
+    MqttComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,18 @@
+<div class="container">
+    <h2>Login</h2>
+
+    <table class="forms">
+        <tr>
+            <td><label htmlFor="usuario">Usuario:</label></td>
+            <td><input pInputText class="p-inputtext-sm" type="text" id="usuario" [(ngModel)]="usuario"></td>
+        </tr>
+        <tr>
+            <td><label htmlFor="senha">Senha:</label></td>
+            <td><input pInputText class="p-inputtext-sm" type="password" id="senha" [(ngModel)]="senha"></td>
+        </tr>
+        <br>
+        <td>
+            <p-button label="Logar" styleClass="p-button-text" (click)="fazerLogin()"></p-button>
+        </td>
+    </table>
+</div>

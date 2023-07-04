@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .forms {
+    margin-top: 20px;
+  }
+  
+  .forms td {
+    padding: 10px;
+  }
+  
+  .forms input {
+    width: 300px;
+    padding: 8px;
+    font-size: 18px;
+  }
+  
+  .p-button-text {
+    margin-top: auto;
+    margin-bottom: 30px;
+  }
+  
