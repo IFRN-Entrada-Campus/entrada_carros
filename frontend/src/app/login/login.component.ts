@@ -16,7 +16,7 @@ export class LoginComponent {
   fazerLogin(): void {
     this.login.login(this.usuario, this.senha).subscribe(
       (response) => {
-        if (response.message == 'Login bem-sucedido') {
+        if (response.auth == true) {
           this.login.autenticado = true;
           this.router.navigate(['/lista']);
         } else {

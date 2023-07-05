@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('./config');
 
 var con = mysql.createConnection({
-    host: 'db',
+    host: 'localhost',
     user: 'root',
     password: '',
     database: 'dbentrada',
@@ -24,12 +26,12 @@ router.post('/', function(req, res) {
     con.query(sql, [usuario], function(erroComandoSQL, result) {
         if (erroComandoSQL) {
             console.error('Erro ao executar consulta:', erroComandoSQL);
-            res.status(500).json({message: 'Erro do servidor'});
+            res.status(500).json({ auth: false, message: 'Erro do servidor'});
             return;
         }
 
         if (result.length === 0) {
-            res.status(401).json({message: 'Credenciais inválidas'});
+            res.status(401).json({ auth: false, message: 'Credenciais inválidas'});
             return;
         }
 
@@ -38,16 +40,20 @@ router.post('/', function(req, res) {
         bcrypt.compare(senha, user.senha, function(erro, result) {
             if (erro) {
                 console.error('Erro ao verificar senha:', erro);
-                res.status(500).json({message: 'Erro do servidor'});
+                res.status(500).json({ auth: false, message: 'Erro do servidor'});
                 return;
             }
 
             if (!result) {
-                res.status(401).json({message: 'Credenciais inválidas'});
+                res.status(401).json({ auth: false, message: 'Credenciais inválidas'});
                 return;
             }
 
-            res.status(200).json({message: 'Login bem-sucedido'});
+            const token = jwt.sign({ usuario: user.usuario }, config.jwtSegredo, { expiresIn: '1d' });
+            const decodedToken = jwt.decode(token);
+            const expiraEm = decodedToken.exp;
+
+            res.status(200).json({auth: true, message: 'Login bem-sucedido', token: token, expiraEm: expiraEm });
         });
     });
 });

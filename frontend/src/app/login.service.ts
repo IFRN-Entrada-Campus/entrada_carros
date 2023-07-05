@@ -10,18 +10,36 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   login(user: string, password:string): Observable<any> {
-    return this.http.post('http://localhost:3000/login', {usuario: user, senha: password});
+    return this.http.post('http://localhost:3000/login', {usuario: user, senha: password})
+    .pipe(
+      tap((response: any) => {
+        if (response.token) {
+          localStorage.setItem('authToken', response.token);
+          localStorage.setItem('tokenExpiration', response.expiraEm);
+        }
+      })
+    );
   }
 
   logout(): void {
+    localStorage.clear;
     this.autenticado = false;
   }
 
   isAutenticado(): boolean {
-    if (this.autenticado) {
-      return true;
-    } else {
-      return false;
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      const expiraEm = localStorage.getItem('tokenExpiration') || '';
+      const tempoExpiraEm = new Date(Number(expiraEm)).getDay();
+      const agora = new Date().getDay();
+      if (agora != tempoExpiraEm) {
+        this.autenticado = true
+        return true;
+      }
     }
+
+    this.autenticado = false;
+    this.logout();
+    return false;
   }
 }
