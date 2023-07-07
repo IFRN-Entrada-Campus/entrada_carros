@@ -10,7 +10,7 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   login(user: string, password:string): Observable<any> {
-    return this.http.post('http://localhost:3000/login', {usuario: user, senha: password})
+    return this.http.post('http://backend:8080/login', {usuario: user, senha: password})
     .pipe(
       tap((response: any) => {
         if (response.token) {
