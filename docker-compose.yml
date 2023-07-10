@@ -1,13 +1,13 @@
 version: '3'
 services:
-  frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - 3000:3000
-    depends_on:
-      - backend
+  db:
+    image: mysql:8.0.33
+    environment:
+      - MYSQL_ROOT_PASSWORD=''
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=dbentrada
+    volumes:
+      - mysql-data:/var/lib/mysql
     networks:
       - app-network
 
@@ -30,15 +30,14 @@ services:
     networks:
       - app-network
 
-  db:
-    image: mysql:8.0.33
-    command: --default-authentication-plugin=mysql_native_password --secure-file-priv=""
-    environment:
-      - MYSQL_ROOT_PASSWORD=''
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-      - MYSQL_DATABASE=dbentrada
-    volumes:
-      - mysql-data:/var/lib/mysql
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
     networks:
       - app-network
 
@@ -47,4 +46,3 @@ networks:
 
 volumes:
   mysql-data:
-
