@@ -1,9 +1,8 @@
-version: '3'
+version: '3.7'
 services:
   db:
     image: mysql:8.0.33
     environment:
-      - MYSQL_ROOT_PASSWORD=''
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_DATABASE=dbentrada
     volumes:
