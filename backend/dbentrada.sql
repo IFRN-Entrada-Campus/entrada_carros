@@ -2,8 +2,7 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Tempo de geração: 26/06/2023 às 22:18
+-- Host: db:3306
 -- Versão do servidor: 8.0.33
 -- Versão do PHP: 8.2.4
 
