@@ -30,7 +30,16 @@ services:
     networks:
       - app-network
 
- 
+  migration:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+      - app
+    networks:
+      - app-network
+    command: sh -c "sleep 100 && npx sequelize-cli db:migrate"
 
 networks:
   app-network:
