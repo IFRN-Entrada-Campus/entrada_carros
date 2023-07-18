@@ -4,6 +4,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 var bodyParser = require('body-parser');
+var Sequelize = require('sequelize');
+var dbConfig = require('./config/dbentrada')
 
 var indexRouter = require('./routes/index');
 var alunocarroRouter = require('./routes/alunocarro');
@@ -23,5 +25,5 @@ app.use(bodyParser.json());
 app.use('/', indexRouter);
 app.use('/alunocarro', alunocarroRouter);
 app.use('/login', loginRouter);
-
-module.exports = app;
+const sequelize = new Sequelize(dbConfig);
+module.exports = app, sequelize;
