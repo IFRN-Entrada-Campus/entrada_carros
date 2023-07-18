@@ -20,6 +20,7 @@ services:
       - migration
     networks:
       - app-network
+    command: sh -c "sleep 120 && npm start"
 
   db:
     image: mysql:8.0.33
