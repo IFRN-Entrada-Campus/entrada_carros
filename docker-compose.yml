@@ -17,6 +17,7 @@ services:
       - ./backend/dbentrada.sql:/docker-entrypoint-initdb.d/dbentrada.sql
     depends_on:
       - db
+      - migration
     networks:
       - app-network
 
@@ -36,10 +37,9 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - db
-      - app
     networks:
       - app-network
-    command: sh -c "sleep 100 && npx sequelize-cli db:migrate"
+    command: sh -c "sleep 100 && npx sequelize-cli db:migrate && npx sequelize db:seed:all"
 
 networks:
   app-network:
