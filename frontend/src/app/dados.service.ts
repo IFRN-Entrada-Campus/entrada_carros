@@ -32,7 +32,8 @@ export class DadosService {
           anoCarro: dado.anoCarro,
           codigoEtiqueta: dado.codigoEtiqueta,
           validaCnh: dado.CNHvalida,
-          matriculaRel: dado.matriculaAluno};
+          matriculaRel: dado.matriculaAluno,
+          placaCarro: dado.placaCarro};
         let addAluno = this.http.post('http://backend:3000/alunocarro/aluno', reqAluno);
         let addCarro = this.http.post('http://backend:3000/alunocarro/carro', reqCarro);
         return forkJoin(addAluno, addCarro);
@@ -54,7 +55,8 @@ export class DadosService {
           anoCarro: dado.anoCarro,
           codigoEtiqueta: dado.codigoEtiqueta,
           validaCnh: dado.CNHvalida,
-          matriculaRel: dado.matriculaAluno};
+          matriculaRel: dado.matriculaAluno,
+          placaCarro: dado.placaCarro};
         let putAluno = this.http.put(`http://backend:3000/aluno/${dado.matriculaAluno}`, reqAluno);
         let putCarro = this.http.put(`http://backend:3000/alunocarro/carro/${idcarro}`, reqCarro);
         return forkJoin(putAluno, putCarro)

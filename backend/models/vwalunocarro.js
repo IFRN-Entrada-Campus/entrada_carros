@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      Placa: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
     }, {
       tableName: 'vwalunocarro',
       timestamps: false,

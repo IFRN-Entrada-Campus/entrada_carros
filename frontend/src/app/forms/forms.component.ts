@@ -10,7 +10,7 @@ import { DadosService } from '../dados.service';
 })
 
 export class FormsComponent implements OnInit{
-  dado: Dados = {modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', CNHvalida: ''};
+  dado: Dados = {modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', CNHvalida: '', placaCarro: ''};
   matriculas: any[] = [];
 
   constructor(private dadosService: DadosService, private router: Router) {
@@ -22,7 +22,7 @@ export class FormsComponent implements OnInit{
       next: (resultado: any) => (this.matriculas = resultado),
       error: (erro: any) => console.log(erro)
     });
-    this.dado = {modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', CNHvalida: ''};
+    this.dado = {modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', CNHvalida: '', placaCarro: ''};
   }
 
   addDados(): void{

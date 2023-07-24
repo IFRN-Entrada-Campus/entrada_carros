@@ -39,6 +39,10 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
+      placaCarro: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
     });
   },
 

@@ -10,6 +10,7 @@
         <tr>
             <th pSortableColumn="Modelo">Modelo do carro <p-sortIcon field="Modelo"></p-sortIcon></th>
             <th pSortableColumn="Marca">Marca do carro <p-sortIcon field="Marca"></p-sortIcon></th>
+            <th pSortableColumn="Placa">Placa do carro <p-sortIcon field="Placa"></p-sortIcon></th>
             <th pSortableColumn="Ano">Ano do carro <p-sortIcon field="Ano"></p-sortIcon></th>
             <th pSortableColumn="Aluno">Nome do aluno/servidor <p-sortIcon field="Aluno"></p-sortIcon></th>
             <th pSortableColumn="Matricula">Matrícula <p-sortIcon field="Matricula"></p-sortIcon></th>
@@ -22,6 +23,7 @@
         <tr [pSelectableRow]="dadosFormulario">
             <td> {{ dados.Modelo }} </td>
             <td> {{ dados.Marca }}</td>
+            <td> {{ dados.Placa }}</td>
             <td> {{ dados.Ano }} </td>
             <td> {{ dados.Aluno }} </td>
             <td> {{ dados.Matricula }} </td>

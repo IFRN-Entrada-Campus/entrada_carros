@@ -10,6 +10,7 @@ module.exports = {
         validaCnh: 1,
         codigoEtiqueta: 'ty1253267',
         matriculaRel: 12345678910,
+        placaCarro: 'BRA2E19',
       },
       {
         marcaCarro: 'Marca modelo',
@@ -18,6 +19,7 @@ module.exports = {
         validaCnh: 1,
         codigoEtiqueta: 'ty1253267',
         matriculaRel: 29876543210,
+        placaCarro: 'RNO6T78',
       },
     ]);
   },

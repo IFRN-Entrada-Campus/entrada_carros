@@ -7,5 +7,6 @@ export interface Dados {
     matriculaAluno: any;
     codigoEtiqueta: any;
     CNHvalida: any;
+    placaCarro: any;
 
 }

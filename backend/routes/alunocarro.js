@@ -76,11 +76,12 @@ router.post('/carro', function(req, res) {
     const codigoEtiqueta = req.body.codigoEtiqueta;
     const validaCnh = req.body.validaCnh;
     const matriculaRel = req.body.matriculaRel;
+    const placaCarro = req.body.placaCarro;
 
-    const sql = `INSERT INTO carro (marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validaCnh, matriculaRel) VALUES (?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO carro (marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validaCnh, matriculaRel, placaCarro) VALUES (?, ?, ?, ?, ?, ?, ?)`;
     con.query(
         sql,
-        [marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validaCnh, matriculaRel],
+        [marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validaCnh, matriculaRel, placaCarro],
         function(erroComandoSQL, result, fields) {
             if (erroComandoSQL) {
                 throw erroComandoSQL;
@@ -125,6 +126,7 @@ router.put('/carro/:idCarro', function(req, res) {
     const codigoEtiqueta = req.body.codigoEtiqueta;
     const validaCnh = req.body.validaCnh;
     const matriculaRel = req.body.matriculaRel;
+    const placaCarro = req.body.placaCarro;
 
     const sql = `UPDATE carro 
     SET marcaCarro = ?,
@@ -132,11 +134,12 @@ router.put('/carro/:idCarro', function(req, res) {
     anoCarro = ?,
     codigoEtiqueta = ?,
     validaCnh = ?,
-    matriculaRel = ?
+    matriculaRel = ?,
+    placaCarro = ?
     WHERE idCarro = ?`;
     con.query(
         sql,
-        [marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validaCnh, matriculaRel, idCarro],
+        [marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validaCnh, matriculaRel, placaCarro, idCarro],
         function(erroComandoSQL, result, fields) {
             if (erroComandoSQL) {
                 throw erroComandoSQL;

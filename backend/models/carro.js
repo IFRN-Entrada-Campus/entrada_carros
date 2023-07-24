@@ -30,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BIGINT,
         allowNull: false,
       },
+      placaCarro: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
     });
   
     Carro.associate = (models) => {

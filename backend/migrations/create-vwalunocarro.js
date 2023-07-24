@@ -12,7 +12,8 @@ module.exports = {
         a.noAluno AS Aluno,
         a.matriculaAluno AS Matricula,
         c.codigoEtiqueta,
-        c.validaCnh AS CNHvalida
+        c.validaCnh AS CNHvalida,
+        c.placaCarro AS Placa
       FROM carro c
       JOIN aluno a ON a.matriculaAluno = c.matriculaRel;
     `);
