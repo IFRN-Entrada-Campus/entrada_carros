@@ -10,6 +10,7 @@ var dbConfig = require('./config/dbentrada')
 var indexRouter = require('./routes/index');
 var alunocarroRouter = require('./routes/alunocarro');
 var loginRouter = require('./routes/login');
+var placaRouter = require('./routes/placa');
 
 var app = express();
 
@@ -25,5 +26,6 @@ app.use(bodyParser.json());
 app.use('/', indexRouter);
 app.use('/alunocarro', alunocarroRouter);
 app.use('/login', loginRouter);
+app.use('/placa', placaRouter);
 const sequelize = new Sequelize(dbConfig);
 module.exports = app, sequelize;

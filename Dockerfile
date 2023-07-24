@@ -3,18 +3,11 @@ WORKDIR /app/frontend
 COPY frontend/package.json .
 RUN npm install
 COPY frontend .
-RUN npm run build
+EXPOSE 80
 
 FROM node:18 AS backend
 WORKDIR /app/backend
 COPY backend/package.json .
-COPY backend/dbentrada.sql /app/dbentrada.sql
 RUN npm install
 COPY backend .
-
-FROM node:18
-WORKDIR /app
-COPY --from=frontend /app/frontend/dist ./frontend/dist
-COPY --from=backend app/backend .
 EXPOSE 3000
-CMD ["npm", "start"]
