@@ -57,7 +57,7 @@ export class DadosService {
           validaCnh: dado.CNHvalida,
           matriculaRel: dado.matriculaAluno,
           placaCarro: dado.placaCarro};
-        let putAluno = this.http.put(`http://backend:3000/aluno/${dado.matriculaAluno}`, reqAluno);
+        let putAluno = this.http.put(`http://backend:3000/alunocarro/aluno/${dado.matriculaAluno}`, reqAluno);
         let putCarro = this.http.put(`http://backend:3000/alunocarro/carro/${idcarro}`, reqCarro);
         return forkJoin(putAluno, putCarro)
       })
