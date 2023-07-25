@@ -30,10 +30,10 @@ export class LoginService {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
       const expiraEm = localStorage.getItem('tokenExpiration') || '';
-      const tempoExpiraEm = new Date(Number(expiraEm)).getDay();
-      const agora = new Date().getDay();
-      if (agora != tempoExpiraEm) {
-        this.autenticado = true
+      const tempoExpiraEm = new Date(Number(expiraEm)).getDate();
+      const agora = new Date().getDate();
+      if (agora > tempoExpiraEm) {
+        this.autenticado = true;
         return true;
       }
     }

@@ -15,7 +15,7 @@ con.connect(function(erroConexao) {
     }
 });
 
-router.post('/:placa', function(req, res) {
+router.post('/', function(req, res) {
     const placa = req.body.placa;
 
     const sql = 'SELECT * FROM vwalunocarro WHERE Placa = ?';
