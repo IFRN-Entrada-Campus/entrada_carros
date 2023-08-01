@@ -10,7 +10,7 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   login(user: string, password:string): Observable<any> {
-    return this.http.post('http://backend:3000/login', {usuario: user, senha: password})
+    return this.http.post('http://localhost:3000/login', {usuario: user, senha: password})
     .pipe(
       tap((response: any) => {
         if (response.token) {
@@ -22,7 +22,7 @@ export class LoginService {
   }
 
   logout(): void {
-    localStorage.clear;
+    localStorage.clear();
     this.autenticado = false;
   }
 
@@ -30,8 +30,9 @@ export class LoginService {
     const authToken = localStorage.getItem('authToken');
     if (authToken) {
       const expiraEm = localStorage.getItem('tokenExpiration') || '';
-      const tempoExpiraEm = new Date(Number(expiraEm)).getDate();
-      const agora = new Date().getDate();
+      const tempoExpiraEm = new Date(Number(expiraEm)).getTime();
+      const agora = new Date().getTime();
+      console.log(tempoExpiraEm, agora)
       if (agora > tempoExpiraEm) {
         this.autenticado = true;
         return true;
