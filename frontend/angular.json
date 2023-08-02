@@ -60,6 +60,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "port": 8080
+          },
           "configurations": {
             "production": {
               "browserTarget": "crud-carros:build:production"
@@ -96,5 +99,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "50cc9e0c-493b-4454-9cc4-417318b5e650"
   }
 }
