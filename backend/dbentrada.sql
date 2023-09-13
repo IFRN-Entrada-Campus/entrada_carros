@@ -35,7 +35,7 @@ CREATE TABLE `aluno` (
 
 LOCK TABLES `aluno` WRITE;
 /*!40000 ALTER TABLE `aluno` DISABLE KEYS */;
-INSERT INTO `aluno` VALUES (20211148060014,'Alessandro Nunes Silva Cruz Filho'),(20221148060001,' Guilherme Cadete Costa');
+INSERT INTO `aluno` VALUES (20221148060001,' Guilherme Cadete Costa');
 /*!40000 ALTER TABLE `aluno` ENABLE KEYS */;
 UNLOCK TABLES;
 
