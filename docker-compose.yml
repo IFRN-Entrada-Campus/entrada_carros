@@ -19,9 +19,7 @@ services:
     depends_on:
       - db
       - migration
-    networks:
-      - app-network
-    command: sh -c "sleep 70 && npm start"
+    command: sh -c "sleep 20 && npm start"
 
   frontend:
     build:
@@ -33,20 +31,30 @@ services:
     depends_on:
       - db
       - migration
-    networks:
-      - app-network
     command: sh -c "ng serve --host 0.0.0.0"
 
   db:
     image: mysql:8.0.33
+    container_name: db
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_DATABASE=dbentrada
     volumes:
       - mysql-data:/var/lib/mysql
-    networks:
-      - app-network
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - db
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+      - PMA_ARBITRARY=1
+    restart: always
+    ports:
+      - 8081:80
+  
   migration:
     build:
       context: .
@@ -54,12 +62,7 @@ services:
       target: backend
     depends_on:
       - db
-    networks:
-      - app-network
-    command: sh -c "sleep 60 && npx sequelize-cli db:migrate && npx sequelize db:seed:all"
-
-networks:
-  app-network:
+    command: sh -c "sleep 10 && npx sequelize-cli db:migrate && npx sequelize db:seed:all"
 
 volumes:
   mysql-data:
