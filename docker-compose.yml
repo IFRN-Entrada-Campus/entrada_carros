@@ -4,9 +4,8 @@ services:
 
   backend:
     build:
-      context: .
+      context: backend/
       dockerfile: Dockerfile
-      target: backend
     ports:
       - 3000:3000
     environment:
@@ -23,15 +22,13 @@ services:
 
   frontend:
     build:
-      context: .
+      context: frontend/dist/
       dockerfile: Dockerfile
-      target: frontend
     ports:
       - 8080:8080
     depends_on:
       - db
       - migration
-    command: sh -c "ng serve --host 0.0.0.0"
 
   db:
     image: mysql:8.0.33
@@ -57,9 +54,8 @@ services:
   
   migration:
     build:
-      context: .
+      context: backend/
       dockerfile: Dockerfile
-      target: backend
     depends_on:
       - db
     command: sh -c "sleep 10 && npx sequelize-cli db:migrate && npx sequelize db:seed:all"
