@@ -24,6 +24,16 @@ router.get('/', function(req, res) {
     });
 });
 
+router.get('/:Matricula', function(req, res) {
+    const Matricula = req.params.Matricula
+    con.query('SELECT * FROM vwalunocarro WHERE Matricula = ?', [Matricula], function(erroComandoSQL, result, fields) {
+        if (erroComandoSQL) {
+            throw erroComandoSQL;
+        }
+        res.status(200).send(result);
+    });
+});
+
 router.get('/matricula', function(req, res) {
     con.query('SELECT Matricula FROM vwalunocarro', function(erroComandoSQL, result, fields) {
         if (erroComandoSQL) {

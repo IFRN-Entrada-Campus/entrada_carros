@@ -7,14 +7,14 @@ import { Router } from '@angular/router';
   templateUrl: './lista.component.html',
   styleUrls: ['./lista.component.css']
 })
-export class ListaComponent implements OnInit{
+export class ListaComponent implements OnInit {
   dadosFormulario: any[] = [];
   dadoSelecionado?: any;
 
   constructor(private dadosService: DadosService, private router: Router) {
 
   }
-  
+
 
   ngOnInit(): void {
     this.onListar();
@@ -22,7 +22,7 @@ export class ListaComponent implements OnInit{
 
   onListar(): void {
     this.dadosService.getDados().subscribe({
-      next: (resultado: any) => {(this.dadosFormulario = resultado), console.log(resultado)},
+      next: (resultado: any) => { (this.dadosFormulario = resultado), console.log(resultado) },
       error: (erro: any) => console.log(erro),
       complete: () => console.log('completo')
     });
@@ -38,5 +38,9 @@ export class ListaComponent implements OnInit{
 
   mqtt(): void {
     this.router.navigate(['/mqtt']);
+  }
+
+  editarDados(matricula: any) {
+    this.router.navigate([`/editar/${matricula}`]);
   }
 }

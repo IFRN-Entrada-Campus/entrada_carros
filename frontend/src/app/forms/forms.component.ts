@@ -31,12 +31,5 @@ export class FormsComponent implements OnInit{
       });
       this.router.navigate(['/lista']);
     }
-
-    editarDados(): void {
-      this.dadosService.editarDados(this.dado).subscribe({
-        error: (erro: any) => console.log(erro)
-      });
-      this.router.navigate(['/lista']);
-    }
 }
 

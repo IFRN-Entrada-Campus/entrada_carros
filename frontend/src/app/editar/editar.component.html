@@ -1,4 +1,4 @@
-<h1>Cadastro de dados</h1>
+<h1>Edição de dados</h1>
 <table class="forms">
     <tr>
         <td><label htmlFor="marca">Marca do carro: </label></td>
@@ -21,21 +21,17 @@
         <td><input pInputText class="p-inputtext-sm" id="nome" [(ngModel)]="dado.aluno"></td>
     </tr>
     <tr>
-        <td><label htmlFor="matricula">Matrícula: </label></td>
-        <td><p-inputNumber class="p-inputtext-sm" id="ano" [(ngModel)]="dado.matriculaAluno" [useGrouping]="false"></p-inputNumber></td>
-    </tr>
-    <tr>
         <td><label htmlFor="codigo">Código da etiqueta: </label></td>
         <td><input pInputText class="p-inputtext-sm" id="codigo" [(ngModel)]="dado.codigoEtiqueta"></td>
     </tr>
     <tr>
         <td><label htmlFor="cnh">CNH é válida?</label></td>
-        <td><p-checkbox [(ngModel)]="dado.CNHvalida" [binary]="true" inputId="cnh"></p-checkbox></td>
+        <td><p-checkbox [ngModel]="dado.CNHvalida" [binary]="true" inputId="cnh"></p-checkbox></td>
     </tr>
     <br>
     <tr>
         <td>
-            <p-button styleClass="p-button-text" (click)="addDados()" label="Enviar"></p-button> 
+            <p-button styleClass="p-button-text" (click)="editarDados()" label="Enviar"></p-button> 
         </td>
     </tr>
 </table>

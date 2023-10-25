@@ -19,6 +19,10 @@ export class DadosService {
     return this.http.get('http://localhost:3000/alunocarro/matricula')
   }
 
+  getDadosporMatricula(matricula: any): Observable<any> {
+    return this.http.get(`http://localhost:3000/alunocarro/${matricula}`)
+  }
+
   addDados(dado: Dados): Observable<any> { 
         if (dado.CNHvalida == true) {
           dado.CNHvalida = 1;
