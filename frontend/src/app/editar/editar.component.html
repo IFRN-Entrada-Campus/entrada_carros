@@ -1,1 +1,37 @@
-<p>editar works!</p>
+<h1>Edição de dados</h1>
+<table class="forms">
+    <tr>
+        <td><label htmlFor="marca">Marca do carro: </label></td>
+        <td><input pInputText class="p-inputtext-sm" id="marca" [(ngModel)]="dado.marcaCarro"></td>
+    </tr>
+    <tr>
+        <td><label htmlFor="modelo">Modelo do carro: </label></td>
+        <td><input pInputText class="p-inputtext-sm" id="modelo" [(ngModel)]="dado.modeloCarro"></td>
+    </tr>
+    <tr>
+        <td><label htmlFor="placa">Placa do carro: </label></td>
+        <td><input pInputText class="p-inputtext-sm" id="placa" [(ngModel)]="dado.placaCarro"></td>
+    </tr>
+    <tr>
+        <td><label htmlFor="ano">Ano do carro: </label></td>
+        <td><p-inputNumber class="p-inputtext-sm" id="ano" [(ngModel)]="dado.anoCarro" [useGrouping]="false"></p-inputNumber></td>
+    </tr>
+    <tr>
+        <td><label htmlFor="nome">Nome completo do aluno: </label></td>
+        <td><input pInputText class="p-inputtext-sm" id="nome" [(ngModel)]="dado.aluno"></td>
+    </tr>
+    <tr>
+        <td><label htmlFor="codigo">Código da etiqueta: </label></td>
+        <td><input pInputText class="p-inputtext-sm" id="codigo" [(ngModel)]="dado.codigoEtiqueta"></td>
+    </tr>
+    <tr>
+        <td><label htmlFor="cnh">CNH é válida?</label></td>
+        <td><p-checkbox [(ngModel)]="dado.CNHvalida" [binary]="true" inputId="cnh"></p-checkbox></td>
+    </tr>
+    <br>
+    <tr>
+        <td>
+            <p-button styleClass="p-button-text" (click)="editarDados()" label="Enviar"></p-button> 
+        </td>
+    </tr>
+</table>

@@ -9,7 +9,7 @@ import { EditarComponent } from './editar/editar.component';
 
 const routes: Routes = [
     { path:'lista', component: ListaComponent, canActivate: [AuthGuard] },
-    { path:'editar', component: EditarComponent, canActivate: [AuthGuard]},
+    { path:'editar/:matricula', component: EditarComponent, canActivate: [AuthGuard]},
     { path:'forms', component: FormsComponent, canActivate: [AuthGuard] },
     { path:'', component: ListaComponent, canActivate: [AuthGuard] },
     { path:'mqtt', component: MqttComponent, canActivate: [AuthGuard] },

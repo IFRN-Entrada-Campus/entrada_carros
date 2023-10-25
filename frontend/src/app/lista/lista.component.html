@@ -30,7 +30,7 @@
             <td> {{ dados.codigoEtiqueta }} </td>
             <td> {{ dados.CNHvalida }} </td>
             <td>
-                <p-button (click)="editarDados()" label="Editar"></p-button>
+                <p-button (click)="editarDados(dados.Matricula)" label="Editar"></p-button>
             </td>
             <td>
                 <p-button (click)="deletarDados(dados.Matricula)" icon="pi pi-times" label="Excluir" styleClass="p-button-danger"></p-button>
