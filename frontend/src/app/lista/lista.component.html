@@ -1,5 +1,5 @@
 <h2>Lista dos carros cadastrados</h2>
-<p-button styleClass="p-button-link" (click)="cadastrar()" id="cadastrar">Cadastrar/Editar</p-button>
+<p-button styleClass="p-button-link" (click)="cadastrar()" id="cadastrar">Cadastrar</p-button>
 <p-button styleClass="p-button-link" (click)="mqtt()" id="mensagens">Mensagens</p-button>
 <p-table 
 [value]="dadosFormulario" [rows]="10" [paginator]="true" 
@@ -29,6 +29,9 @@
             <td> {{ dados.Matricula }} </td>
             <td> {{ dados.codigoEtiqueta }} </td>
             <td> {{ dados.CNHvalida }} </td>
+            <td>
+                <p-button (click)="editarDados()" label="Editar"></p-button>
+            </td>
             <td>
                 <p-button (click)="deletarDados(dados.Matricula)" icon="pi pi-times" label="Excluir" styleClass="p-button-danger"></p-button>
             </td>

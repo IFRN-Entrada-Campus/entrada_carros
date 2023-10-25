@@ -39,4 +39,6 @@ export class ListaComponent implements OnInit{
   mqtt(): void {
     this.router.navigate(['/mqtt']);
   }
+
+  editarDados() {}
 }

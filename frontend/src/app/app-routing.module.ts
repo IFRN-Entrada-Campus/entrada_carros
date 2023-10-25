@@ -5,9 +5,11 @@ import { FormsComponent } from './forms/forms.component';
 import { MqttComponent } from './mqtt/mqtt.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
+import { EditarComponent } from './editar/editar.component';
 
 const routes: Routes = [
     { path:'lista', component: ListaComponent, canActivate: [AuthGuard] },
+    { path:'editar', component: EditarComponent, canActivate: [AuthGuard]},
     { path:'forms', component: FormsComponent, canActivate: [AuthGuard] },
     { path:'', component: ListaComponent, canActivate: [AuthGuard] },
     { path:'mqtt', component: MqttComponent, canActivate: [AuthGuard] },
