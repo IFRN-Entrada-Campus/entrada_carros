@@ -1,10 +1,11 @@
 <h2>Lista dos carros cadastrados</h2>
+<p>Para editar qualquer um dos registros, clique em cima do escolhido.</p>
 <p-button styleClass="p-button-link" (click)="cadastrar()" id="cadastrar">Cadastrar</p-button>
 <p-button styleClass="p-button-link" (click)="mqtt()" id="mensagens">Mensagens</p-button>
 <p-table 
-[value]="dadosFormulario" [rows]="10" [paginator]="true" 
+[value]="dadosFormulario" [rows]="100" [paginator]="true" 
 [showCurrentPageReport]="true" currentPageReportTemplate="{first} a {last} de {totalRecords}" 
-[rowsPerPageOptions]="[10, 20, 40]" selectionMode="single" 
+[rowsPerPageOptions]="[100, 200, 400]" selectionMode="single" 
 [(selection)]="dadoSelecionado" dataKey="Matricula">
     <ng-template pTemplate="header">
         <tr>
@@ -16,6 +17,7 @@
             <th pSortableColumn="Matricula">Matrícula <p-sortIcon field="Matricula"></p-sortIcon></th>
             <th pSortableColumn="codigoEtiqueta">Código da etiqueta <p-sortIcon field="codigoEtiqueta"></p-sortIcon></th>
             <th pSortableColumn="CNHvalida">CNH válida <p-sortIcon field="CNHvalida"></p-sortIcon></th>
+            <th></th>
             <th></th>
         </tr>
     </ng-template>
@@ -30,7 +32,7 @@
             <td> {{ dados.codigoEtiqueta }} </td>
             <td> {{ dados.CNHvalida }} </td>
             <td>
-                <p-button (click)="editarDados(dados.Matricula)" label="Editar"></p-button>
+                <p-button (click)="editarDados(dados.Matricula)" label="Editar" styleClass="p-button-link"></p-button>
             </td>
             <td>
                 <p-button (click)="deletarDados(dados.Matricula)" icon="pi pi-times" label="Excluir" styleClass="p-button-danger"></p-button>

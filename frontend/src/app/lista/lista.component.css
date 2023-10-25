@@ -6,3 +6,7 @@ h2 {
     top: 75px;
     right: 20px;
 }
+p {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.603);
+}
