@@ -54,10 +54,9 @@ export class EditarComponent implements OnInit {
       this.dado.marcaCarro != '' &&
       this.dado.modeloCarro != '' &&
       this.dado.placaCarro != '' &&
-      this.dado.anoCarro != null && 0 &&
+      this.dado.anoCarro != 0 &&
       this.dado.aluno != '' &&
-      this.dado.codigoEtiqueta != '' &&
-      this.dado.validadeEtiqueta != null 
+      this.dado.codigoEtiqueta != ''
     ) {
       this.dadosServico.editarDados(this.dado).subscribe({
         error: (erro: any) => console.log(erro)

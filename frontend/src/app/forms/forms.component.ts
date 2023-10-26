@@ -33,11 +33,10 @@ export class FormsComponent implements OnInit {
       this.dado.marcaCarro != '' &&
       this.dado.modeloCarro != '' &&
       this.dado.placaCarro != '' &&
-      this.dado.anoCarro != null && 0 &&
+      this.dado.anoCarro != 0 &&
       this.dado.aluno != '' &&
-      this.dado.matriculaAluno != null && 0 &&
-      this.dado.codigoEtiqueta != '' &&
-      this.dado.validadeEtiqueta != null
+      this.dado.matriculaAluno != 0 &&
+      this.dado.codigoEtiqueta != ''
     ) {
       this.dadosService.addDados(this.dado).subscribe({
         error: (erro: any) => console.log(erro)

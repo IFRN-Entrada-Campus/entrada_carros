@@ -29,13 +29,14 @@ export class DadosService {
         } else {
           dado.CNHvalida = 0;
         }
+        let dataFormatada = dado.validadeEtiqueta.toISOString().slice(0, 19).replace('T', ' ');
         let reqAluno = {noAluno: dado.aluno, matriculaAluno: dado.matriculaAluno};
         let reqCarro ={
           marcaCarro: dado.marcaCarro,
           modeloCarro: dado.modeloCarro,
           anoCarro: dado.anoCarro,
           codigoEtiqueta: dado.codigoEtiqueta,
-          validadeEtiqueta: dado.validadeEtiqueta,
+          validadeEtiqueta: dataFormatada,
           validaCnh: dado.CNHvalida,
           matriculaRel: dado.matriculaAluno,
           placaCarro: dado.placaCarro};
@@ -48,6 +49,7 @@ export class DadosService {
     return this.http.get(`http://localhost:3000/alunocarro/carro/${dado.matriculaAluno}`).pipe(
       switchMap((resultado: any) => {
         let idcarro = resultado.id
+        let dataFormatada = dado.validadeEtiqueta.toISOString().slice(0, 19).replace('T', ' ');
         if (dado.CNHvalida === true) {
           dado.CNHvalida = 1;
         } else {
@@ -59,7 +61,7 @@ export class DadosService {
           modeloCarro: dado.modeloCarro,
           anoCarro: dado.anoCarro,
           codigoEtiqueta: dado.codigoEtiqueta,
-          validadeEtiqueta: dado.validadeEtiqueta,
+          validadeEtiqueta: dataFormatada,
           validaCnh: dado.CNHvalida,
           matriculaRel: dado.matriculaAluno,
           placaCarro: dado.placaCarro};
