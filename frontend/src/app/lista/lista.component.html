@@ -1,6 +1,9 @@
 <h2>Lista dos carros cadastrados</h2>
 <p-button styleClass="p-button-link" (click)="cadastrar()" id="cadastrar">Cadastrar</p-button>
 <p-button styleClass="p-button-link" (click)="mqtt()" id="mensagens">Mensagens</p-button>
+<div class="pesquisa">
+    <input [(ngModel)]="placaPesquisada" (input)="onSearchInput()" class="pesquisar" pInputText placeholder="Pesquisa por placa...">
+</div>
 <p-table 
 [value]="dadosFormulario" [rows]="100" [paginator]="true" 
 [showCurrentPageReport]="true" currentPageReportTemplate="{first} a {last} de {totalRecords}" 

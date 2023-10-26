@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DadosService } from '../dados.service';
 import { Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-lista',
@@ -9,10 +11,13 @@ import { Router } from '@angular/router';
 })
 export class ListaComponent implements OnInit {
   dadosFormulario: any[] = [];
+  dadosCopia: any[] = [];
   dadoSelecionado?: any;
+  placaPesquisada: string = '';
+  private placasPesquisadas = new Subject<string>();
 
   constructor(private dadosService: DadosService, private router: Router) {
-
+    this.placasPesquisadas.pipe(debounceTime(300)).subscribe(() => this.filtrarPlacas());
   }
 
 
@@ -26,6 +31,7 @@ export class ListaComponent implements OnInit {
       error: (erro: any) => console.log(erro),
       complete: () => console.log('completo')
     });
+    this.dadosCopia = this.dadosFormulario;
   }
 
   deletarDados(matricula: number): void {
@@ -42,5 +48,21 @@ export class ListaComponent implements OnInit {
 
   editarDados(matricula: any) {
     this.router.navigate([`/editar/${matricula}`]);
+  }
+
+  filtrarPlacas() {
+    if (this.placaPesquisada) {
+      this.placaPesquisada = this.placaPesquisada.toUpperCase();
+
+      this.dadosFormulario = this.dadosFormulario.filter((dados) => {
+        return dados.Placa.toUpperCase().includes(this.placaPesquisada.toUpperCase());
+      });
+    } else {
+      this.dadosFormulario = this.dadosCopia;
+    }
+  }
+
+  onSearchInput() {
+    this.placasPesquisadas.next(this.placaPesquisada);
   }
 }
