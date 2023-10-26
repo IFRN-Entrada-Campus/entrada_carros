@@ -84,14 +84,15 @@ router.post('/carro', function(req, res) {
     const modeloCarro = req.body.modeloCarro;
     const anoCarro = req.body.anoCarro;
     const codigoEtiqueta = req.body.codigoEtiqueta;
+    const validadeEtiqueta = req.body.validadeEtiqueta;
     const validaCnh = req.body.validaCnh;
     const matriculaRel = req.body.matriculaRel;
     const placaCarro = req.body.placaCarro;
 
-    const sql = `INSERT INTO carro (marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validaCnh, matriculaRel, placaCarro) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO carro (marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validadeEtiqueta, validaCnh, matriculaRel, placaCarro) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
     con.query(
         sql,
-        [marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validaCnh, matriculaRel, placaCarro],
+        [marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validadeEtiqueta, validaCnh, matriculaRel, placaCarro],
         function(erroComandoSQL, result, fields) {
             if (erroComandoSQL) {
                 throw erroComandoSQL;
@@ -134,6 +135,7 @@ router.put('/carro/:idCarro', function(req, res) {
     const modeloCarro = req.body.modeloCarro;
     const anoCarro = req.body.anoCarro;
     const codigoEtiqueta = req.body.codigoEtiqueta;
+    const validadeEtiqueta = req.body.validadeEtiqueta;
     const validaCnh = req.body.validaCnh;
     const matriculaRel = req.body.matriculaRel;
     const placaCarro = req.body.placaCarro;
@@ -143,13 +145,14 @@ router.put('/carro/:idCarro', function(req, res) {
     modeloCarro = ?,
     anoCarro = ?,
     codigoEtiqueta = ?,
+    validadeEtiqueta = ?,
     validaCnh = ?,
     matriculaRel = ?,
     placaCarro = ?
     WHERE idCarro = ?`;
     con.query(
         sql,
-        [marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validaCnh, matriculaRel, placaCarro, idCarro],
+        [marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validadeEtiqueta, validaCnh, matriculaRel, placaCarro, idCarro],
         function(erroComandoSQL, result, fields) {
             if (erroComandoSQL) {
                 throw erroComandoSQL;
