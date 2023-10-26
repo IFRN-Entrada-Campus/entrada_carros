@@ -36,7 +36,7 @@ module.exports = {
       FOR EACH ROW
       BEGIN
         INSERT INTO logs (operacao, usuario, dataoperacao, detalhe)
-        VALUES ('INSERT', 'root@localhost', NOW(), CONCAT('Registro inserido: idCarro=', NEW.idCarro, ', marcaCarro=', NEW.marcaCarro, ', modeloCarro=', NEW.modeloCarro, ', anoCarro=', NEW.anoCarro, ', validaCnh=', NEW.validaCnh, ', codigoEtiqueta=', NEW.codigoEtiqueta, ', matriculaRel=', NEW.matriculaRel, '. Tabela carro'));
+        VALUES ('INSERT', 'root@localhost', NOW(), CONCAT('Registro inserido: idCarro=', NEW.idCarro, ', marcaCarro=', NEW.marcaCarro, ', modeloCarro=', NEW.modeloCarro, ', anoCarro=', NEW.anoCarro, ', validaCnh=', NEW.validaCnh, ', codigoEtiqueta=', NEW.codigoEtiqueta, ', validadeEtiqueta=', NEW.validadeEtiqueta, ', matriculaRel=', NEW.matriculaRel, '. Tabela carro'));
       END
     `);
 
@@ -45,7 +45,7 @@ module.exports = {
       FOR EACH ROW
       BEGIN
         INSERT INTO logs (operacao, usuario, dataoperacao, detalhe)
-        VALUES ('UPDATE', 'root@localhost', NOW(), CONCAT('Registro afetado: idCarro=', OLD.idCarro, ', marcaCarro=', OLD.marcaCarro, ', modeloCarro=', OLD.modeloCarro, ', anoCarro=', OLD.anoCarro, ', validaCnh=', OLD.validaCnh, ', codigoEtiqueta=', OLD.codigoEtiqueta, ', matriculaRel=', OLD.matriculaRel, ' -> idCarro=', NEW.idCarro, ', marcaCarro=', NEW.marcaCarro, ', modeloCarro=', NEW.modeloCarro, ', anoCarro=', NEW.anoCarro, ', validaCnh=', NEW.validaCnh, ', codigoEtiqueta=', NEW.codigoEtiqueta, ', matriculaRel=', NEW.matriculaRel, '. Tabela carro'));
+        VALUES ('UPDATE', 'root@localhost', NOW(), CONCAT('Registro afetado: idCarro=', OLD.idCarro, ', marcaCarro=', OLD.marcaCarro, ', modeloCarro=', OLD.modeloCarro, ', anoCarro=', OLD.anoCarro, ', validaCnh=', OLD.validaCnh, ', codigoEtiqueta=', OLD.codigoEtiqueta, ', validadeEtiqueta=', OLD.validadeEtiqueta, ', matriculaRel=', OLD.matriculaRel, ' -> idCarro=', NEW.idCarro, ', marcaCarro=', NEW.marcaCarro, ', modeloCarro=', NEW.modeloCarro, ', anoCarro=', NEW.anoCarro, ', validaCnh=', NEW.validaCnh, ', codigoEtiqueta=', NEW.codigoEtiqueta, ', validadeEtiqueta=', NEW.validadeEtiqueta, ', matriculaRel=', NEW.matriculaRel, '. Tabela carro'));
       END
     `);
 
@@ -54,7 +54,7 @@ module.exports = {
       FOR EACH ROW
       BEGIN
         INSERT INTO logs (operacao, usuario, dataoperacao, detalhe)
-        VALUES ('DELETE', 'root@localhost', NOW(), CONCAT('Registro deletado: idCarro=', OLD.idCarro, ', marcaCarro=', OLD.marcaCarro, ', modeloCarro=', OLD.modeloCarro, ', anoCarro=', OLD.anoCarro, ', validaCnh=', OLD.validaCnh, ', codigoEtiqueta=', OLD.codigoEtiqueta, ', matriculaRel=', OLD.matriculaRel, '. Tabela carro'));
+        VALUES ('DELETE', 'root@localhost', NOW(), CONCAT('Registro deletado: idCarro=', OLD.idCarro, ', marcaCarro=', OLD.marcaCarro, ', modeloCarro=', OLD.modeloCarro, ', anoCarro=', OLD.anoCarro, ', validaCnh=', OLD.validaCnh, ', codigoEtiqueta=', OLD.codigoEtiqueta, ', validadeEtiqueta=', OLD.validadeEtiqueta, ', matriculaRel=', OLD.matriculaRel, '. Tabela carro'));
       END
     `);
 

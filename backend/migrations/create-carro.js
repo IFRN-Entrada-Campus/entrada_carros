@@ -29,6 +29,10 @@ module.exports = {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
+      validadeEtiqueta: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
       matriculaRel: {
         type: Sequelize.BIGINT,
         allowNull: false,

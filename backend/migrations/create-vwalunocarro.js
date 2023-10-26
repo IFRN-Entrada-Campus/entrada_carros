@@ -2,7 +2,6 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    // A migração para criar a view não precisa de comandos para criar ou excluir a tabela, apenas para criar a view.
     await queryInterface.sequelize.query(`
       CREATE VIEW vwalunocarro AS
       SELECT
@@ -13,14 +12,14 @@ module.exports = {
         a.matriculaAluno AS Matricula,
         c.codigoEtiqueta,
         c.validaCnh AS CNHvalida,
-        c.placaCarro AS Placa
+        c.placaCarro AS Placa,
+        c.validadeEtiqueta
       FROM carro c
       JOIN aluno a ON a.matriculaAluno = c.matriculaRel;
     `);
   },
 
   down: async (queryInterface, Sequelize) => {
-    // Para a view, é suficiente remover a view.
     await queryInterface.sequelize.query('DROP VIEW vwalunocarro;');
   },
 };

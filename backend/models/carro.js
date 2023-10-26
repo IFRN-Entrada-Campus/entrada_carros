@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(50),
         allowNull: false,
       },
+      validadeEtiqueta: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
       matriculaRel: {
         type: DataTypes.BIGINT,
         allowNull: false,
