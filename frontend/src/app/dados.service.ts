@@ -35,6 +35,7 @@ export class DadosService {
           modeloCarro: dado.modeloCarro,
           anoCarro: dado.anoCarro,
           codigoEtiqueta: dado.codigoEtiqueta,
+          validadeEtiqueta: dado.validadeEtiqueta,
           validaCnh: dado.CNHvalida,
           matriculaRel: dado.matriculaAluno,
           placaCarro: dado.placaCarro};
@@ -58,6 +59,7 @@ export class DadosService {
           modeloCarro: dado.modeloCarro,
           anoCarro: dado.anoCarro,
           codigoEtiqueta: dado.codigoEtiqueta,
+          validadeEtiqueta: dado.validadeEtiqueta,
           validaCnh: dado.CNHvalida,
           matriculaRel: dado.matriculaAluno,
           placaCarro: dado.placaCarro};

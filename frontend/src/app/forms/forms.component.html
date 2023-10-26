@@ -15,7 +15,8 @@
     </tr>
     <tr>
         <td><label htmlFor="ano">Ano do carro: </label></td>
-        <td><p-inputNumber class="p-inputtext-sm" id="ano" [(ngModel)]="dado.anoCarro" [useGrouping]="false"></p-inputNumber></td>
+        <td><p-inputNumber class="p-inputtext-sm" id="ano" [(ngModel)]="dado.anoCarro"
+                [useGrouping]="false"></p-inputNumber></td>
     </tr>
     <tr>
         <td><label htmlFor="nome">Nome completo do aluno: </label></td>
@@ -23,20 +24,26 @@
     </tr>
     <tr>
         <td><label htmlFor="matricula">Matrícula: </label></td>
-        <td><p-inputNumber class="p-inputtext-sm" id="matricula" [(ngModel)]="dado.matriculaAluno" [useGrouping]="false"></p-inputNumber></td>
+        <td><p-inputNumber class="p-inputtext-sm" id="matricula" [(ngModel)]="dado.matriculaAluno"
+                [useGrouping]="false"></p-inputNumber></td>
     </tr>
     <tr>
         <td><label htmlFor="codigo">Código da etiqueta: </label></td>
         <td><input pInputText class="p-inputtext-sm" id="codigo" [(ngModel)]="dado.codigoEtiqueta"></td>
     </tr>
     <tr>
-        <td><label htmlFor="cnh">CNH é válida?</label></td>
-        <td><p-checkbox [(ngModel)]="dado.CNHvalida" [binary]="true" inputId="cnh"></p-checkbox></td>
+        <td><label htmlFor="validade">Validade da etiqueta: </label></td>
+        <td><p-calendar id="validade" [(ngModel)]="dado.validadeEtiqueta" [showIcon]="true" [showTime]="true"
+                dateFormat="yy-mm-dd"></p-calendar></td>
+    </tr>
+    <tr>
+    <td><label htmlFor="cnh">CNH é válida?</label></td>
+    <td><p-checkbox [(ngModel)]="dado.CNHvalida" [binary]="true" inputId="cnh"></p-checkbox></td>
     </tr>
     <br>
     <tr>
         <td>
-            <p-button styleClass="p-button-text" (click)="addDados()" label="Enviar"></p-button> 
+            <p-button styleClass="p-button-text" (click)="addDados()" label="Enviar"></p-button>
         </td>
     </tr>
 </table>

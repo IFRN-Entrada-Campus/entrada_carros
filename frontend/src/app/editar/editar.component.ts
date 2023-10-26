@@ -11,7 +11,7 @@ import { Validators } from '@angular/forms';
 })
 export class EditarComponent implements OnInit {
 
-  dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', CNHvalida: '', placaCarro: '' };
+  dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
   formInvalid = false;
 
   constructor(
@@ -34,6 +34,7 @@ export class EditarComponent implements OnInit {
             this.dado.anoCarro = retorno[0].Ano;
             this.dado.aluno = retorno[0].Aluno;
             this.dado.codigoEtiqueta = retorno[0].codigoEtiqueta;
+            this.dado.validadeEtiqueta = retorno[0].validadeEtiqueta;
             this.dado.CNHvalida = retorno[0].CNHvalida;
             if (this.dado.CNHvalida = 1) {
               this.dado.CNHvalida = true
@@ -54,7 +55,9 @@ export class EditarComponent implements OnInit {
       this.dado.modeloCarro != '' &&
       this.dado.placaCarro != '' &&
       this.dado.anoCarro != null && 0 &&
-      this.dado.aluno != ''
+      this.dado.aluno != '' &&
+      this.dado.codigoEtiqueta != '' &&
+      this.dado.validadeEtiqueta != null 
     ) {
       this.dadosServico.editarDados(this.dado).subscribe({
         error: (erro: any) => console.log(erro)

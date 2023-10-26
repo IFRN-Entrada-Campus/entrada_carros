@@ -11,7 +11,7 @@ import { Validators } from '@angular/forms';
 })
 
 export class FormsComponent implements OnInit {
-  dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', CNHvalida: '', placaCarro: '' };
+  dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
   matriculas: any[] = [];
   formInvalid = false;
 
@@ -24,7 +24,7 @@ export class FormsComponent implements OnInit {
       next: (resultado: any) => (this.matriculas = resultado),
       error: (erro: any) => console.log(erro)
     });
-    this.dado = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', CNHvalida: '', placaCarro: '' };
+    this.dado = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
     this.formInvalid = false;
   }
 
@@ -35,7 +35,9 @@ export class FormsComponent implements OnInit {
       this.dado.placaCarro != '' &&
       this.dado.anoCarro != null && 0 &&
       this.dado.aluno != '' &&
-      this.dado.matriculaAluno != null && 0
+      this.dado.matriculaAluno != null && 0 &&
+      this.dado.codigoEtiqueta != '' &&
+      this.dado.validadeEtiqueta != null
     ) {
       this.dadosService.addDados(this.dado).subscribe({
         error: (erro: any) => console.log(erro)
@@ -43,6 +45,7 @@ export class FormsComponent implements OnInit {
       this.router.navigate(['/lista']);
     } else {
       this.formInvalid = true;
+      console.log(this.dado);
     }
   }
 }

@@ -4,12 +4,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MqttModule } from 'ngx-mqtt';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { ListaComponent } from './lista/lista.component';
 import { FormsComponent } from './forms/forms.component';
 import { DadosService } from './dados.service';
 import { MqttComponent } from './mqtt/mqtt.component';
+import { LoginComponent } from './login/login.component';
+import { EditarComponent } from './editar/editar.component';
 
 /* Imports do primeng  */
 import { InputTextModule } from 'primeng/inputtext';
@@ -18,8 +21,7 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { HttpClientModule } from '@angular/common/http';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { LoginComponent } from './login/login.component';
-import { EditarComponent } from './editar/editar.component';
+import { CalendarModule } from 'primeng/calendar';
 
 
 
@@ -48,6 +50,8 @@ import { EditarComponent } from './editar/editar.component';
       port: 8883,
       protocol: 'wss'
     }),
+    CalendarModule,
+    BrowserAnimationsModule
   ],
   providers: [DadosService],
   bootstrap: [AppComponent]

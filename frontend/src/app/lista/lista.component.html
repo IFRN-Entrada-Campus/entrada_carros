@@ -15,6 +15,7 @@
             <th pSortableColumn="Aluno">Nome do aluno/servidor <p-sortIcon field="Aluno"></p-sortIcon></th>
             <th pSortableColumn="Matricula">Matrícula <p-sortIcon field="Matricula"></p-sortIcon></th>
             <th pSortableColumn="codigoEtiqueta">Código da etiqueta <p-sortIcon field="codigoEtiqueta"></p-sortIcon></th>
+            <th pSortableColumn="validadeEtiqueta">Validade da etiqueta <p-sortIcon field="validadeEtiqueta"></p-sortIcon></th>
             <th pSortableColumn="CNHvalida">CNH válida <p-sortIcon field="CNHvalida"></p-sortIcon></th>
             <th></th>
             <th></th>
@@ -29,6 +30,7 @@
             <td> {{ dados.Aluno }} </td>
             <td> {{ dados.Matricula }} </td>
             <td> {{ dados.codigoEtiqueta }} </td>
+            <td> {{ dados.validadeEtiqueta }} </td>
             <td> {{ dados.CNHvalida }} </td>
             <td>
                 <p-button (click)="editarDados(dados.Matricula)" label="Editar" styleClass="p-button-link"></p-button>
