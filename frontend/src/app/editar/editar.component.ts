@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DadosService } from '../dados.service';
 import { Dados } from '../dados';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-editar',
@@ -10,15 +11,17 @@ import { Dados } from '../dados';
 })
 export class EditarComponent implements OnInit {
 
-  dado: Dados = {modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', CNHvalida: '', placaCarro: ''};
+  dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', CNHvalida: '', placaCarro: '' };
+  formInvalid = false;
 
   constructor(
     private activaRoute: ActivatedRoute,
     private dadosServico: DadosService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    this.formInvalid = false;
     this.activaRoute.paramMap.subscribe({
       next: (rota: any) => {
         this.dado.matriculaAluno = rota.params.matricula;
@@ -38,7 +41,7 @@ export class EditarComponent implements OnInit {
               this.dado.CNHvalida = false
             }
           },
-          
+
           error: (erro: any) => console.log(erro)
         });
       },
@@ -46,9 +49,19 @@ export class EditarComponent implements OnInit {
   }
 
   editarDados() {
-    this.dadosServico.editarDados(this.dado).subscribe({
-      error: (erro: any) => console.log(erro)
-    });
-    this.router.navigate(['/lista']);
-  }  
+    if (
+      this.dado.marcaCarro != '' &&
+      this.dado.modeloCarro != '' &&
+      this.dado.placaCarro != '' &&
+      this.dado.anoCarro != null && 0 &&
+      this.dado.aluno != ''
+    ) {
+      this.dadosServico.editarDados(this.dado).subscribe({
+        error: (erro: any) => console.log(erro)
+      });
+      this.router.navigate(['/lista']);
+    } else {
+      this.formInvalid = true;
+    }
+  }
 }

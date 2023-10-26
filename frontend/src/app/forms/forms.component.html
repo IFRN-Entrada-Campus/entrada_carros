@@ -1,16 +1,17 @@
 <h1>Cadastro de dados</h1>
+<p *ngIf="formInvalid" class="error-message">O formulário contém erros. Verifique os campos obrigatórios.</p>
 <table class="forms">
     <tr>
         <td><label htmlFor="marca">Marca do carro: </label></td>
-        <td><input pInputText class="p-inputtext-sm" id="marca" [(ngModel)]="dado.marcaCarro"></td>
+        <td><input pInputText class="p-inputtext-sm" id="marca" [(ngModel)]="dado.marcaCarro" required></td>
     </tr>
     <tr>
         <td><label htmlFor="modelo">Modelo do carro: </label></td>
-        <td><input pInputText class="p-inputtext-sm" id="modelo" [(ngModel)]="dado.modeloCarro"></td>
+        <td><input pInputText class="p-inputtext-sm" id="modelo" [(ngModel)]="dado.modeloCarro" required></td>
     </tr>
     <tr>
         <td><label htmlFor="placa">Placa do carro: </label></td>
-        <td><input pInputText class="p-inputtext-sm" id="placa" [(ngModel)]="dado.placaCarro"></td>
+        <td><input pInputText class="p-inputtext-sm" id="placa" [(ngModel)]="dado.placaCarro" required></td>
     </tr>
     <tr>
         <td><label htmlFor="ano">Ano do carro: </label></td>
@@ -18,11 +19,11 @@
     </tr>
     <tr>
         <td><label htmlFor="nome">Nome completo do aluno: </label></td>
-        <td><input pInputText class="p-inputtext-sm" id="nome" [(ngModel)]="dado.aluno"></td>
+        <td><input pInputText class="p-inputtext-sm" id="nome" [(ngModel)]="dado.aluno" required></td>
     </tr>
     <tr>
         <td><label htmlFor="matricula">Matrícula: </label></td>
-        <td><p-inputNumber class="p-inputtext-sm" id="ano" [(ngModel)]="dado.matriculaAluno" [useGrouping]="false"></p-inputNumber></td>
+        <td><p-inputNumber class="p-inputtext-sm" id="matricula" [(ngModel)]="dado.matriculaAluno" [useGrouping]="false"></p-inputNumber></td>
     </tr>
     <tr>
         <td><label htmlFor="codigo">Código da etiqueta: </label></td>
