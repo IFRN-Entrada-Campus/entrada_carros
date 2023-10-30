@@ -11,13 +11,13 @@ import { debounceTime } from 'rxjs';
 })
 export class ListaComponent implements OnInit {
   dadosFormulario: any[] = [];
-  dadosCopia: any[] = [];
   dadoSelecionado?: any;
   placaPesquisada: string = '';
   private placasPesquisadas = new Subject<string>();
+  dadosCopia: any[] = [];
 
   constructor(private dadosService: DadosService, private router: Router) {
-    this.placasPesquisadas.pipe(debounceTime(300)).subscribe(() => this.filtrarPlacas());
+    this.placasPesquisadas.pipe(debounceTime(600)).subscribe(() => this.filtrarPlacas());
   }
 
 
@@ -31,7 +31,11 @@ export class ListaComponent implements OnInit {
       error: (erro: any) => console.log(erro),
       complete: () => console.log('completo')
     });
-    this.dadosCopia = this.dadosFormulario;
+    this.dadosService.getDados().subscribe({
+      next: (resultado: any) => { (this.dadosCopia = resultado), console.log(resultado) },
+      error: (erro: any) => console.log(erro),
+      complete: () => console.log('completo')
+    });
   }
 
   deletarDados(matricula: number): void {
@@ -58,7 +62,7 @@ export class ListaComponent implements OnInit {
         return dados.Placa.toUpperCase().includes(this.placaPesquisada.toUpperCase());
       });
     } else {
-      this.dadosFormulario = this.dadosCopia;
+      this.dadosFormulario = [...this.dadosCopia];
     }
   }
 
