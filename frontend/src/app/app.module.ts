@@ -22,7 +22,7 @@ import { ButtonModule } from 'primeng/button';
 import { HttpClientModule } from '@angular/common/http';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
-
+import { PasswordModule } from 'primeng/password';
 
 
 @NgModule({
@@ -51,7 +51,8 @@ import { CalendarModule } from 'primeng/calendar';
       protocol: 'wss'
     }),
     CalendarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    PasswordModule,
   ],
   providers: [DadosService],
   bootstrap: [AppComponent]

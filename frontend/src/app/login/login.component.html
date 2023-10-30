@@ -4,11 +4,11 @@
     <table class="forms">
         <tr>
             <td><label htmlFor="usuario">Usuario:</label></td>
-            <td><input pInputText class="p-inputtext-sm" type="text" id="usuario" [(ngModel)]="usuario"></td>
+            <td><input pInputText styleClass="p-inputtext-sm" type="text" id="usuario" [(ngModel)]="usuario"></td>
         </tr>
         <tr>
             <td><label htmlFor="senha">Senha:</label></td>
-            <td><input pInputText class="p-inputtext-sm" type="password" id="senha" [(ngModel)]="senha"></td>
+            <td><p-password styleClass="p-inputtext-sm" id="senha" [(ngModel)]="senha" [toggleMask]="true" [feedback]="false"></p-password></td>
         </tr>
         <br>
         <td>
