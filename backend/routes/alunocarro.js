@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('mysql2');
+const jwt = require('jsonwebtoken');
+const config = require('./config');
 
 var con = mysql.createConnection({
     host: 'db',
@@ -15,7 +17,25 @@ con.connect(function(erroConexao) {
     }
 });
 
-router.get('/', function(req, res) {
+function verificarToken(req, res, next) {
+    const token = req.headers['x-access-token'];
+    if (!token) {
+      res.status(401).json({
+        auth: false,
+        message: 'Nenhum token de autenticação informado.',
+      });
+    } else {
+      jwt.verify(token, config.jwtSegredo, function (err, decoded) {
+        if (err) {
+          res.status(500).json({ auth: false, message: 'Token inválido.' });
+        } else {
+          next();
+        }
+      });
+    }
+  }
+
+router.get('/', verificarToken, function(req, res) {
     con.query('SELECT * FROM vwalunocarro', function(erroComandoSQL, result, fields) {
         if (erroComandoSQL) {
             throw erroComandoSQL;
@@ -24,7 +44,7 @@ router.get('/', function(req, res) {
     });
 });
 
-router.get('/:Matricula', function(req, res) {
+router.get('/:Matricula', verificarToken, function(req, res) {
     const Matricula = req.params.Matricula
     con.query('SELECT * FROM vwalunocarro WHERE Matricula = ?', [Matricula], function(erroComandoSQL, result, fields) {
         if (erroComandoSQL) {
@@ -34,7 +54,7 @@ router.get('/:Matricula', function(req, res) {
     });
 });
 
-router.get('/matricula', function(req, res) {
+router.get('/matricula', verificarToken, function(req, res) {
     con.query('SELECT Matricula FROM vwalunocarro', function(erroComandoSQL, result, fields) {
         if (erroComandoSQL) {
             throw erroComandoSQL;
@@ -43,7 +63,7 @@ router.get('/matricula', function(req, res) {
     });
 });
 
-router.get('/carro/:matriculaRel', function(req, res) {
+router.get('/carro/:matriculaRel', verificarToken, function(req, res) {
     const matriculaRel = req.params.matriculaRel;
 
     const sql = `SELECT idCarro FROM carro WHERE matriculaRel = ?`
@@ -56,7 +76,7 @@ router.get('/carro/:matriculaRel', function(req, res) {
     });
 });
 
-router.post('/aluno', function(req, res) {
+router.post('/aluno', verificarToken, function(req, res) {
     const noAluno = req.body.noAluno;
     const matriculaAluno = req.body.matriculaAluno;
 
@@ -79,7 +99,7 @@ router.post('/aluno', function(req, res) {
     );
 });
 
-router.post('/carro', function(req, res) {
+router.post('/carro', verificarToken, function(req, res) {
     const marcaCarro = req.body.marcaCarro;
     const modeloCarro = req.body.modeloCarro;
     const anoCarro = req.body.anoCarro;
@@ -107,7 +127,7 @@ router.post('/carro', function(req, res) {
     );
 });
 
-router.put('/aluno/:matriculaAluno', function(req, res) {
+router.put('/aluno/:matriculaAluno', verificarToken, function(req, res) {
     const noAluno = req.body.noAluno;
     const matriculaAluno = req.body.matriculaAluno;
 
@@ -129,7 +149,7 @@ router.put('/aluno/:matriculaAluno', function(req, res) {
     );
 });
 
-router.put('/carro/:idCarro', function(req, res) {
+router.put('/carro/:idCarro', verificarToken, function(req, res) {
     const idCarro = req.params.idCarro;
     const marcaCarro = req.body.marcaCarro;
     const modeloCarro = req.body.modeloCarro;
@@ -167,7 +187,7 @@ router.put('/carro/:idCarro', function(req, res) {
     );
 });
 
-router.delete('/aluno/:matriculaAluno', function(req, res) {
+router.delete('/aluno/:matriculaAluno', verificarToken, function(req, res) {
     const matriculaAluno = req.params.matriculaAluno;
 
     const sql = `DELETE FROM aluno WHERE matriculaAluno = ?`;
@@ -188,7 +208,7 @@ router.delete('/aluno/:matriculaAluno', function(req, res) {
     );
 });
 
-router.delete('/carro/:idCarro', function(req, res) {
+router.delete('/carro/:idCarro', verificarToken, function(req, res) {
     const idCarro = req.params.idCarro;
 
     const sql = `DELETE FROM carro WHERE idCarro = ?`;
