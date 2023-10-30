@@ -3,6 +3,7 @@ import { DadosService } from '../dados.service';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime } from 'rxjs';
+import { Dados } from '../dados';
 
 @Component({
   selector: 'app-lista',
@@ -17,7 +18,7 @@ export class ListaComponent implements OnInit {
   dadosCopia: any[] = [];
 
   constructor(private dadosService: DadosService, private router: Router) {
-    this.placasPesquisadas.pipe(debounceTime(600)).subscribe(() => this.filtrarPlacas());
+    this.placasPesquisadas.pipe(debounceTime(100)).subscribe(() => this.filtrarPlacas());
   }
 
 
@@ -25,14 +26,23 @@ export class ListaComponent implements OnInit {
     this.onListar();
   }
 
+  formatarData(data: string): string {
+    const dataFormatada = new Date(data);
+    return dataFormatada.toLocaleDateString('pt-BR');
+  }
+
   onListar(): void {
     this.dadosService.getDados().subscribe({
-      next: (resultado: any) => { (this.dadosFormulario = resultado), console.log(resultado) },
+      next: (resultado: any) => { (this.dadosFormulario = resultado.map((item: any) => {
+        return {...item, validadeEtiqueta: this.formatarData(item.validadeEtiqueta) };
+      })), console.log(resultado) },
       error: (erro: any) => console.log(erro),
       complete: () => console.log('completo')
     });
     this.dadosService.getDados().subscribe({
-      next: (resultado: any) => { (this.dadosCopia = resultado), console.log(resultado) },
+      next: (resultado: any) => { (this.dadosCopia = resultado.map((item: any) => {
+        return {...item, validadeEtiqueta: this.formatarData(item.validadeEtiqueta) };
+      })), console.log(resultado) },
       error: (erro: any) => console.log(erro),
       complete: () => console.log('completo')
     });
