@@ -30,5 +30,11 @@ app.use('/', indexRouter);
 app.use('/alunocarro', alunocarroRouter);
 app.use('/login', loginRouter);
 app.use('/placa', placaRouter);
+app.use((req, res, next) => {
+  req.priority = req.method === 'POST' ? 1:0
+
+  req.queue = [];
+  req.queue.push(next);
+});
 const sequelize = new Sequelize(dbConfig);
 module.exports = app, sequelize;
