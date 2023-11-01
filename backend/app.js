@@ -14,7 +14,10 @@ var placaRouter = require('./routes/placa');
 
 var app = express();
 
-app.use(cors())
+app.use(cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"]
+  }));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -23,15 +26,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*")
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-    next()
-  })
-
 app.use('/', indexRouter);
 app.use('/alunocarro', alunocarroRouter);
 app.use('/login', loginRouter);
 app.use('/placa', placaRouter);
+app.use((req, res, next) => {
+  req.priority = req.method === 'POST' ? 1:0
+
+  req.queue = [];
+  req.queue.push(next);
+});
 const sequelize = new Sequelize(dbConfig);
 module.exports = app, sequelize;
