@@ -28,12 +28,23 @@ export class FormsComponent implements OnInit {
     this.formInvalid = false;
   }
 
+
+  validatePlacaCarro(placa: string): boolean {
+    const placaRegex = /^[A-Z]{3}\d[A-Z]\d{2}$/;
+    return placaRegex.test(placa);
+  }
+
+  validateAnoCarro(ano: number): boolean {
+    const anoAtual = new Date().getFullYear();
+    return ano >= 1900 && ano <= anoAtual;
+  }
+  
   addDados(): void {
     if (
       this.dado.marcaCarro != '' &&
       this.dado.modeloCarro != '' &&
-      this.dado.placaCarro != '' &&
-      this.dado.anoCarro != 0 &&
+      this.validatePlacaCarro(this.dado.placaCarro) &&
+      this.validateAnoCarro(this.dado.anoCarro) &&
       this.dado.aluno != '' &&
       this.dado.matriculaAluno != 0 &&
       this.dado.codigoEtiqueta != ''
