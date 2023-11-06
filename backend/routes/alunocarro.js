@@ -79,6 +79,7 @@ router.get('/carro/:matriculaRel', verificarToken, function(req, res) {
 router.post('/aluno', verificarToken, function(req, res) {
     const noAluno = req.body.noAluno;
     const matriculaAluno = req.body.matriculaAluno;
+    console.log(`POST aluno: ${matriculaAluno}`);
 
     const sql = `INSERT INTO aluno (noAluno, matriculaAluno) VALUES (?, ?)`;
     con.query(
@@ -90,9 +91,9 @@ router.post('/aluno', verificarToken, function(req, res) {
             }
 
             if (result.affectedRows > 0) {
-                res.status(200).send('Registro incluído com sucesso');
+                res.status(200).send({message: 'Registro incluído com sucesso'});
             } else {
-                res.status(400).send('Erro ao incluir registro');
+                res.status(400).send({message: 'Erro ao incluir registro'});
             }
             
         }
@@ -108,6 +109,7 @@ router.post('/carro', verificarToken, function(req, res) {
     const validaCnh = req.body.validaCnh;
     const matriculaRel = req.body.matriculaRel;
     const placaCarro = req.body.placaCarro;
+    console.log(`POST carro de ${matriculaRel}`);
 
     const sql = `INSERT INTO carro (marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validadeEtiqueta, validaCnh, matriculaRel, placaCarro) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
     con.query(
@@ -119,9 +121,9 @@ router.post('/carro', verificarToken, function(req, res) {
             }
 
             if (result.affectedRows > 0) {
-                res.status(200).send('Registro incluído com sucesso');
+                res.status(200).send({message: 'Registro incluído com sucesso'});
             } else {
-                res.status(400).send('Erro ao incluir registro');
+                res.status(400).send({message: 'Erro ao incluir registro'});
             }
         }
     );
@@ -130,6 +132,7 @@ router.post('/carro', verificarToken, function(req, res) {
 router.put('/aluno/:matriculaAluno', verificarToken, function(req, res) {
     const noAluno = req.body.noAluno;
     const matriculaAluno = req.body.matriculaAluno;
+    console.log(`PUT aluno: ${matriculaAluno}`);
 
     const sql = `UPDATE aluno SET noAluno = ?, matriculaAluno = ? WHERE matriculaAluno = ?`;
     con.query(
@@ -141,9 +144,9 @@ router.put('/aluno/:matriculaAluno', verificarToken, function(req, res) {
             }
 
             if (result.affectedRows > 0) {
-                res.status(200).send('Registro alterado com sucesso');
+                res.status(200).send({message: 'Registro alterado com sucesso'});
             } else {
-                res.status(404).send('Registro não encontrado');
+                res.status(404).send({message: 'Registro não encontrado'});
             }
         }
     );
@@ -159,6 +162,7 @@ router.put('/carro/:idCarro', verificarToken, function(req, res) {
     const validaCnh = req.body.validaCnh;
     const matriculaRel = req.body.matriculaRel;
     const placaCarro = req.body.placaCarro;
+    console.log(`PUT carro: ${idCarro}`);
 
     const sql = `UPDATE carro 
     SET marcaCarro = ?,
@@ -179,9 +183,9 @@ router.put('/carro/:idCarro', verificarToken, function(req, res) {
             }
 
             if (result.affectedRows > 0) {
-                res.status(200).send('Registro alterado com sucesso');
+                res.status(200).send({message: 'Registro alterado com sucesso'});
             } else {
-                res.status(404).send('Registro não encontrado');
+                res.status(404).send({message: 'Registro não encontrado'});
             }
         }
     );
@@ -189,6 +193,7 @@ router.put('/carro/:idCarro', verificarToken, function(req, res) {
 
 router.delete('/aluno/:matriculaAluno', verificarToken, function(req, res) {
     const matriculaAluno = req.params.matriculaAluno;
+    console.log(`DELETE aluno: ${matriculaAluno}`);
 
     const sql = `DELETE FROM aluno WHERE matriculaAluno = ?`;
     con.query(
@@ -200,9 +205,9 @@ router.delete('/aluno/:matriculaAluno', verificarToken, function(req, res) {
             }
 
             if (result.affectedRows > 0) {
-                res.status(200).send('Registro excluído com sucesso');
+                res.status(200).send({message: 'Registro excluído com sucesso'});
             } else {
-                res.status(404).send('Não encontrado');
+                res.status(404).send({message: 'Não encontrado'});
             }
         }
     );
@@ -210,6 +215,7 @@ router.delete('/aluno/:matriculaAluno', verificarToken, function(req, res) {
 
 router.delete('/carro/:idCarro', verificarToken, function(req, res) {
     const idCarro = req.params.idCarro;
+    console.log(`DELETE carro: ${idCarro}`);
 
     const sql = `DELETE FROM carro WHERE idCarro = ?`;
     con.query(
@@ -221,9 +227,9 @@ router.delete('/carro/:idCarro', verificarToken, function(req, res) {
             }
 
             if (result.affectedRows > 0) {
-                res.status(200).send('Registro excluído com sucesso');
+                res.status(200).send({message: 'Registro excluído com sucesso'});
             } else {
-                res.status(404).send('Não encontrado');
+                res.status(404).send({message: 'Não encontrado'});
             }
         }
     );

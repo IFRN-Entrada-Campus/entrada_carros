@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Dados } from './dados';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, switchMap, forkJoin } from 'rxjs';
+import { Observable, switchMap, merge } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +45,7 @@ export class DadosService {
           placaCarro: dado.placaCarro};
         let addAluno = this.http.post('http://localhost:3000/alunocarro/aluno', reqAluno, {headers: this.headers});
         let addCarro = this.http.post('http://localhost:3000/alunocarro/carro', reqCarro, {headers: this.headers});
-        return forkJoin(addAluno, addCarro);
+        return merge(addAluno, addCarro);
   }
 
   editarDados(dado: Dados): Observable<any> {
@@ -70,7 +70,7 @@ export class DadosService {
           placaCarro: dado.placaCarro};
         let putAluno = this.http.put(`http://localhost:3000/alunocarro/aluno/${dado.matriculaAluno}`, reqAluno, {headers: this.headers});
         let putCarro = this.http.put(`http://localhost:3000/alunocarro/carro/${idcarro}`, reqCarro, {headers: this.headers});
-        return forkJoin(putAluno, putCarro)
+        return merge(putAluno, putCarro)
       })
     )
         
@@ -82,7 +82,7 @@ export class DadosService {
         let idcarro = resultado.id;
         let deleteCarro = this.http.delete(`http://localhost:3000/alunocarro/carro/${idcarro}`, {headers: this.headers});
         let deleteAluno = this.http.delete(`http://localhost:3000/alunocarro/aluno/${matricula}`, {headers: this.headers});
-        return forkJoin(deleteCarro, deleteAluno);
+        return merge(deleteCarro, deleteAluno);
       })
     );
   }
