@@ -71,13 +71,7 @@ services:
     networks:
       - my-networks
     command: sh -c "sleep 30 && npx sequelize-cli db:migrate && npx sequelize db:seed:all"
-
-  restarter:
-    image: docker:cli
-    volumes: ["/var/run/docker.sock:/var/run/docker.sock"]
-    command: ["/bin/sh", "-c", "while true; do sleep 3600000; docker restart entrada_carros-backend-1; done"]
-    restart: always
-
+    
 volumes:
   mysql-data:
 networks:
