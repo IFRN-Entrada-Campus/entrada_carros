@@ -48,8 +48,8 @@ export class ListaComponent implements OnInit {
     });
   }
 
-  deletarDados(matricula: number): void {
-    this.dadosService.deletarDados(matricula).subscribe({})
+  deletarDados(placa: any): void {
+    this.dadosService.deletarDados(placa).subscribe({})
   }
 
   cadastrar(): void {

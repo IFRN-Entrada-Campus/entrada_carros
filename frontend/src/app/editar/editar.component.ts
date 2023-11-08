@@ -13,6 +13,7 @@ export class EditarComponent implements OnInit {
 
   dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
   formInvalid = false;
+  placa = '';
 
   constructor(
     private activaRoute: ActivatedRoute,
@@ -25,6 +26,7 @@ export class EditarComponent implements OnInit {
     this.activaRoute.paramMap.subscribe({
       next: (rota: any) => {
         this.dado.placaCarro = rota.params.placa;
+        this.placa = rota.params.placa;
         console.log(this.dado.matriculaAluno)
         this.dadosServico.getDadosporPlaca(this.dado.placaCarro).subscribe({
           next: (retorno: any) => {
@@ -69,7 +71,7 @@ export class EditarComponent implements OnInit {
       this.dado.aluno != '' &&
       this.dado.codigoEtiqueta != ''
     ) {
-      this.dadosServico.editarDados(this.dado).subscribe({
+      this.dadosServico.editarDados(this.dado, this.placa).subscribe({
         error: (erro: any) => console.log(erro)
       });
       this.router.navigate(['/lista']);

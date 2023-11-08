@@ -52,10 +52,7 @@ export class DadosService {
         return merge(addAluno, addCarro);
   }
 
-  editarDados(dado: Dados): Observable<any> {
-    return this.http.get(`http://localhost:3000/alunocarro/carro/${dado.matriculaAluno}`, {headers: this.headers}).pipe(
-      switchMap((resultado: any) => {
-        let idcarro = resultado.id
+  editarDados(dado: Dados, placa: any): Observable<any> {
         let dataFormatada = dado.validadeEtiqueta.toISOString().slice(0, 19).replace('T', ' ');
         if (dado.CNHvalida === true) {
           dado.CNHvalida = 1;
@@ -73,18 +70,16 @@ export class DadosService {
           matriculaRel: dado.matriculaAluno,
           placaCarro: dado.placaCarro};
         let putAluno = this.http.put(`http://localhost:3000/alunocarro/aluno/${dado.matriculaAluno}`, reqAluno, {headers: this.headers});
-        let putCarro = this.http.put(`http://localhost:3000/alunocarro/carro/${idcarro}`, reqCarro, {headers: this.headers});
+        let putCarro = this.http.put(`http://localhost:3000/alunocarro/carro/${placa}`, reqCarro, {headers: this.headers});
         return merge(putAluno, putCarro)
-      })
-    )
         
   }
 
-  deletarDados(matricula: number): Observable<any> {
-    return this.http.get(`http://localhost:3000/alunocarro/carro/${matricula}`, {headers: this.headers}).pipe(
+  deletarDados(placa: any): Observable<any> {
+    return this.http.get(`http://localhost:3000/placa/${placa}`, {headers: this.headers}).pipe(
       switchMap((resultado: any) => {
-        let idcarro = resultado.id;
-        let deleteCarro = this.http.delete(`http://localhost:3000/alunocarro/carro/${idcarro}`, {headers: this.headers});
+        let matricula = resultado[0].Matricula;
+        let deleteCarro = this.http.delete(`http://localhost:3000/alunocarro/carro/${placa}`, {headers: this.headers});
         let deleteAluno = this.http.delete(`http://localhost:3000/alunocarro/aluno/${matricula}`, {headers: this.headers});
         return merge(deleteCarro, deleteAluno);
       })

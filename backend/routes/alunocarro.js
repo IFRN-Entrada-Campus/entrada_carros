@@ -152,8 +152,7 @@ router.put('/aluno/:matriculaAluno', verificarToken, function(req, res) {
     );
 });
 
-router.put('/carro/:idCarro', verificarToken, function(req, res) {
-    const idCarro = req.params.idCarro;
+router.put('/carro/:placaCarro', verificarToken, function(req, res) {
     const marcaCarro = req.body.marcaCarro;
     const modeloCarro = req.body.modeloCarro;
     const anoCarro = req.body.anoCarro;
@@ -161,8 +160,9 @@ router.put('/carro/:idCarro', verificarToken, function(req, res) {
     const validadeEtiqueta = req.body.validadeEtiqueta;
     const validaCnh = req.body.validaCnh;
     const matriculaRel = req.body.matriculaRel;
+    const placaCarroAntiga = req.params.placaCarro;
     const placaCarro = req.body.placaCarro;
-    console.log(`PUT carro: ${idCarro}`);
+    console.log(`PUT carro: ${placaCarro}`);
 
     const sql = `UPDATE carro 
     SET marcaCarro = ?,
@@ -173,10 +173,10 @@ router.put('/carro/:idCarro', verificarToken, function(req, res) {
     validaCnh = ?,
     matriculaRel = ?,
     placaCarro = ?
-    WHERE idCarro = ?`;
+    WHERE placaCarro = ?`;
     con.query(
         sql,
-        [marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validadeEtiqueta, validaCnh, matriculaRel, placaCarro, idCarro],
+        [marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validadeEtiqueta, validaCnh, matriculaRel, placaCarro, placaCarroAntiga],
         function(erroComandoSQL, result, fields) {
             if (erroComandoSQL) {
                 throw erroComandoSQL;
@@ -213,14 +213,14 @@ router.delete('/aluno/:matriculaAluno', verificarToken, function(req, res) {
     );
 });
 
-router.delete('/carro/:idCarro', verificarToken, function(req, res) {
-    const idCarro = req.params.idCarro;
-    console.log(`DELETE carro: ${idCarro}`);
+router.delete('/carro/:placaCarro', verificarToken, function(req, res) {
+    const placaCarro = req.params.placaCarro;
+    console.log(`DELETE carro: ${placaCarro}`);
 
-    const sql = `DELETE FROM carro WHERE idCarro = ?`;
+    const sql = `DELETE FROM carro WHERE placaCarro = ?`;
     con.query(
         sql,
-        [idCarro],
+        [placaCarro],
         function(erroComandoSQL, result, fields) {
             if (erroComandoSQL) {
                 throw erroComandoSQL;
