@@ -24,13 +24,13 @@ export class EditarComponent implements OnInit {
     this.formInvalid = false;
     this.activaRoute.paramMap.subscribe({
       next: (rota: any) => {
-        this.dado.matriculaAluno = rota.params.matricula;
+        this.dado.placaCarro = rota.params.placa;
         console.log(this.dado.matriculaAluno)
-        this.dadosServico.getDadosporMatricula(this.dado.matriculaAluno).subscribe({
+        this.dadosServico.getDadosporPlaca(this.dado.placaCarro).subscribe({
           next: (retorno: any) => {
             this.dado.modeloCarro = retorno[0].Modelo;
             this.dado.marcaCarro = retorno[0].Marca;
-            this.dado.placaCarro = retorno[0].Placa;
+            this.dado.matriculaAluno = retorno[0].Matricula;
             this.dado.anoCarro = retorno[0].Ano;
             this.dado.aluno = retorno[0].Aluno;
             this.dado.codigoEtiqueta = retorno[0].codigoEtiqueta;

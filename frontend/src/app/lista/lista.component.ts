@@ -60,8 +60,8 @@ export class ListaComponent implements OnInit {
     this.router.navigate(['/mqtt']);
   }
 
-  editarDados(matricula: any) {
-    this.router.navigate([`/editar/${matricula}`]);
+  editarDados(Placa: any) {
+    this.router.navigate([`/editar/${Placa}`]);
   }
 
   filtrarPlacas() {
