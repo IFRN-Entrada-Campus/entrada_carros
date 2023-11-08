@@ -48,8 +48,8 @@ export class ListaComponent implements OnInit {
     });
   }
 
-  deletarDados(matricula: number): void {
-    this.dadosService.deletarDados(matricula).subscribe({})
+  deletarDados(placa: any): void {
+    this.dadosService.deletarDados(placa).subscribe({})
   }
 
   cadastrar(): void {
@@ -60,8 +60,8 @@ export class ListaComponent implements OnInit {
     this.router.navigate(['/mqtt']);
   }
 
-  editarDados(matricula: any) {
-    this.router.navigate([`/editar/${matricula}`]);
+  editarDados(Placa: any) {
+    this.router.navigate([`/editar/${Placa}`]);
   }
 
   filtrarPlacas() {
