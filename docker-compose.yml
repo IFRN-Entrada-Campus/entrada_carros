@@ -21,7 +21,7 @@ services:
     networks:
       - my-networks
     restart: always
-    command: sh -c "npm start"
+    command: sh -c "npm start NODE_ENV=production"
 
   frontend:
     build:
