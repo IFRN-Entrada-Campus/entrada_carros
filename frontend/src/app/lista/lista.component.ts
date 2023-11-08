@@ -14,11 +14,9 @@ export class ListaComponent implements OnInit {
   dadosFormulario: any[] = [];
   dadoSelecionado?: any;
   placaPesquisada: string = '';
-  private placasPesquisadas = new Subject<string>();
   dadosCopia: any[] = [];
 
   constructor(private dadosService: DadosService, private router: Router) {
-    this.placasPesquisadas.pipe(debounceTime(100)).subscribe(() => this.filtrarPlacas());
   }
 
 
@@ -68,15 +66,11 @@ export class ListaComponent implements OnInit {
     if (this.placaPesquisada) {
       this.placaPesquisada = this.placaPesquisada.toUpperCase();
 
-      this.dadosFormulario = this.dadosFormulario.filter((dados) => {
+      this.dadosFormulario = this.dadosCopia.filter((dados) => {
         return dados.Placa.toUpperCase().includes(this.placaPesquisada.toUpperCase());
       });
     } else {
       this.dadosFormulario = [...this.dadosCopia];
     }
-  }
-
-  onSearchInput() {
-    this.placasPesquisadas.next(this.placaPesquisada);
   }
 }
