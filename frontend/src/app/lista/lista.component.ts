@@ -15,6 +15,7 @@ export class ListaComponent implements OnInit {
   dadoSelecionado?: any;
   placaPesquisada: string = '';
   dadosCopia: any[] = [];
+  carregando = true;
 
   constructor(private dadosService: DadosService, private router: Router) {
   }
@@ -42,7 +43,7 @@ export class ListaComponent implements OnInit {
         return {...item, validadeEtiqueta: this.formatarData(item.validadeEtiqueta) };
       })), console.log(resultado) },
       error: (erro: any) => console.log(erro),
-      complete: () => console.log('completo')
+      complete: () => this.carregando = false
     });
   }
 

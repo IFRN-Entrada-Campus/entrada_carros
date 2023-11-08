@@ -23,7 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
 import { PasswordModule } from 'primeng/password';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -53,6 +53,7 @@ import { PasswordModule } from 'primeng/password';
     CalendarModule,
     BrowserAnimationsModule,
     PasswordModule,
+    ProgressSpinnerModule
   ],
   providers: [DadosService],
   bootstrap: [AppComponent]
