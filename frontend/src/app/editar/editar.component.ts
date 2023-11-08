@@ -34,13 +34,14 @@ export class EditarComponent implements OnInit {
             this.dado.anoCarro = retorno[0].Ano;
             this.dado.aluno = retorno[0].Aluno;
             this.dado.codigoEtiqueta = retorno[0].codigoEtiqueta;
-            this.dado.validadeEtiqueta = retorno[0].validadeEtiqueta;
+            this.dado.validadeEtiqueta = new Date(retorno[0].validadeEtiqueta);
             this.dado.CNHvalida = retorno[0].CNHvalida;
             if (this.dado.CNHvalida = 1) {
               this.dado.CNHvalida = true
             } else {
               this.dado.CNHvalida = false
             }
+            console.log(retorno);
           },
 
           error: (erro: any) => console.log(erro)
