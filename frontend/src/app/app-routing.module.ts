@@ -6,6 +6,7 @@ import { MqttComponent } from './mqtt/mqtt.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard';
 import { EditarComponent } from './editar/editar.component';
+import { ScannerComponent } from './scanner/scanner.component';
 
 const routes: Routes = [
     { path:'lista', component: ListaComponent, canActivate: [AuthGuard] },
@@ -13,7 +14,8 @@ const routes: Routes = [
     { path:'forms', component: FormsComponent, canActivate: [AuthGuard] },
     { path:'', component: ListaComponent, canActivate: [AuthGuard] },
     { path:'mqtt', component: MqttComponent, canActivate: [AuthGuard] },
-    { path: 'login', component: LoginComponent }
+    { path: 'login', component: LoginComponent },
+    { path: 'scanner', component: ScannerComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

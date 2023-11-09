@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MqttModule } from 'ngx-mqtt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
 
 import { AppComponent } from './app.component';
 import { ListaComponent } from './lista/lista.component';
@@ -24,6 +25,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
 import { PasswordModule } from 'primeng/password';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ScannerComponent } from './scanner/scanner.component';
+
+LOAD_WASM().subscribe();
 
 @NgModule({
   declarations: [
@@ -32,7 +36,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     FormsComponent,
     MqttComponent,
     LoginComponent,
-    EditarComponent
+    EditarComponent,
+    ScannerComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +58,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     CalendarModule,
     BrowserAnimationsModule,
     PasswordModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    NgxScannerQrcodeModule
   ],
   providers: [DadosService],
   bootstrap: [AppComponent]
