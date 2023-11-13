@@ -29,17 +29,27 @@ export class ListaComponent implements OnInit {
     return dataFormatada.toLocaleDateString('pt-BR');
   }
 
+  formatarCNH(cnh: number): string {
+    let cnhformatada;
+    if (cnh == 1) {
+      cnhformatada = 'Sim';
+    } else {
+      cnhformatada = 'Não';
+    }
+    return cnhformatada;
+  }
+
   onListar(): void {
     this.dadosService.getDados().subscribe({
       next: (resultado: any) => { (this.dadosFormulario = resultado.map((item: any) => {
-        return {...item, validadeEtiqueta: this.formatarData(item.validadeEtiqueta) };
+        return {...item, validadeEtiqueta: this.formatarData(item.validadeEtiqueta), CNHvalida: this.formatarCNH(item.CNHvalida) };
       })), console.log(resultado) },
       error: (erro: any) => console.log(erro),
       complete: () => console.log('completo')
     });
     this.dadosService.getDados().subscribe({
       next: (resultado: any) => { (this.dadosCopia = resultado.map((item: any) => {
-        return {...item, validadeEtiqueta: this.formatarData(item.validadeEtiqueta) };
+        return {...item, validadeEtiqueta: this.formatarData(item.validadeEtiqueta), CNHvalida: this.formatarCNH(item.CNHvalida) };
       })), console.log(resultado) },
       error: (erro: any) => console.log(erro),
       complete: () => this.carregando = false
