@@ -2,12 +2,19 @@ h2 {
     text-align: center;
 }
 
-.pesquisa {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 input {
     width: 100%;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
