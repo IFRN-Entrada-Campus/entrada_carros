@@ -59,6 +59,10 @@ export class ListaComponent implements OnInit {
     this.router.navigate(['/mqtt']);
   }
 
+  scanner(): void {
+    this.router.navigate(['/scanner']);
+  }
+
   editarDados(Placa: any) {
     this.router.navigate([`/editar/${Placa}`]);
   }
