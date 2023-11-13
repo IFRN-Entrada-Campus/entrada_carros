@@ -7,51 +7,75 @@
     </h2>
 </div>
 <div *ngIf="!carregando">
-<h2>Veículos cadastrados</h2>
-<p-button styleClass="p-button-link" (click)="cadastrar()" id="cadastrar" label="Cadastrar"></p-button>
-<p-button styleClass="p-button-link" (click)="mqtt()" id="mensagens" label="Mensagens"></p-button>
-<p-button styleClass="p-button-link" severity="secondary" (click)="scanner()" id="scanner" label="Escanear QRcode"></p-button>
-<div class="pesquisa">
-    <input [(ngModel)]="placaPesquisada" (keyup)="filtrarPlacas()" class="pesquisar" pInputText placeholder="Pesquisa por placa...">
-</div>
-<p-table 
-[value]="dadosFormulario" [rows]="100" [paginator]="true" 
-[showCurrentPageReport]="true" currentPageReportTemplate="{first} a {last} de {totalRecords}" 
-[rowsPerPageOptions]="[100, 200, 400]" selectionMode="single" 
-[(selection)]="dadoSelecionado" dataKey="Matricula">
-    <ng-template pTemplate="header">
-        <tr>
-            <th pSortableColumn="Modelo">Modelo do carro <p-sortIcon field="Modelo"></p-sortIcon></th>
-            <th pSortableColumn="Marca">Marca do carro <p-sortIcon field="Marca"></p-sortIcon></th>
-            <th pSortableColumn="Placa">Placa do carro <p-sortIcon field="Placa"></p-sortIcon></th>
-            <th pSortableColumn="Ano">Ano do carro <p-sortIcon field="Ano"></p-sortIcon></th>
-            <th pSortableColumn="Aluno">Nome do aluno/servidor <p-sortIcon field="Aluno"></p-sortIcon></th>
-            <th pSortableColumn="Matricula">Matrícula <p-sortIcon field="Matricula"></p-sortIcon></th>
-            <th pSortableColumn="codigoEtiqueta">Código da etiqueta <p-sortIcon field="codigoEtiqueta"></p-sortIcon></th>
-            <th pSortableColumn="validadeEtiqueta">Validade da etiqueta <p-sortIcon field="validadeEtiqueta"></p-sortIcon></th>
-            <th pSortableColumn="CNHvalida">CNH válida <p-sortIcon field="CNHvalida"></p-sortIcon></th>
-            <th></th>
-            <th></th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-dados>
-        <tr [pSelectableRow]="dadosFormulario">
-            <td> {{ dados.Modelo }} </td>
-            <td> {{ dados.Marca }}</td>
-            <td> {{ dados.Placa }}</td>
-            <td> {{ dados.Ano }} </td>
-            <td> {{ dados.Aluno }} </td>
-            <td> {{ dados.Matricula }} </td>
-            <td> {{ dados.codigoEtiqueta }} </td>
-            <td> {{ dados.validadeEtiqueta }} </td>
-            <td> {{ dados.CNHvalida }} </td>
-            <td>
-                <p-button (click)="editarDados(dados.Placa)" label="Editar" styleClass="p-button-link"></p-button>
-            </td>
-            <td>
-                <p-button (click)="deletarDados(dados.Placa)" icon="pi pi-times" label="Excluir" styleClass="p-button-danger"></p-button>
-            </td>
-        </tr>
-    </ng-template>
-</p-table>
+    <h2>Veículos cadastrados</h2>
+    <div>
+        <div class="links">
+            <p-button styleClass="p-button-link" (click)="cadastrar()" id="cadastrar" label="Cadastrar"></p-button>
+            <p-button styleClass="p-button-link" (click)="mqtt()" id="mensagens" label="Mensagens"></p-button>
+            <p-button styleClass="p-button-link" (click)="scanner()" id="scanner" label="Escanear QRcode"></p-button>
+        </div>
+        <div *ngIf="tipo_pesquisa" class="input-group">
+            <input [(ngModel)]="placaPesquisada" (keyup)="filtrarPlacas()" class="pesquisar" pInputText
+                placeholder="Pesquisa por placa...">
+            <p-button size="small" styleClass="p-button-link" label="Filtrar por placa/etiqueta" (click)="trocarPesquisa()">
+            </p-button>
+        </div>
+        <div *ngIf="!tipo_pesquisa" class="input-group">
+            <input pInputText placeholder="Pesquisa por etiqueta..." class="pesquisar" [(ngModel)]="etiquetaPesquisada"
+                (keyup)="filtrarEtiquetas()">
+            <p-button size="small" styleClass="p-button-link" label="Filtrar por placa/etiqueta" (click)="trocarPesquisa()">
+            </p-button>
+        </div>
+    </div>
+    <p-table [value]="dadosFormulario" [rows]="100" [paginator]="true" [showCurrentPageReport]="true"
+        currentPageReportTemplate="{first} a {last} de {totalRecords}" [rowsPerPageOptions]="[100, 200, 400]"
+        selectionMode="single" [(selection)]="dadoSelecionado" dataKey="Matricula">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="Modelo">Modelo do carro <p-sortIcon field="Modelo"></p-sortIcon>
+                </th>
+                <th pSortableColumn="Marca">Marca do carro <p-sortIcon field="Marca"></p-sortIcon>
+                </th>
+                <th pSortableColumn="Placa">Placa do carro <p-sortIcon field="Placa"></p-sortIcon>
+                </th>
+                <th pSortableColumn="Ano">Ano do carro <p-sortIcon field="Ano"></p-sortIcon>
+                </th>
+                <th pSortableColumn="Aluno">Nome do aluno/servidor <p-sortIcon field="Aluno"></p-sortIcon>
+                </th>
+                <th pSortableColumn="Matricula">Matrícula <p-sortIcon field="Matricula"></p-sortIcon>
+                </th>
+                <th pSortableColumn="codigoEtiqueta">Código da etiqueta <p-sortIcon field="codigoEtiqueta">
+                    </p-sortIcon>
+                </th>
+                <th pSortableColumn="validadeEtiqueta">Validade da etiqueta <p-sortIcon field="validadeEtiqueta">
+                    </p-sortIcon>
+                </th>
+                <th pSortableColumn="CNHvalida">CNH válida <p-sortIcon field="CNHvalida"></p-sortIcon>
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-dados>
+            <tr [pSelectableRow]="dadosFormulario">
+                <td> {{ dados.Modelo }} </td>
+                <td> {{ dados.Marca }}</td>
+                <td> {{ dados.Placa }}</td>
+                <td> {{ dados.Ano }} </td>
+                <td> {{ dados.Aluno }} </td>
+                <td> {{ dados.Matricula }} </td>
+                <td> {{ dados.codigoEtiqueta }} </td>
+                <td> {{ dados.validadeEtiqueta }} </td>
+                <td> {{ dados.CNHvalida }} </td>
+                <td>
+                    <p-button (click)="editarDados(dados.Placa)" label="Editar" styleClass="p-button-link">
+                    </p-button>
+                </td>
+                <td>
+                    <p-button (click)="deletarDados(dados.Placa)" label="Excluir"
+                        styleClass="p-button-danger"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>

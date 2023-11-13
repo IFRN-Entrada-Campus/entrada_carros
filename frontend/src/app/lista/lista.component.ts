@@ -1,9 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { DadosService } from '../dados.service';
 import { Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
-import { debounceTime } from 'rxjs';
-import { Dados } from '../dados';
 
 @Component({
   selector: 'app-lista',
@@ -14,8 +11,10 @@ export class ListaComponent implements OnInit {
   dadosFormulario: any[] = [];
   dadoSelecionado?: any;
   placaPesquisada: string = '';
+  etiquetaPesquisada: string = '';
   dadosCopia: any[] = [];
   carregando = true;
+  tipo_pesquisa = true; // true = placa e false = etiqueta;
 
   constructor(private dadosService: DadosService, private router: Router) {
   }
@@ -63,19 +62,39 @@ export class ListaComponent implements OnInit {
     this.router.navigate(['/scanner']);
   }
 
-  editarDados(Placa: any) {
+  editarDados(Placa: any): void {
     this.router.navigate([`/editar/${Placa}`]);
   }
 
-  filtrarPlacas() {
+  filtrarPlacas(): void {
     if (this.placaPesquisada) {
       this.placaPesquisada = this.placaPesquisada.toUpperCase();
 
       this.dadosFormulario = this.dadosCopia.filter((dados) => {
-        return dados.Placa.toUpperCase().includes(this.placaPesquisada.toUpperCase());
+        return dados.Placa.toUpperCase().includes(this.placaPesquisada);
       });
     } else {
       this.dadosFormulario = [...this.dadosCopia];
+    }
+  }
+
+  filtrarEtiquetas(): void {
+    if (this.etiquetaPesquisada) {
+      this.etiquetaPesquisada = this.etiquetaPesquisada.toLowerCase();
+
+      this.dadosFormulario = this.dadosCopia.filter((dados) => {
+        return dados.codigoEtiqueta.toLowerCase().includes(this.etiquetaPesquisada);
+      });
+    } else {
+      this.dadosFormulario = [...this.dadosCopia];
+    }
+  }
+
+  trocarPesquisa(): void {
+    if (this.tipo_pesquisa) {
+      this.tipo_pesquisa = false;
+    } else {
+      this.tipo_pesquisa = true;
     }
   }
 }
