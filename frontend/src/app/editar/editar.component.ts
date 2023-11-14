@@ -27,7 +27,6 @@ export class EditarComponent implements OnInit {
       next: (rota: any) => {
         this.dado.placaCarro = rota.params.placa;
         this.placa = rota.params.placa;
-        console.log(this.dado.matriculaAluno)
         this.dadosServico.getDadosporPlaca(this.dado.placaCarro).subscribe({
           next: (retorno: any) => {
             this.dado.modeloCarro = retorno[0].Modelo;
@@ -43,7 +42,6 @@ export class EditarComponent implements OnInit {
             } else {
               this.dado.CNHvalida = false
             }
-            console.log(retorno);
           },
 
           error: (erro: any) => console.log(erro)
