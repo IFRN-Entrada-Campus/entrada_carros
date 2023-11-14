@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Dados } from '../dados';
 import { Router } from '@angular/router';
 import { DadosService } from '../dados.service';
-import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forms',
@@ -11,7 +10,7 @@ import { Validators } from '@angular/forms';
 })
 
 export class FormsComponent implements OnInit {
-  dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
+  dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: 0, validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
   matriculas: any[] = [];
   formInvalid = false;
 
@@ -24,7 +23,7 @@ export class FormsComponent implements OnInit {
       next: (resultado: any) => (this.matriculas = resultado),
       error: (erro: any) => console.log(erro)
     });
-    this.dado = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
+    this.dado = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: 0, validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
     this.formInvalid = false;
   }
 

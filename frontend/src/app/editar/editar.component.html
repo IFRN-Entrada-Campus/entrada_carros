@@ -24,6 +24,7 @@
     <tr>
         <td><label htmlFor="codigo">Código da etiqueta: </label></td>
         <td><input pInputText class="p-inputtext-sm" id="codigo" [(ngModel)]="dado.codigoEtiqueta"></td>
+        <p-button label="Escanear" (click)="escanear()"></p-button>
     </tr>
     <tr>
         <td><label for="validade">Validade da etiqueta: </label></td>

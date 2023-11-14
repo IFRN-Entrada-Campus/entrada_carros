@@ -14,6 +14,7 @@ import { DadosService } from './dados.service';
 import { MqttComponent } from './mqtt/mqtt.component';
 import { LoginComponent } from './login/login.component';
 import { EditarComponent } from './editar/editar.component';
+import { SharedDataService } from './shared-data.service';
 
 /* Imports do primeng  */
 import { InputTextModule } from 'primeng/inputtext';
@@ -61,7 +62,7 @@ LOAD_WASM().subscribe();
     ProgressSpinnerModule,
     NgxScannerQrcodeModule
   ],
-  providers: [DadosService],
+  providers: [DadosService, SharedDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

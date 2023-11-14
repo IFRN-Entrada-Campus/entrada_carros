@@ -15,7 +15,8 @@ const routes: Routes = [
     { path:'', component: ListaComponent, canActivate: [AuthGuard] },
     { path:'mqtt', component: MqttComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent },
-    { path: 'scanner', component: ScannerComponent, canActivate: [AuthGuard] }
+    { path: 'scanner', component: ScannerComponent, canActivate: [AuthGuard] },
+    { path: 'scanner/:placa', component: ScannerComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
