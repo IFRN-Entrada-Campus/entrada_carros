@@ -1,3 +1,7 @@
+<select #select1 (change)="action.playDevice(select1.value)">
+    <option [value]="null" selected>Selecione o dispositivo</option>
+    <option *ngFor="let c of action.devices.value; let i = index" [value]="c.deviceId" [selected]="i == action.deviceIndexActive">{{c.label}}</option>
+</select>
 <ngx-scanner-qrcode #action="scanner" (event)="handleQrCodeResult($event, action)"></ngx-scanner-qrcode>
 <p *ngIf="action.isLoading">Carregando...</p>
 <p-button (click)="action.isStart ? action.stop() : action.start()">{{action.isStart ? 'Parar' : 'Começar'}}</p-button>
