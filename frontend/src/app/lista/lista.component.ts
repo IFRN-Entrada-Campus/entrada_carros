@@ -43,14 +43,14 @@ export class ListaComponent implements OnInit {
     this.dadosService.getDados().subscribe({
       next: (resultado: any) => { (this.dadosFormulario = resultado.map((item: any) => {
         return {...item, validadeEtiqueta: this.formatarData(item.validadeEtiqueta), CNHvalida: this.formatarCNH(item.CNHvalida) };
-      })), console.log(resultado) },
+      }))},
       error: (erro: any) => console.log(erro),
       complete: () => console.log('completo')
     });
     this.dadosService.getDados().subscribe({
       next: (resultado: any) => { (this.dadosCopia = resultado.map((item: any) => {
         return {...item, validadeEtiqueta: this.formatarData(item.validadeEtiqueta), CNHvalida: this.formatarCNH(item.CNHvalida) };
-      })), console.log(resultado) },
+      }))},
       error: (erro: any) => console.log(erro),
       complete: () => this.carregando = false
     });
