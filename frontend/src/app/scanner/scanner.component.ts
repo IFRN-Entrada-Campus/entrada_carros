@@ -34,12 +34,13 @@ export class ScannerComponent implements AfterViewInit, OnInit {
   }
 
   handleQrCodeResult(e: ScannerQRCodeResult[], action?: any): void {
-    action.pause();
     this.valorDoScanner = e[0].value;
+    this.sharedDataService.setCodigoEtiqueta(this.valorDoScanner);
+    action.stop();
     if (this.placa != null) {
-      action.stop();
-      this.sharedDataService.setCodigoEtiqueta(this.valorDoScanner);
       this.router.navigate([`/editar/${this.placa}`]);
+    } else {
+      this.router.navigate(['/forms']);
     }
   }
 }

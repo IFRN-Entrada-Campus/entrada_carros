@@ -69,7 +69,7 @@ export class ListaComponent implements OnInit {
   }
 
   scanner(): void {
-    this.router.navigate(['/scanner']);
+    this.router.navigate(['/analise']);
   }
 
   editarDados(Placa: any): void {

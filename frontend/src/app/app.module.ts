@@ -27,6 +27,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { PasswordModule } from 'primeng/password';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ScannerComponent } from './scanner/scanner.component';
+import { AnaliseComponent } from './analise/analise.component';
 
 LOAD_WASM().subscribe();
 
@@ -38,7 +39,8 @@ LOAD_WASM().subscribe();
     MqttComponent,
     LoginComponent,
     EditarComponent,
-    ScannerComponent
+    ScannerComponent,
+    AnaliseComponent
   ],
   imports: [
     BrowserModule,
