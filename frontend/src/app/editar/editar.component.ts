@@ -10,12 +10,11 @@ import { Subscription } from 'rxjs';
   templateUrl: './editar.component.html',
   styleUrls: ['./editar.component.css']
 })
-export class EditarComponent implements OnInit, OnDestroy {
+export class EditarComponent implements OnInit {
 
   dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
-  formInvalid = false;
-  placa = '';
-  codigoEtiquetaSubscription: Subscription | undefined;
+  formInvalid = false;  // variavel para mostrar o alerta de erro
+  placa = ''; // variavel para armazenar a placa do carro
 
   constructor(
     private activaRoute: ActivatedRoute,
@@ -26,7 +25,7 @@ export class EditarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.formInvalid = false;
-    this.activaRoute.paramMap.subscribe({
+    this.activaRoute.paramMap.subscribe({ // Preenche os campos com os dados do carro
       next: (rota: any) => {
         this.dado.placaCarro = rota.params.placa;
         this.placa = rota.params.placa;
@@ -39,9 +38,13 @@ export class EditarComponent implements OnInit, OnDestroy {
             this.dado.aluno = retorno[0].Aluno;
             this.dado.codigoEtiqueta = retorno[0].codigoEtiqueta;
             if (retorno[0].codigoEtiqueta == 0 || '') {
-              this.codigoEtiquetaSubscription = this.sharedDataService.codigoEtiqueta$.subscribe((codigo: string) => {
-                this.dado.codigoEtiqueta = codigo;
+              this.sharedDataService.codigoEtiqueta$.subscribe(
+                (codigo: string) => { 
+                if (codigo) {
+                  this.dado.codigoEtiqueta = codigo;
+                } 
               });
+              this.sharedDataService.setCodigoEtiqueta('');
             }
             this.dado.validadeEtiqueta = new Date(retorno[0].validadeEtiqueta);
             this.dado.CNHvalida = retorno[0].CNHvalida;
@@ -59,23 +62,17 @@ export class EditarComponent implements OnInit, OnDestroy {
     });
     }
 
-  ngOnDestroy(): void {
-    if (this.codigoEtiquetaSubscription) {
-      this.codigoEtiquetaSubscription.unsubscribe();
-    }
-  }
-
-  validatePlacaCarro(placa: string): boolean {
+  validatePlacaCarro(placa: string): boolean {  // valida a placa do carro
     const placaRegex = /^[A-Z]{3}\d[A-Z]\d{2}$/;
     return placaRegex.test(placa);
   }
 
-  validateAnoCarro(ano: number): boolean {
+  validateAnoCarro(ano: number): boolean {  // valida o ano do carro
     const anoAtual = new Date().getFullYear();
     return ano >= 1900 && ano <= anoAtual;
   }
   
-  editarDados() {
+  editarDados() { // edita os dados no banco de dados
     if (
       this.dado.marcaCarro != '' &&
       this.dado.modeloCarro != '' &&
@@ -93,7 +90,7 @@ export class EditarComponent implements OnInit, OnDestroy {
     }
   }
 
-  escanear(): void {
+  escanear(): void {  // navega para o componente scanner do carro selecionado
     this.router.navigate([`/scanner/${this.placa}`])
   }
 }
