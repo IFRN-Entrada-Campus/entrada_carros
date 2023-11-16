@@ -7,12 +7,12 @@
     </h2>
 </div>
 <div *ngIf="!carregando">
-    <h2>Veículos cadastrados</h2>
+    <h2>Veículos registrados</h2>
     <div>
         <div class="links">
             <p-button styleClass="p-button-link" (click)="cadastrar()" id="cadastrar" label="Cadastrar"></p-button>
             <p-button styleClass="p-button-link" (click)="mqtt()" id="mensagens" label="Mensagens"></p-button>
-            <p-button styleClass="p-button-link" (click)="scanner()" id="scanner" label="Escanear QRcode"></p-button>
+            <p-button styleClass="p-button-link" (click)="scanner()" id="scanner" label="Pesquisa com QRcode"></p-button>
         </div>
         <div *ngIf="tipo_pesquisa" class="input-group">
             <input [(ngModel)]="placaPesquisada" (keyup)="filtrarPlacas()" class="pesquisar" pInputText
