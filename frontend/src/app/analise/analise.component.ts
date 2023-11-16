@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgxScannerQrcodeComponent, ScannerQRCodeResult } from 'ngx-scanner-qrcode';
+import { SharedDataService } from '../shared-data.service';
 
 @Component({
   selector: 'app-analise',
@@ -10,6 +12,10 @@ export class AnaliseComponent implements AfterViewInit{
   @ViewChild('action') action!: NgxScannerQrcodeComponent;
   valorDoScanner = '';
 
+  constructor (
+    private router: Router, 
+    private sharedDataService: SharedDataService) {}
+
   ngAfterViewInit(): void {
     this.action.isReady.subscribe((res: any) => {
 
@@ -18,6 +24,8 @@ export class AnaliseComponent implements AfterViewInit{
 
   handleQrCodeResult(e: ScannerQRCodeResult[], action?: any): void {
     this.valorDoScanner = e[0].value;
-    action.pause();
+    this.sharedDataService.setCodigoEtiqueta(this.valorDoScanner);
+    action.stop();
+    this.router.navigate(['/lista']);
   }
 }

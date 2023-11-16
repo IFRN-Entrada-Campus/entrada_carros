@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { DadosService } from '../dados.service';
 import { Router } from '@angular/router';
+import { SharedDataService } from '../shared-data.service';
 
 @Component({
   selector: 'app-lista',
@@ -14,14 +15,20 @@ export class ListaComponent implements OnInit {
   etiquetaPesquisada: string = '';
   dadosCopia: any[] = [];
   carregando = true;
-  tipo_pesquisa = true; // true = placa e false = etiqueta;
+  tipo_pesquisa = false; // true = placa e false = etiqueta;
 
-  constructor(private dadosService: DadosService, private router: Router) {
+  constructor(private dadosService: DadosService, private router: Router, private sharedDataService: SharedDataService) {
   }
 
 
   ngOnInit(): void {
     this.onListar();
+    this.sharedDataService.codigoEtiqueta$.subscribe((codigoEtiqueta) => {
+      if (codigoEtiqueta) {
+        this.etiquetaPesquisada = codigoEtiqueta;
+        this.filtrarEtiquetas();
+      }
+    });
   }
 
   formatarData(data: string): string {
