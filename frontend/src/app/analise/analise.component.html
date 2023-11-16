@@ -5,3 +5,6 @@
 <ngx-scanner-qrcode #action="scanner" (event)="handleQrCodeResult($event, action)"></ngx-scanner-qrcode>
 <p *ngIf="action.isLoading">Carregando...</p>
 <p-button (click)="action.isStart ? action.stop() : action.start()">{{action.isStart ? 'Parar' : 'Começar'}}</p-button>
+
+<p *ngIf="valorDoScanner !== null">Código: {{ valorDoScanner | json }}</p>
+<p *ngIf="valorDoScanner === null">Aguardando código...</p>

@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Dados } from '../dados';
 import { Router } from '@angular/router';
 import { DadosService } from '../dados.service';
+import { SharedDataService } from '../shared-data.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-forms',
@@ -9,12 +11,22 @@ import { DadosService } from '../dados.service';
   styleUrls: ['./forms.component.css']
 })
 
-export class FormsComponent implements OnInit {
+export class FormsComponent implements OnInit, OnDestroy {
   dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: 0, validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
   matriculas: any[] = [];
   formInvalid = false;
 
-  constructor(private dadosService: DadosService, private router: Router) {
+  codigoEtiquetaSubscription: Subscription | undefined;
+  matriculaAlunoSubscription: Subscription | undefined;
+  alunoSubscription: Subscription | undefined;
+  modeloCarroSubscription: Subscription | undefined;
+  marcaCarroSubscription: Subscription | undefined;
+  anoCarroSubscription: Subscription | undefined;
+  placaCarroSubscription: Subscription | undefined;
+  CNHvalidaSubscription: Subscription | undefined;
+  validadeEtiquetaSubscription: Subscription | undefined;
+
+  constructor(private dadosService: DadosService, private router: Router, private sharedData: SharedDataService) {
 
   }
 
@@ -23,8 +35,64 @@ export class FormsComponent implements OnInit {
       next: (resultado: any) => (this.matriculas = resultado),
       error: (erro: any) => console.log(erro)
     });
-    this.dado = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: 0, validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
+    this.codigoEtiquetaSubscription = this.sharedData.codigoEtiqueta$.subscribe({
+      next: (codigo: string) => this.dado.codigoEtiqueta = codigo
+    });
+    this.matriculaAlunoSubscription = this.sharedData.matriculaAluno$.subscribe({
+      next: (matricula: number) => this.dado.matriculaAluno = matricula
+    });
+    this.alunoSubscription = this.sharedData.aluno$.subscribe({
+      next: (aluno: string) => this.dado.aluno = aluno
+    });
+    this.modeloCarroSubscription = this.sharedData.modeloCarro$.subscribe({
+      next: (modelo: string) => this.dado.modeloCarro = modelo
+    });
+    this.marcaCarroSubscription = this.sharedData.marcaCarro$.subscribe({
+      next: (marca: string) => this.dado.marcaCarro = marca
+    });
+    this.anoCarroSubscription = this.sharedData.anoCarro$.subscribe({
+      next: (ano: number) => this.dado.anoCarro = ano
+    });
+    this.placaCarroSubscription = this.sharedData.placaCarro$.subscribe({
+      next: (placa: string) => this.dado.placaCarro = placa
+    });
+    this.CNHvalidaSubscription = this.sharedData.CNHvalida$.subscribe({
+      next: (valida: boolean) => this.dado.CNHvalida = valida
+    });
+    this.validadeEtiquetaSubscription = this.sharedData.validadeEtiqueta$.subscribe({
+      next: (validade: Date) => this.dado.validadeEtiqueta = validade
+    });
     this.formInvalid = false;
+  }
+
+  ngOnDestroy(): void {
+    if (this.codigoEtiquetaSubscription) {
+      this.codigoEtiquetaSubscription.unsubscribe();
+    }
+    if (this.matriculaAlunoSubscription) {
+      this.matriculaAlunoSubscription.unsubscribe();
+    }
+    if (this.alunoSubscription) {
+      this.alunoSubscription.unsubscribe();
+    }
+    if (this.modeloCarroSubscription) {
+      this.modeloCarroSubscription.unsubscribe();
+    }
+    if (this.marcaCarroSubscription) {
+      this.marcaCarroSubscription.unsubscribe();
+    }
+    if (this.anoCarroSubscription) {
+      this.anoCarroSubscription.unsubscribe();
+    }
+    if (this.placaCarroSubscription) {
+      this.placaCarroSubscription.unsubscribe();
+    }
+    if (this.CNHvalidaSubscription) {
+      this.CNHvalidaSubscription.unsubscribe();
+    }
+    if (this.validadeEtiquetaSubscription) {
+      this.validadeEtiquetaSubscription.unsubscribe();
+    }
   }
 
 
@@ -57,5 +125,20 @@ export class FormsComponent implements OnInit {
       console.log(this.dado);
     }
   }
+
+  escanear(): void {
+    this.sharedData.setAluno(this.dado.aluno);
+    this.sharedData.setMatriculaAluno(this.dado.matriculaAluno);
+    this.sharedData.setCodigoEtiqueta(this.dado.codigoEtiqueta);
+    this.sharedData.setModeloCarro(this.dado.modeloCarro);
+    this.sharedData.setMarcaCarro(this.dado.marcaCarro);
+    this.sharedData.setAnoCarro(this.dado.anoCarro);
+    this.sharedData.setPlacaCarro(this.dado.placaCarro);
+    this.sharedData.setValidadeEtiqueta(this.dado.validadeEtiqueta);
+    this.sharedData.setCNHvalida(this.dado.CNHvalida);
+    this.router.navigate(['/scanner']);
+  }
+
+
 }
 
