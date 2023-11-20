@@ -99,10 +99,9 @@ export class ListaComponent implements OnInit {
 
   filtrarEtiquetas(): void {  // filtra as etiquetas
     if (this.etiquetaPesquisada) {
-      this.etiquetaPesquisada = this.etiquetaPesquisada.toLowerCase();
 
       this.dadosFormulario = this.dadosCopia.filter((dados) => {
-        return dados.codigoEtiqueta.toLowerCase().includes(this.etiquetaPesquisada);
+        return dados.codigoEtiqueta.includes(this.etiquetaPesquisada);
       });
     } else {
       this.dadosFormulario = [...this.dadosCopia];
