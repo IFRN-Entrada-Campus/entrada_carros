@@ -44,7 +44,9 @@ export class EditarComponent implements OnInit {
                   this.dado.codigoEtiqueta = codigo;
                 } 
               });
+              const codigoEtiqueta = this.dado.codigoEtiqueta;
               this.sharedDataService.setCodigoEtiqueta('');
+              this.dado.codigoEtiqueta = codigoEtiqueta
             }
             this.dado.validadeEtiqueta = new Date(retorno[0].validadeEtiqueta);
             this.dado.CNHvalida = retorno[0].CNHvalida;

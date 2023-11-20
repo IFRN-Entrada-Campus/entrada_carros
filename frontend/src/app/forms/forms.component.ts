@@ -11,20 +11,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./forms.component.css']
 })
 
-export class FormsComponent implements OnInit, OnDestroy {
+export class FormsComponent implements OnInit {
   dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: 0, validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
   matriculas: any[] = []; // variavel para armazenar as matriculas dos alunos
   formInvalid = false;  // variavel para mostrar o alerta de erro
-
-  codigoEtiquetaSubscription: Subscription | undefined;
-  matriculaAlunoSubscription: Subscription | undefined;
-  alunoSubscription: Subscription | undefined;
-  modeloCarroSubscription: Subscription | undefined;
-  marcaCarroSubscription: Subscription | undefined;
-  anoCarroSubscription: Subscription | undefined;
-  placaCarroSubscription: Subscription | undefined;
-  CNHvalidaSubscription: Subscription | undefined;
-  validadeEtiquetaSubscription: Subscription | undefined;
 
   constructor(private dadosService: DadosService, private router: Router, private sharedData: SharedDataService) {
 
@@ -35,10 +25,10 @@ export class FormsComponent implements OnInit, OnDestroy {
       next: (resultado: any) => (this.matriculas = resultado),
       error: (erro: any) => console.log(erro)
     });
-    this.codigoEtiquetaSubscription = this.sharedData.codigoEtiqueta$.subscribe((codigo: string) => { // Recebe os dados do formulário
+    this.sharedData.codigoEtiqueta$.subscribe((codigo: string) => { // Recebe os dados do formulário
       this.dado.codigoEtiqueta = codigo
     });
-    this.matriculaAlunoSubscription = this.sharedData.matriculaAluno$.subscribe((matricula: number) => {
+    this.sharedData.matriculaAluno$.subscribe((matricula: number) => {
       this.dado.matriculaAluno = matricula
     });
     this.sharedData.aluno$.subscribe((aluno: string) => {
@@ -62,7 +52,18 @@ export class FormsComponent implements OnInit, OnDestroy {
     this.sharedData.validadeEtiqueta$.subscribe((validade: Date) => {
       this.dado.validadeEtiqueta = validade
     });
-    this.sharedData.setAluno(''); // Limpa os dados do sharedData
+
+    const aluno = this.dado.aluno;
+    const matriculaAluno = this.dado.matriculaAluno;
+    const codigoEtiqueta = this.dado.codigoEtiqueta;
+    const modeloCarro = this.dado.modeloCarro;
+    const marcaCarro = this.dado.marcaCarro;
+    const anoCarro = this.dado.anoCarro;
+    const placaCarro = this.dado.placaCarro;
+    const CNHvalida = this.dado.CNHvalida;
+    const validadeEtiqueta = this.dado.validadeEtiqueta;
+
+    this.sharedData.setAluno('');
     this.sharedData.setMatriculaAluno(0);
     this.sharedData.setCodigoEtiqueta('');
     this.sharedData.setModeloCarro('');
@@ -72,36 +73,16 @@ export class FormsComponent implements OnInit, OnDestroy {
     this.sharedData.setValidadeEtiqueta(new Date());
     this.sharedData.setCNHvalida(false);
     this.formInvalid = false;
-  }
 
-  ngOnDestroy(): void { // Desinscreve os observables
-    if (this.codigoEtiquetaSubscription) {
-      this.codigoEtiquetaSubscription.unsubscribe();
-    }
-    if (this.matriculaAlunoSubscription) {
-      this.matriculaAlunoSubscription.unsubscribe();
-    }
-    if (this.alunoSubscription) {
-      this.alunoSubscription.unsubscribe();
-    }
-    if (this.modeloCarroSubscription) {
-      this.modeloCarroSubscription.unsubscribe();
-    }
-    if (this.marcaCarroSubscription) {
-      this.marcaCarroSubscription.unsubscribe();
-    }
-    if (this.anoCarroSubscription) {
-      this.anoCarroSubscription.unsubscribe();
-    }
-    if (this.placaCarroSubscription) {
-      this.placaCarroSubscription.unsubscribe();
-    }
-    if (this.CNHvalidaSubscription) {
-      this.CNHvalidaSubscription.unsubscribe();
-    }
-    if (this.validadeEtiquetaSubscription) {
-      this.validadeEtiquetaSubscription.unsubscribe();
-    }
+    this.dado.aluno = aluno;
+    this.dado.matriculaAluno = matriculaAluno;
+    this.dado.codigoEtiqueta = codigoEtiqueta;
+    this.dado.modeloCarro = modeloCarro;
+    this.dado.marcaCarro = marcaCarro;
+    this.dado.anoCarro = anoCarro;
+    this.dado.placaCarro = placaCarro;
+    this.dado.CNHvalida = CNHvalida;
+    this.dado.validadeEtiqueta = validadeEtiqueta;
   }
 
 
