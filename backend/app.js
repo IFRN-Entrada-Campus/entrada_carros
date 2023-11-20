@@ -16,7 +16,7 @@ var app = express();
 
 app.use(cors({
     origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"]
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
   }));
 app.use(logger('dev'));
 app.use(express.json());

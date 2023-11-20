@@ -13,21 +13,22 @@ export class DadosService {
   .set('x-access-token', this.authToken);
 
   constructor(private http: HttpClient) { }
+  apiURL = 'imatra.ifrn.local:3000/api';
 
   getDados(): Observable<any> {
-    return this.http.get('http://localhost:3000/alunocarro', {headers: this.headers});
+    return this.http.get(`http://${this.apiURL}/alunocarro`, {headers: this.headers})
   }
 
   getMatriculas(): Observable<any> {
-    return this.http.get('http://localhost:3000/alunocarro/matricula', {headers: this.headers})
+    return this.http.get(`http://${this.apiURL}/alunocarro/matricula`, {headers: this.headers})
   }
 
   getDadosporMatricula(matricula: any): Observable<any> {
-    return this.http.get(`http://localhost:3000/alunocarro/${matricula}`, {headers: this.headers})
+    return this.http.get(`http://${this.apiURL}/alunocarro/${matricula}`, {headers: this.headers})
   }
 
   getDadosporPlaca(placa: any): Observable<any> {
-    return this.http.get(`http://localhost:3000/placa/${placa}`, {headers: this.headers})
+    return this.http.get(`http://${this.apiURL}/placa/${placa}`, {headers: this.headers})
   }
 
   addDados(dado: Dados): Observable<any> { 
@@ -47,8 +48,8 @@ export class DadosService {
           validaCnh: dado.CNHvalida,
           matriculaRel: dado.matriculaAluno,
           placaCarro: dado.placaCarro};
-        let addAluno = this.http.post('http://localhost:3000/alunocarro/aluno', reqAluno, {headers: this.headers});
-        let addCarro = this.http.post('http://localhost:3000/alunocarro/carro', reqCarro, {headers: this.headers});
+        let addAluno = this.http.post(`http://${this.apiURL}/alunocarro/aluno`, reqAluno, {headers: this.headers});
+        let addCarro = this.http.post(`http://${this.apiURL}/alunocarro/carro`, reqCarro, {headers: this.headers});
         return merge(addAluno, addCarro);
   }
 
@@ -69,18 +70,18 @@ export class DadosService {
           validaCnh: dado.CNHvalida,
           matriculaRel: dado.matriculaAluno,
           placaCarro: dado.placaCarro};
-        let putAluno = this.http.put(`http://localhost:3000/alunocarro/aluno/${dado.matriculaAluno}`, reqAluno, {headers: this.headers});
-        let putCarro = this.http.put(`http://localhost:3000/alunocarro/carro/${placa}`, reqCarro, {headers: this.headers});
+        let putAluno = this.http.put(`http://${this.apiURL}/alunocarro/aluno/${dado.matriculaAluno}`, reqAluno, {headers: this.headers});
+        let putCarro = this.http.put(`http://${this.apiURL}/alunocarro/carro/${placa}`, reqCarro, {headers: this.headers});
         return merge(putAluno, putCarro)
         
   }
 
   deletarDados(placa: any): Observable<any> {
-    return this.http.get(`http://localhost:3000/placa/${placa}`, {headers: this.headers}).pipe(
+    return this.http.get(`http://${this.apiURL}/placa/${placa}`, {headers: this.headers}).pipe(
       switchMap((resultado: any) => {
         let matricula = resultado[0].Matricula;
-        let deleteCarro = this.http.delete(`http://localhost:3000/alunocarro/carro/${placa}`, {headers: this.headers});
-        let deleteAluno = this.http.delete(`http://localhost:3000/alunocarro/aluno/${matricula}`, {headers: this.headers});
+        let deleteCarro = this.http.delete(`http://${this.apiURL}/alunocarro/carro/${placa}`, {headers: this.headers});
+        let deleteAluno = this.http.delete(`http://${this.apiURL}/alunocarro/aluno/${matricula}`, {headers: this.headers});
         return merge(deleteCarro, deleteAluno);
       })
     );
