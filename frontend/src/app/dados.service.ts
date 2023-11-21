@@ -13,7 +13,7 @@ export class DadosService {
   .set('x-access-token', this.authToken);
 
   constructor(private http: HttpClient) { }
-  apiURL = 'imatra.ifrn.local:3000/api';
+  apiURL = 'imatra.ifrn.local/api';
 
   getDados(): Observable<any> {
     return this.http.get(`http://${this.apiURL}/alunocarro`, {headers: this.headers})
