@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mysql = require('mysql2');
+const jwt = require('jsonwebtoken');
+const config = require('./config');
 
 var con = mysql.createConnection({
     host: 'db',
@@ -15,7 +17,25 @@ con.connect(function(erroConexao) {
     }
 });
 
-router.get('/:placa', function(req, res) {
+function verificarToken(req, res, next) {
+    const token = req.headers['x-access-token'];
+    if (!token) {
+      res.status(401).json({
+        auth: false,
+        message: 'Nenhum token de autenticação informado.',
+      });
+    } else {
+      jwt.verify(token, config.jwtSegredo, function (err, decoded) {
+        if (err) {
+          res.status(500).json({ auth: false, message: 'Token inválido.' });
+        } else {
+          next();
+        }
+      });
+    }
+  }
+
+router.get('/:placa', verificarToken, function(req, res) {
     const placa = req.params.placa;
 
     const sql = 'SELECT * FROM vwalunocarro WHERE Placa = ?';
