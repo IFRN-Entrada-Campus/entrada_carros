@@ -2,6 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { DadosService } from '../dados.service';
 import { Router } from '@angular/router';
 import { SharedDataService } from '../shared-data.service';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-lista',
@@ -17,7 +18,7 @@ export class ListaComponent implements OnInit {
   carregando = true;  // variavel para mostrar o loading
   tipo_pesquisa = true; // true = placa e false = etiqueta;
 
-  constructor(private dadosService: DadosService, private router: Router, private sharedDataService: SharedDataService) {
+  constructor(private dadosService: DadosService, private router: Router, private sharedDataService: SharedDataService, private loginService: LoginService) {
   }
 
 
@@ -114,5 +115,9 @@ export class ListaComponent implements OnInit {
     } else {
       this.tipo_pesquisa = true;
     }
+  }
+
+  logout(): void {
+    this.loginService.logout();
   }
 }

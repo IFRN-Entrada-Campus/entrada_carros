@@ -9,7 +9,14 @@ input {
 .input-group {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.botoes {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 10px;
 }
 
@@ -17,4 +24,10 @@ input {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+}
+
+.logout {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
