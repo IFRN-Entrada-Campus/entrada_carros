@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +9,10 @@ import { Observable, tap } from 'rxjs';
 export class LoginService {
   autenticado = false;
   constructor(private http: HttpClient) { }
+  apiUrl = environment.apiUrl;
 
   login(user: string, password:string): Observable<any> {
-    return this.http.post('http://imatra.ifrn.local/api/login', {usuario: user, senha: password})
+    return this.http.post(`${this.apiUrl}/login`, {usuario: user, senha: password})
     .pipe(
       tap((response: any) => {
         if (response.token) {
