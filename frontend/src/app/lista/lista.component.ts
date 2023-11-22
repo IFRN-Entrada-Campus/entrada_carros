@@ -119,5 +119,6 @@ export class ListaComponent implements OnInit {
 
   logout(): void {
     this.loginService.logout();
+    window.location.reload();
   }
 }
