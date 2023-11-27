@@ -87,8 +87,13 @@ export class FormsComponent implements OnInit {
 
 
   validatePlacaCarro(placa: string): boolean {  // Valida a placa do carro
+    // Verifica se a placa está no formato antigo brasileiro
+    const formatoAntigoRegex = /^[A-Z]{3}\d{4}$/;
+    
+    // Verifica se a placa está no formato Mercosul 
     const placaRegex = /^[A-Z]{3}\d[A-Z]\d{2}$/;
-    return placaRegex.test(placa);
+
+    return formatoAntigoRegex.test(placa) || placaRegex.test(placa);
   }
 
   validateAnoCarro(ano: number): boolean {  // Valida o ano do carro

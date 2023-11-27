@@ -13,7 +13,7 @@ RUN mkdir /etc/nginx/ssl
 WORKDIR /etc/nginx/ssl
 RUN openssl genpkey -algorithm RSA -out private.key
 RUN openssl req -new -key private.key -out cert.csr -subj "/C=BR/ST=RN/L=PAR/O=IFRN/CN=localhost"
-RUN openssl x509 -req -days 365 -in cert.csr -signkey private.key -out cert.crt
+RUN openssl x509 -req -days 1826 -in cert.csr -signkey private.key -out cert.crt
 
 # Etapa de configuração do Nginx
 FROM docker.io/nginx:latest

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('mysql2');
 const jwt = require('jsonwebtoken');
-const config = require('./config');
+const config = require('../.env.production.local');
 
 var con = mysql.createConnection({
     host: 'db',
@@ -25,7 +25,7 @@ function verificarToken(req, res, next) {
         message: 'Nenhum token de autenticação informado.',
       });
     } else {
-      jwt.verify(token, config.jwtSegredo, function (err, decoded) {
+      jwt.verify(token, config.JWT_SEGREDO, function (err, decoded) {
         if (err) {
           res.status(500).json({ auth: false, message: 'Token inválido.' });
         } else {
