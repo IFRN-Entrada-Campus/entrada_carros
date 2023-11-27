@@ -1,3 +1,3 @@
 module.exports = {
-    jwtSegredo: 'IFRNentrada_8667'
+    jwtSegredo: '5534IFRNeuquero_entrarcom0carro$#!2'
 }
