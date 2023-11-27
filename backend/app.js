@@ -11,6 +11,7 @@ var indexRouter = require('./routes/index');
 var alunocarroRouter = require('./routes/alunocarro');
 var loginRouter = require('./routes/login');
 var placaRouter = require('./routes/placa');
+require('dotenv').config();
 
 var app = express();
 
