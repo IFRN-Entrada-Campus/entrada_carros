@@ -3,7 +3,6 @@ const router = express.Router();
 const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const config = require('./config');
 
 var con = mysql.createConnection({
     host: 'db',
@@ -49,7 +48,7 @@ router.post('/', function(req, res) {
                 return;
             }
 
-            const token = jwt.sign({ usuario: user.usuario }, config.jwtSegredo, { expiresIn: '1d' });
+            const token = jwt.sign({ usuario: user.usuario }, process.env.JWT_SEGREDO, { expiresIn: '1d' });
             const decodedToken = jwt.decode(token);
             const expiraEm = decodedToken.exp;
 
