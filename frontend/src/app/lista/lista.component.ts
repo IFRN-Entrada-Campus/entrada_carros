@@ -28,7 +28,9 @@ export class ListaComponent implements OnInit {
       if (codigoEtiqueta) {
         this.tipo_pesquisa = false;
         this.etiquetaPesquisada = codigoEtiqueta;
-        this.filtrarEtiquetas();
+        setTimeout(() => {
+          this.filtrarEtiquetas();
+        }, 500);
       }
     });
     this.sharedDataService.setCodigoEtiqueta('');
