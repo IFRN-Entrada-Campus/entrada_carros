@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgxScannerQrcodeComponent, ScannerQRCodeResult } from 'ngx-scanner-qrcode';
 import { SharedDataService } from '../shared-data.service';
@@ -18,7 +18,7 @@ export class AnaliseComponent implements AfterViewInit{
 
   ngAfterViewInit(): void {
     this.action.isReady.subscribe((res: any) => {
-
+      this.action.start();
     });
   }
 

@@ -17,11 +17,11 @@ export class ScannerComponent implements AfterViewInit, OnInit {
     private sharedDataService: SharedDataService,
     private activaRoute: ActivatedRoute,
     private router: Router
-    ) {}
+  ) { }
 
   ngAfterViewInit(): void {
     this.action.isReady.subscribe((res: any) => {
-
+      this.action.start();
     });
   }
 
