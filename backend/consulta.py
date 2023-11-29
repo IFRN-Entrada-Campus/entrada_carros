@@ -1,3 +1,4 @@
+# Exemplo de consulta aos dados através de uma placa na linguagem Python
 import requests
 import json
 

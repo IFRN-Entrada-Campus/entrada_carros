@@ -8,7 +8,7 @@ var con = mysql.createPool({
   user: 'root',
   password: '',
   database: 'dbentrada',
-  connectionLimit: 10,
+  connectionLimit: 50,
 });
 
 function verificarToken(req, res, next) {

@@ -9,7 +9,7 @@ var con = mysql.createPool({
     user: 'root',
     password: '',
     database: 'dbentrada',
-    connectionLimit: 10,
+    connectionLimit: 50,
 });
 
 router.post('/', function (req, res) {
