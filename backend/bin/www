@@ -88,3 +88,15 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+/**
+ * Lógica de fechamento do servidor.
+ */
+
+ process.on('SIGTERM', () => {
+  console.log('Recebido sinal de encerramento. Fechando o servidor...');
+  server.close(() => {
+    console.log('Servidor fechado.');
+    process.exit(0);
+  });
+});
