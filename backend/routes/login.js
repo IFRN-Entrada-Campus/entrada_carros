@@ -12,6 +12,24 @@ var con = mysql.createPool({
     connectionLimit: 50,
 });
 
+function verificarToken(req, res, next) {
+    const token = req.headers['x-access-token'];
+    if (!token) {
+        res.status(401).json({
+            auth: false,
+            message: 'Nenhum token de autenticação informado.',
+        });
+    } else {
+        jwt.verify(token, process.env.JWT_SEGREDO, function (err, decoded) {
+            if (err) {
+                res.status(500).json({ auth: false, message: 'Token inválido.' });
+            } else {
+                next();
+            }
+        });
+    }
+}
+
 router.post('/', function (req, res) {
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
@@ -58,7 +76,7 @@ router.post('/', function (req, res) {
     });
 });
 
-router.post('/novo', function (req, res) {
+router.post('/novo', verificarToken, function (req, res) {
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
