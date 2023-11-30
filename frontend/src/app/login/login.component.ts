@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   usuario = '';
   senha = '';
+  loginInvalid = false;
 
   constructor(private login: LoginService, private router: Router) {}
 
@@ -19,9 +20,10 @@ export class LoginComponent {
         if (response.auth == true) {
           this.login.autenticado = true;
           this.router.navigate(['/lista']);
-        } else {
-          console.log('Falha no login');
-        }
+        } 
+      },
+      (error) => {
+        this.loginInvalid = true;
       }
     )
   }
