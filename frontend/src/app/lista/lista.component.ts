@@ -69,7 +69,11 @@ export class ListaComponent implements OnInit {
   }
 
   deletarDados(placa: any): void {  // deleta os dados do banco de dados
-    this.dadosService.deletarDados(placa).subscribe({})
+    this.dadosService.deletarDados(placa).subscribe({});
+    setTimeout(() => {
+      this.onListar();
+    }, 1000);
+    
   }
 
   cadastrar(): void { // navega para o componente forms
