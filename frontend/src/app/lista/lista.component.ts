@@ -70,6 +70,7 @@ export class ListaComponent implements OnInit {
 
   deletarDados(placa: any): void {  // deleta os dados do banco de dados
     this.dadosService.deletarDados(placa).subscribe({});
+    this.carregando = true;
     setTimeout(() => {
       this.onListar();
     }, 1000);

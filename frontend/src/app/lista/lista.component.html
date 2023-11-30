@@ -1,3 +1,26 @@
+<h2>Veículos registrados</h2>
+<div class="botoes">
+    <div class="links">
+        <p-button [text]="true" (click)="cadastrar()" id="cadastrar" label="Cadastrar"></p-button>
+        <p-button [text]="true" severity="secondary" (click)="mqtt()" id="mensagens" label="Mensagens"></p-button>
+        <p-button [text]="true" severity="secondary" (click)="scanner()" id="scanner" label="Pesquisa com QRcode"></p-button>
+    </div>
+    <div class="logout">
+        <p-button [text]="true" [raised]="true" severity="danger" (click)="logout()" id="logout" label="Sair"></p-button>
+    </div>
+</div>
+<div *ngIf="tipo_pesquisa" class="input-group">
+    <input [(ngModel)]="placaPesquisada" (keyup)="filtrarPlacas()" class="pesquisar" pInputText
+        placeholder="Pesquisa por placa...">
+    <p-button size="small" [text]="true" [plain]="true" label="Filtrar por placa/etiqueta" (click)="trocarPesquisa()">
+    </p-button>
+</div>
+<div *ngIf="!tipo_pesquisa" class="input-group">
+    <input pInputText placeholder="Pesquisa por etiqueta..." class="pesquisar" [(ngModel)]="etiquetaPesquisada"
+        (keyup)="filtrarEtiquetas()">
+    <p-button size="small" [text]="true" [plain]="true" label="Filtrar por placa/etiqueta" (click)="trocarPesquisa()">
+    </p-button>
+</div>
 <div *ngIf="carregando">
     <h2>
         Aguarde, carregando dados...
@@ -7,29 +30,6 @@
     </h2>
 </div>
 <div *ngIf="!carregando">
-    <h2>Veículos registrados</h2>
-    <div class="botoes">
-        <div class="links">
-            <p-button [text]="true" (click)="cadastrar()" id="cadastrar" label="Cadastrar"></p-button>
-            <p-button [text]="true" severity="secondary" (click)="mqtt()" id="mensagens" label="Mensagens"></p-button>
-            <p-button [text]="true" severity="secondary" (click)="scanner()" id="scanner" label="Pesquisa com QRcode"></p-button>
-        </div>
-        <div class="logout">
-            <p-button [text]="true" [raised]="true" severity="danger" (click)="logout()" id="logout" label="Sair"></p-button>
-        </div>
-    </div>
-    <div *ngIf="tipo_pesquisa" class="input-group">
-        <input [(ngModel)]="placaPesquisada" (keyup)="filtrarPlacas()" class="pesquisar" pInputText
-            placeholder="Pesquisa por placa...">
-        <p-button size="small" [text]="true" [plain]="true" label="Filtrar por placa/etiqueta" (click)="trocarPesquisa()">
-        </p-button>
-    </div>
-    <div *ngIf="!tipo_pesquisa" class="input-group">
-        <input pInputText placeholder="Pesquisa por etiqueta..." class="pesquisar" [(ngModel)]="etiquetaPesquisada"
-            (keyup)="filtrarEtiquetas()">
-        <p-button size="small" [text]="true" [plain]="true" label="Filtrar por placa/etiqueta" (click)="trocarPesquisa()">
-        </p-button>
-    </div>
     <p-table [value]="dadosFormulario" [rows]="100" [paginator]="true" [showCurrentPageReport]="true"
         currentPageReportTemplate="{first} a {last} de {totalRecords}" [rowsPerPageOptions]="[100, 200, 400]"
         selectionMode="single" [(selection)]="dadoSelecionado" dataKey="Matricula">
