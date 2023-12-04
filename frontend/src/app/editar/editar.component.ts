@@ -16,6 +16,7 @@ export class EditarComponent implements OnInit {
   formInvalid = false;  // variavel para mostrar o alerta de erro
   placa = ''; // variavel para armazenar a placa do carro
   erroSQL = false;  // variavel para mostrar o alerta de erro do banco
+  cadastroSucesso = false;  // variavel para mostrar o alerta de sucesso
 
   constructor(
     private activaRoute: ActivatedRoute,
@@ -40,11 +41,11 @@ export class EditarComponent implements OnInit {
             this.dado.codigoEtiqueta = retorno[0].codigoEtiqueta;
             if (retorno[0].codigoEtiqueta == 0 || '') {
               this.sharedDataService.codigoEtiqueta$.subscribe(
-                (codigo: string) => { 
-                if (codigo) {
-                  this.dado.codigoEtiqueta = codigo;
-                } 
-              });
+                (codigo: string) => {
+                  if (codigo) {
+                    this.dado.codigoEtiqueta = codigo;
+                  }
+                });
               const codigoEtiqueta = this.dado.codigoEtiqueta;
               this.sharedDataService.setCodigoEtiqueta('');
               this.dado.codigoEtiqueta = codigoEtiqueta
@@ -56,30 +57,30 @@ export class EditarComponent implements OnInit {
             } else {
               this.dado.CNHvalida = false
             }
-            
+
           },
 
           error: (erro: any) => console.log(erro)
         });
       },
     });
-    }
+  }
 
-    validatePlacaCarro(placa: string): boolean {  // Valida a placa do carro
-      // Verifica se a placa está no formato antigo brasileiro
-      const formatoAntigoRegex = /^[A-Z]{3}\d{4}$/;
-      
-      // Verifica se a placa está no formato Mercosul 
-      const placaRegex = /^[A-Z]{3}\d[A-Z]\d{2}$/;
-  
-      return formatoAntigoRegex.test(placa) || placaRegex.test(placa);
-    }
+  validatePlacaCarro(placa: string): boolean {  // Valida a placa do carro
+    // Verifica se a placa está no formato antigo brasileiro
+    const formatoAntigoRegex = /^[A-Z]{3}\d{4}$/;
+
+    // Verifica se a placa está no formato Mercosul 
+    const placaRegex = /^[A-Z]{3}\d[A-Z]\d{2}$/;
+
+    return formatoAntigoRegex.test(placa) || placaRegex.test(placa);
+  }
 
   validateAnoCarro(ano: number): boolean {  // valida o ano do carro
     const anoAtual = new Date().getFullYear();
     return ano >= 1900 && ano <= anoAtual;
   }
-  
+
   editarDados() { // edita os dados no banco de dados
     if (
       this.dado.marcaCarro != '' &&
@@ -91,7 +92,10 @@ export class EditarComponent implements OnInit {
     ) {
       this.dadosServico.editarDados(this.dado, this.placa).subscribe({
         next: () => {
-          this.router.navigate(['/lista']);
+          this.cadastroSucesso = true;
+          setTimeout(() => {
+            this.router.navigate(['/lista']);
+          }, 2000);
         },
         error: (erro: any) => {
           console.log(erro);
