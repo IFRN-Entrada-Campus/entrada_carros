@@ -11,7 +11,7 @@ var con = mysql.createPool({
   connectionLimit: 50,
 });
 
-function verificarToken(req, res, next) {
+function verificarToken(req, res, next) { // verifica se o token é válido
   const token = req.headers['x-access-token'];
   if (!token) {
     res.status(401).json({
@@ -29,7 +29,7 @@ function verificarToken(req, res, next) {
   }
 }
 
-router.get('/:placa', verificarToken, function (req, res) {
+router.get('/:placa', verificarToken, function (req, res) { // busca os dados pela placa
   con.getConnection(function (erroConexao, conexao) {
     if (erroConexao) {
       throw erroConexao;

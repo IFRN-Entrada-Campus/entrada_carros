@@ -15,7 +15,7 @@ export class LoginService {
     return this.http.post(`${this.apiUrl}/login`, {usuario: user, senha: password})
     .pipe(
       tap((response: any) => {
-        if (response.token) {
+        if (response.token) { // Salva o token e a data de expiração no localStorage
           localStorage.setItem('authToken', response.token);
           localStorage.setItem('tokenExpiration', response.expiraEm);
         }
@@ -24,19 +24,19 @@ export class LoginService {
   }
 
   logout(): void {
-    localStorage.clear();
-    this.autenticado = false;
+    localStorage.clear(); // Limpa o localStorage
+    this.autenticado = false; // Define a variavel autenticado como false
   }
 
-  isAutenticado(): boolean {
-    const authToken = localStorage.getItem('authToken');
+  isAutenticado(): boolean { // Verifica se o usuário está autenticado
+    const authToken = localStorage.getItem('authToken');  // Verifica se o token existe e se está expirado
     if (authToken) {
       const expiraEm = localStorage.getItem('tokenExpiration') || '';
       const tempoExpiraEm = new Date(Number(expiraEm) * 1000).getTime();
       const agora = new Date().getTime();
-      if (agora > tempoExpiraEm) {
+      if (agora > tempoExpiraEm) { 
         this.autenticado = false;
-        return false;
+        return false; 
       }
       this.autenticado = true;
       return true;

@@ -3,7 +3,7 @@ const router = express.Router();
 const mysql = require('mysql2');
 const jwt = require('jsonwebtoken');
 
-var con = mysql.createPool({
+var con = mysql.createPool({ //cria pool com o banco de dados
     host: 'db',
     user: 'root',
     password: '',
@@ -12,15 +12,15 @@ var con = mysql.createPool({
 });
 
 
-function verificarToken(req, res, next) {
+function verificarToken(req, res, next) { //verifica se o token é válido
     const token = req.headers['x-access-token'];
     if (!token) {
-        res.status(401).json({
+        res.status(401).json({ 
             auth: false,
             message: 'Nenhum token de autenticação informado.',
         });
     } else {
-        jwt.verify(token, process.env.JWT_SEGREDO, function (err, decoded) {
+        jwt.verify(token, process.env.JWT_SEGREDO, function (err, decoded) { 
             if (err) {
                 res.status(500).json({ auth: false, message: 'Token inválido.' });
             } else {
@@ -30,7 +30,7 @@ function verificarToken(req, res, next) {
     }
 }
 
-router.get('/', verificarToken, function (req, res) {
+router.get('/', verificarToken, function (req, res) { //retorna todos os alunos e carros
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
@@ -47,7 +47,7 @@ router.get('/', verificarToken, function (req, res) {
     });
 });
 
-router.get('/:Matricula', verificarToken, function (req, res) {
+router.get('/:Matricula', verificarToken, function (req, res) { // retorna aluno e carro pela matricula
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
@@ -64,7 +64,7 @@ router.get('/:Matricula', verificarToken, function (req, res) {
     });
 });
 
-router.get('/matricula', verificarToken, function (req, res) {
+router.get('/matricula', verificarToken, function (req, res) { // retorna todas as matriculas
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
@@ -79,7 +79,7 @@ router.get('/matricula', verificarToken, function (req, res) {
     });
 });
 
-router.get('/carro/:matriculaRel', verificarToken, function (req, res) {
+router.get('/carro/:matriculaRel', verificarToken, function (req, res) { // retorna carro pela matricula do responsavel
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
@@ -98,7 +98,7 @@ router.get('/carro/:matriculaRel', verificarToken, function (req, res) {
     });
 });
 
-router.post('/aluno', verificarToken, function (req, res) {
+router.post('/aluno', verificarToken, function (req, res) { // insere aluno
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
@@ -128,7 +128,7 @@ router.post('/aluno', verificarToken, function (req, res) {
     });
 });
 
-router.post('/carro', verificarToken, function (req, res) {
+router.post('/carro', verificarToken, function (req, res) { // insere carro
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
@@ -163,7 +163,7 @@ router.post('/carro', verificarToken, function (req, res) {
     });
 });
 
-router.put('/aluno/:matriculaAluno', verificarToken, function (req, res) {
+router.put('/aluno/:matriculaAluno', verificarToken, function (req, res) { // altera aluno
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
@@ -192,7 +192,7 @@ router.put('/aluno/:matriculaAluno', verificarToken, function (req, res) {
     });
 });
 
-router.put('/carro/:placaCarro', verificarToken, function (req, res) {
+router.put('/carro/:placaCarro', verificarToken, function (req, res) { // altera carro
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
@@ -237,7 +237,7 @@ router.put('/carro/:placaCarro', verificarToken, function (req, res) {
     });
 });
 
-router.delete('/aluno/:matriculaAluno', verificarToken, function (req, res) {
+router.delete('/aluno/:matriculaAluno', verificarToken, function (req, res) { // exclui aluno
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
@@ -265,7 +265,7 @@ router.delete('/aluno/:matriculaAluno', verificarToken, function (req, res) {
     });
 });
 
-router.delete('/carro/:placaCarro', verificarToken, function (req, res) {
+router.delete('/carro/:placaCarro', verificarToken, function (req, res) { // exclui carro
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;

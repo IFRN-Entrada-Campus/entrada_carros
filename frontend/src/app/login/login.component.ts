@@ -14,16 +14,16 @@ export class LoginComponent {
 
   constructor(private login: LoginService, private router: Router) {}
 
-  fazerLogin(): void {
+  fazerLogin(): void { // Faz o login
     this.login.login(this.usuario, this.senha).subscribe(
       (response) => {
         if (response.auth == true) {
-          this.login.autenticado = true;
-          this.router.navigate(['/lista']);
+          this.login.autenticado = true; // Define a variavel autenticado como true
+          this.router.navigate(['/lista']); // Navega para a página de lista
         } 
       },
       (error) => {
-        this.loginInvalid = true;
+        this.loginInvalid = true; // Mostra o alerta de erro
       }
     )
   }

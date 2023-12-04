@@ -17,15 +17,15 @@ export class AnaliseComponent implements AfterViewInit{
     private sharedDataService: SharedDataService) {}
 
   ngAfterViewInit(): void {
-    this.action.isReady.subscribe((res: any) => {
+    this.action.isReady.subscribe((res: any) => { // Inicia o scanner
       this.action.start();
     });
   }
 
-  handleQrCodeResult(e: ScannerQRCodeResult[], action?: any): void {
+  handleQrCodeResult(e: ScannerQRCodeResult[], action?: any): void { // Recebe o resultado do scanner
     this.valorDoScanner = e[0].value;
-    this.sharedDataService.setCodigoEtiqueta(this.valorDoScanner);
+    this.sharedDataService.setCodigoEtiqueta(this.valorDoScanner); // Envia o resultado para o serviço
     action.stop();
-    this.router.navigate(['/lista']);
+    this.router.navigate(['/lista']); // Navega para a página de lista
   }
 }

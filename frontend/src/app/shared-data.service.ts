@@ -4,16 +4,16 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class SharedDataService {
+export class SharedDataService { // Serviço para compartilhar os dados entre os componentes
   private codigoEtiquetaSubject = new BehaviorSubject<string>('');
-  private matriculaAlunoSubject = new BehaviorSubject<number>(0);
+  private matriculaAlunoSubject = new BehaviorSubject<number>(0); // Inicia a matricula com 0
   private alunoSubject = new BehaviorSubject<string>('');
   private modeloCarroSubject = new BehaviorSubject<string>('');
   private marcaCarroSubject = new BehaviorSubject<string>('');
-  private anoCarroSubject = new BehaviorSubject<number>(2000);
+  private anoCarroSubject = new BehaviorSubject<number>(2000); // Inicia o ano com 2000
   private placaCarroSubject = new BehaviorSubject<string>('');
   private CNHvalidaSubject = new BehaviorSubject<boolean>(false);
-  private validadeEtiquetaSubject = new BehaviorSubject<Date>(new Date());
+  private validadeEtiquetaSubject = new BehaviorSubject<Date>(new Date()); // Inicia a data com a data atual
 
   codigoEtiqueta$ = this.codigoEtiquetaSubject.asObservable();
   matriculaAluno$ = this.matriculaAlunoSubject.asObservable();

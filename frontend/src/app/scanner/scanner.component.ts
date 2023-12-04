@@ -20,13 +20,13 @@ export class ScannerComponent implements AfterViewInit, OnInit {
   ) { }
 
   ngAfterViewInit(): void {
-    this.action.isReady.subscribe((res: any) => {
+    this.action.isReady.subscribe((res: any) => { // Inicia o scanner
       this.action.start();
     });
   }
 
   ngOnInit(): void {
-    this.activaRoute.paramMap.subscribe({
+    this.activaRoute.paramMap.subscribe({ // Recebe o parametro da rota
       next: (rota: any) => {
         this.placa = rota.params.placa;
       }
@@ -35,10 +35,10 @@ export class ScannerComponent implements AfterViewInit, OnInit {
 
   handleQrCodeResult(e: ScannerQRCodeResult[], action?: any): void {
     this.valorDoScanner = e[0].value;
-    this.sharedDataService.setCodigoEtiqueta(this.valorDoScanner);
+    this.sharedDataService.setCodigoEtiqueta(this.valorDoScanner); // Envia o resultado para o serviço
     action.stop();
-    if (this.placa != null) {
-      this.router.navigate([`/editar/${this.placa}`]);
+    if (this.placa != null) { // Navega para a página de edição ou de formulário baseado no parametro da rota
+      this.router.navigate([`/editar/${this.placa}`]); 
     } else {
       this.router.navigate(['/forms']);
     }

@@ -12,7 +12,7 @@ var con = mysql.createPool({
     connectionLimit: 50,
 });
 
-function verificarToken(req, res, next) {
+function verificarToken(req, res, next) { // verifica se o token é válido
     const token = req.headers['x-access-token'];
     if (!token) {
         res.status(401).json({
@@ -30,7 +30,7 @@ function verificarToken(req, res, next) {
     }
 }
 
-router.post('/', function (req, res) {
+router.post('/', function (req, res) { // autentica o usuário
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
@@ -76,7 +76,7 @@ router.post('/', function (req, res) {
     });
 });
 
-router.post('/novo', verificarToken, function (req, res) {
+router.post('/novo', verificarToken, function (req, res) { // cria um novo usuário
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
