@@ -1,6 +1,7 @@
 <h1>Cadastro de dados</h1>
 <p *ngIf="formInvalid" class="error-message">O formulário contém erros. Preencha todos os campos e verifique se: O ano do carro está entre 1900 e o ano atual. A placa está digitada no padrão(LLL1111 ou LLL11L1).</p>
 <p *ngIf="erroSQL" class="error-message">Não foi possível cadastrar. Verifique se não há dados incorretos e tente novamente.</p>
+<p *ngIf="cadastroSucesso" class="success-message">Dados cadastrados com sucesso!</p>
 <table class="forms">
     <tr>
         <td><label htmlFor="marca">Marca do carro: </label></td>

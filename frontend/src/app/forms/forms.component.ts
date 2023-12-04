@@ -16,6 +16,7 @@ export class FormsComponent implements OnInit {
   matriculas: any[] = []; // variavel para armazenar as matriculas dos alunos
   formInvalid = false;  // variavel para mostrar o alerta de erro
   erroSQL = false;  // variavel para mostrar o alerta de erro do banco
+  cadastroSucesso = false;  // variavel para mostrar o alerta de sucesso
 
   constructor(private dadosService: DadosService, private router: Router, private sharedData: SharedDataService) {
 
@@ -114,7 +115,10 @@ export class FormsComponent implements OnInit {
     ) {
       this.dadosService.addDados(this.dado).subscribe({
         next: () => {
+          this.cadastroSucesso = true;
+          setTimeout(() => {
           this.router.navigate(['/lista']);
+          }, 2000);
         },
         error: (erro: any) => {
           console.log(erro);
