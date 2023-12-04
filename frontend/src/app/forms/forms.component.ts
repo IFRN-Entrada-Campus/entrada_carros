@@ -15,6 +15,7 @@ export class FormsComponent implements OnInit {
   dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: 0, validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
   matriculas: any[] = []; // variavel para armazenar as matriculas dos alunos
   formInvalid = false;  // variavel para mostrar o alerta de erro
+  erroSQL = false;  // variavel para mostrar o alerta de erro do banco
 
   constructor(private dadosService: DadosService, private router: Router, private sharedData: SharedDataService) {
 
@@ -112,9 +113,14 @@ export class FormsComponent implements OnInit {
       this.dado.codigoEtiqueta != ''
     ) {
       this.dadosService.addDados(this.dado).subscribe({
-        error: (erro: any) => console.log(erro)
+        next: () => {
+          this.router.navigate(['/lista']);
+        },
+        error: (erro: any) => {
+          console.log(erro);
+          this.erroSQL = true;
+        }
       });
-      this.router.navigate(['/lista']);
     } else {
       this.formInvalid = true;
       console.log(this.dado);
