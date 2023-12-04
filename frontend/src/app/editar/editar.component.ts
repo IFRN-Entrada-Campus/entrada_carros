@@ -15,6 +15,7 @@ export class EditarComponent implements OnInit {
   dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
   formInvalid = false;  // variavel para mostrar o alerta de erro
   placa = ''; // variavel para armazenar a placa do carro
+  erroSQL = false;  // variavel para mostrar o alerta de erro do banco
 
   constructor(
     private activaRoute: ActivatedRoute,
@@ -89,9 +90,14 @@ export class EditarComponent implements OnInit {
       this.dado.codigoEtiqueta != ''
     ) {
       this.dadosServico.editarDados(this.dado, this.placa).subscribe({
-        error: (erro: any) => console.log(erro)
+        next: () => {
+          this.router.navigate(['/lista']);
+        },
+        error: (erro: any) => {
+          console.log(erro);
+          this.erroSQL = true;
+        }
       });
-      this.router.navigate(['/lista']);
     } else {
       this.formInvalid = true;
     }

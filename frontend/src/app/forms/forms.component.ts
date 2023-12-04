@@ -123,7 +123,6 @@ export class FormsComponent implements OnInit {
       });
     } else {
       this.formInvalid = true;
-      console.log(this.dado);
     }
   }
 
