@@ -22,9 +22,7 @@ export class LoginService {
           localStorage.setItem('authToken', response.token);
           localStorage.setItem('tokenExpiration', response.expiraEm);
 
-          console.log(response.role);
           this.isAdmin = response.role == 'admin';
-          localStorage.setItem('isAdmin', this.isAdmin.toString());
         }
       })
     );
@@ -44,16 +42,13 @@ export class LoginService {
       const agora = new Date().getTime();
       if (agora > tempoExpiraEm) { 
         this.autenticado = false;
-        this.isAdmin = false;
         return false; 
       }
       this.autenticado = true;
-      this.isAdmin = localStorage.getItem('isAdmin') == 'true';
       return true;
     }
   
     this.autenticado = false;
-    this.isAdmin = false;
     return false;
   }
 
