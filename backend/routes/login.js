@@ -12,6 +12,13 @@ var con = mysql.createPool({
     connectionLimit: 50,
 });
 
+/**
+ * @swagger
+ * tags:
+ *   name: Login
+ *   description: Operações relacionadas a login de usuários
+ */
+
 function verificarToken(req, res, next) { // verifica se o token é válido
     const token = req.headers['x-access-token'];
     if (!token) {
@@ -30,6 +37,14 @@ function verificarToken(req, res, next) { // verifica se o token é válido
     }
 }
 
+/**
+ * @swagger
+ * /api/login:
+ *  post:
+ *      summary: Autenticação do usuário
+ *      description: Autentica o usuário e devolve um token de acesso
+ *      tags: [Login]
+ */
 router.post('/', function (req, res) { // autentica o usuário
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
@@ -76,6 +91,14 @@ router.post('/', function (req, res) { // autentica o usuário
     });
 });
 
+/**
+ * @swagger
+ * /api/login/novo:
+ *  post:
+ *      summary: Cadastra novo usuário
+ *      description: Cadastra um novo usuário
+ *      tags: [Login]
+ */
 router.post('/novo', verificarToken, function (req, res) { // cria um novo usuário
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {

@@ -11,6 +11,13 @@ var con = mysql.createPool({
   connectionLimit: 50,
 });
 
+/**
+ * @swagger
+ * tags:
+ *   name: Aluno/Servidor e Carros
+ *   description: Operações relacionadas a dados de alunos, servidores e carros
+ */
+
 function verificarToken(req, res, next) { // verifica se o token é válido
   const token = req.headers['x-access-token'];
   if (!token) {
@@ -29,6 +36,14 @@ function verificarToken(req, res, next) { // verifica se o token é válido
   }
 }
 
+/**
+ * @swagger
+ * /api/placa/<placa>:
+ *  get:
+ *      summary: Retorna os dados de alunos ou servidores e seu carro pela placa
+ *      description: Retorna os dados de alunos ou servidores e de seu respectivo carro buscando pela placa
+ *      tags: [Aluno/Servidor e Carros]
+ */
 router.get('/:placa', verificarToken, function (req, res) { // busca os dados pela placa
   con.getConnection(function (erroConexao, conexao) {
     if (erroConexao) {

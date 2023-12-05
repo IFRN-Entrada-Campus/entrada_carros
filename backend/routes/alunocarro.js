@@ -11,6 +11,12 @@ var con = mysql.createPool({ //cria pool com o banco de dados
     connectionLimit: 50,
 });
 
+/**
+ * @swagger
+ * tags:
+ *   name: Aluno/Servidor e Carros
+ *   description: Operações relacionadas a dados de alunos, servidores e carros
+ */
 
 function verificarToken(req, res, next) { //verifica se o token é válido
     const token = req.headers['x-access-token'];
@@ -30,6 +36,14 @@ function verificarToken(req, res, next) { //verifica se o token é válido
     }
 }
 
+/**
+ * @swagger
+ * /api/alunocarro:
+ *  get:
+ *      summary: Retorna os alunos/servidores e carros
+ *      description: Retorna todos os dados organizados das tabelas aluno e carro
+ *      tags: [Aluno/Servidor e Carros]
+ */
 router.get('/', verificarToken, function (req, res) { //retorna todos os alunos e carros
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
@@ -47,6 +61,14 @@ router.get('/', verificarToken, function (req, res) { //retorna todos os alunos 
     });
 });
 
+/**
+ * @swagger
+ * /api/alunocarro/<matricula>:
+ *  get:
+ *      summary: Retorna os alunos/servidores e carros de acordo com a matrícula
+ *      description: Retorna todos os dados organizados das tabelas aluno e carro de acordo com a matrícula
+ *      tags: [Aluno/Servidor e Carros]
+ */
 router.get('/:Matricula', verificarToken, function (req, res) { // retorna aluno e carro pela matricula
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
@@ -64,6 +86,14 @@ router.get('/:Matricula', verificarToken, function (req, res) { // retorna aluno
     });
 });
 
+/**
+ * @swagger
+ * /api/alunocarro/matricula:
+ *  get:
+ *      summary: Retorna todas as matrículas
+ *      description: Retorna todos as matrículas de todos os alunos/servidores cadastrados
+ *      tags: [Aluno/Servidor e Carros]
+ */
 router.get('/matricula', verificarToken, function (req, res) { // retorna todas as matriculas
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
@@ -79,6 +109,14 @@ router.get('/matricula', verificarToken, function (req, res) { // retorna todas 
     });
 });
 
+/**
+ * @swagger
+ * /api/alunocarro/carro/<matricula>:
+ *  get:
+ *      summary: Retorna carros pela matrícula do condutor
+ *      description: Retorna todos os carros relacionados a uma matrícula
+ *      tags: [Aluno/Servidor e Carros]
+ */
 router.get('/carro/:matriculaRel', verificarToken, function (req, res) { // retorna carro pela matricula do responsavel
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
@@ -98,6 +136,14 @@ router.get('/carro/:matriculaRel', verificarToken, function (req, res) { // reto
     });
 });
 
+/**
+ * @swagger
+ * /api/alunocarro/aluno:
+ *  post:
+ *      summary: Cadastro de aluno ou servidor
+ *      description: Cadastro de nome e matricula do servidor ou aluno
+ *      tags: [Aluno/Servidor e Carros]
+ */
 router.post('/aluno', verificarToken, function (req, res) { // insere aluno
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
@@ -128,6 +174,14 @@ router.post('/aluno', verificarToken, function (req, res) { // insere aluno
     });
 });
 
+/**
+ * @swagger
+ * /api/alunocarro/carro:
+ *  post:
+ *      summary: Cadastra um novo carro e o relaciona a um condutor(aluno/servidor)
+ *      description: Cadastra placa, modelo, marca e ano do carro junto com o código da etiqueta, validade da mesma e uma confirmação da validade da etiqueta.
+ *      tags: [Aluno/Servidor e Carros]
+ */
 router.post('/carro', verificarToken, function (req, res) { // insere carro
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
@@ -163,6 +217,14 @@ router.post('/carro', verificarToken, function (req, res) { // insere carro
     });
 });
 
+/**
+ * @swagger
+ * /api/alunocarro/aluno/<matricula>:
+ *  put:
+ *      summary: Edita aluno ou servidor pela matrícula
+ *      description: Edita todos os dados do aluno o buscando pela matrícula
+ *      tags: [Aluno/Servidor e Carros]
+ */
 router.put('/aluno/:matriculaAluno', verificarToken, function (req, res) { // altera aluno
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
@@ -192,6 +254,14 @@ router.put('/aluno/:matriculaAluno', verificarToken, function (req, res) { // al
     });
 });
 
+/**
+ * @swagger
+ * /api/alunocarro/carro/<placa>:
+ *  put:
+ *      summary: Edita carro pela placa
+ *      description: Edita todos os dados do carro buscando pela placa
+ *      tags: [Aluno/Servidor e Carros]
+ */
 router.put('/carro/:placaCarro', verificarToken, function (req, res) { // altera carro
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
@@ -237,6 +307,14 @@ router.put('/carro/:placaCarro', verificarToken, function (req, res) { // altera
     });
 });
 
+/**
+ * @swagger
+ * /api/alunocarro/aluno/<matricula>:
+ *  delete:
+ *      summary: Deleta aluno ou servidor pela matrícula
+ *      description: Deleta todos os dados do aluno o buscando pela matrícula
+ *      tags: [Aluno/Servidor e Carros]
+ */
 router.delete('/aluno/:matriculaAluno', verificarToken, function (req, res) { // exclui aluno
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
@@ -265,6 +343,14 @@ router.delete('/aluno/:matriculaAluno', verificarToken, function (req, res) { //
     });
 });
 
+/**
+ * @swagger
+ * /api/alunocarro/carro/<placa>:
+ *  delete:
+ *      summary: Deleta carro pela placa
+ *      description: Deleta todos os dados do carro buscando pela placa
+ *      tags: [Aluno/Servidor e Carros]
+ */
 router.delete('/carro/:placaCarro', verificarToken, function (req, res) { // exclui carro
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
