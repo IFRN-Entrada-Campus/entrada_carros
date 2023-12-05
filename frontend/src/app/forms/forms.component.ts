@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { DadosService } from '../dados.service';
 import { SharedDataService } from '../shared-data.service';
 import { Subscription } from 'rxjs';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-forms',
@@ -17,12 +18,14 @@ export class FormsComponent implements OnInit {
   formInvalid = false;  // variavel para mostrar o alerta de erro
   erroSQL = false;  // variavel para mostrar o alerta de erro do banco
   cadastroSucesso = false;  // variavel para mostrar o alerta de sucesso
+  admin = false; // variavel para verificar se o usuário é admin ou não
 
-  constructor(private dadosService: DadosService, private router: Router, private sharedData: SharedDataService) {
+  constructor(private dadosService: DadosService, private router: Router, private sharedData: SharedDataService, private loginService: LoginService) {
 
   }
 
   ngOnInit(): void {
+    this.admin = this.loginService.isUserAdmin();
     this.dadosService.getMatriculas().subscribe({ // Preenche o select com as matrículas dos alunos
       next: (resultado: any) => (this.matriculas = resultado),
       error: (erro: any) => console.log(erro)
@@ -118,7 +121,7 @@ export class FormsComponent implements OnInit {
           this.cadastroSucesso = true;
           setTimeout(() => {
           this.router.navigate(['/lista']);
-          }, 2000);
+          }, 1000);
         },
         error: (erro: any) => {
           console.log(erro);

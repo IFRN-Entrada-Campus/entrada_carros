@@ -4,6 +4,7 @@ import { DadosService } from '../dados.service';
 import { Dados } from '../dados';
 import { SharedDataService } from '../shared-data.service';
 import { Subscription } from 'rxjs';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-editar',
@@ -17,15 +18,18 @@ export class EditarComponent implements OnInit {
   placa = ''; // variavel para armazenar a placa do carro
   erroSQL = false;  // variavel para mostrar o alerta de erro do banco
   cadastroSucesso = false;  // variavel para mostrar o alerta de sucesso
+  admin = false; // variavel para verificar se o usuário é admin ou não
 
   constructor(
     private activaRoute: ActivatedRoute,
     private dadosServico: DadosService,
     private router: Router,
-    private sharedDataService: SharedDataService
+    private sharedDataService: SharedDataService,
+    private loginService: LoginService
   ) { }
 
   ngOnInit(): void {
+    this.admin = this.loginService.isUserAdmin();
     this.formInvalid = false;
     this.activaRoute.paramMap.subscribe({ // Preenche os campos com os dados do carro
       next: (rota: any) => {
@@ -95,7 +99,7 @@ export class EditarComponent implements OnInit {
           this.cadastroSucesso = true;
           setTimeout(() => {
             this.router.navigate(['/lista']);
-          }, 2000);
+          }, 1000);
         },
         error: (erro: any) => {
           console.log(erro);
