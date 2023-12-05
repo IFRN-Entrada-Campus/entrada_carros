@@ -19,22 +19,31 @@ var con = mysql.createPool({
  *   description: Operações relacionadas a login de usuários
  */
 
-function verificarToken(req, res, next) { // verifica se o token é válido
+function verificarAdmin(req, res, next) {
     const token = req.headers['x-access-token'];
     if (!token) {
         res.status(401).json({
             auth: false,
-            message: 'Nenhum token de autenticação informado.',
+            message: 'Nenhum token de autenticação informado.'
         });
     } else {
         jwt.verify(token, process.env.JWT_SEGREDO, function (err, decoded) {
             if (err) {
                 res.status(500).json({ auth: false, message: 'Token inválido.' });
             } else {
-                next();
+                const role = decoded.role;
+
+                if (role === 'admin') {
+                    next();
+                } else {
+                    res.status(403).json({
+                        auth: false,
+                        message: 'Acesso negado. Somente usuários com papel de admin podem realizar essa operação'
+                    });
+                }
             }
         });
-    }
+    } 
 }
 
 /**
@@ -81,7 +90,7 @@ router.post('/', function (req, res) { // autentica o usuário
                     return;
                 }
 
-                const token = jwt.sign({ usuario: user.usuario }, process.env.JWT_SEGREDO, { expiresIn: '1d' });
+                const token = jwt.sign({ usuario: user.usuario, role: user.role }, process.env.JWT_SEGREDO, { expiresIn: '1d' });
                 const decodedToken = jwt.decode(token);
                 const expiraEm = decodedToken.exp;
 
@@ -99,13 +108,14 @@ router.post('/', function (req, res) { // autentica o usuário
  *      description: Cadastra um novo usuário
  *      tags: [Login]
  */
-router.post('/novo', verificarToken, function (req, res) { // cria um novo usuário
+router.post('/novo', verificarAdmin, function (req, res) { // cria um novo usuário
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
         }
         const usuario = req.body.usuario;
         const senha = req.body.senha;
+        const role = req.body.role;
 
         const sqlselect = 'SELECT * FROM login WHERE usuario = ?';
         con.query(sqlselect, [usuario], function (erroComandoSQL, result) {
@@ -128,8 +138,8 @@ router.post('/novo', verificarToken, function (req, res) { // cria um novo usuá
                     return;
                 }
 
-                const sqlinsert = 'INSERT INTO login(usuario, senha) VALUES (?, ?)';
-                con.query(sqlinsert, [usuario, hash], function (erro) {
+                const sqlinsert = 'INSERT INTO login(usuario, senha, role) VALUES (?, ?, ?)';
+                con.query(sqlinsert, [usuario, hash, role], function (erro) {
                     if (erro) {
                         console.error('Erro ao inserir novo login:', erro);
                         res.status(500).send('Erro do servidor');

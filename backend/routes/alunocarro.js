@@ -36,6 +36,33 @@ function verificarToken(req, res, next) { //verifica se o token é válido
     }
 }
 
+function verificarAdmin(req, res, next) { // Verifica se o usuário é admin
+    const token = req.headers['x-access-token'];
+    if (!token) {
+        res.status(401).json({
+            auth: false,
+            message: 'Nenhum token de autenticação informado.'
+        });
+    } else {
+        jwt.verify(token, process.env.JWT_SEGREDO, function (err, decoded) {
+            if (err) {
+                res.status(500).json({ auth: false, message: 'Token inválido.' });
+            } else {
+                const role = decoded.role;
+
+                if (role === 'admin') {
+                    next();
+                } else {
+                    res.status(403).json({
+                        auth: false,
+                        message: 'Acesso negado. Somente usuários com papel de admin podem realizar essa operação'
+                    });
+                }
+            }
+        });
+    } 
+}
+
 /**
  * @swagger
  * /api/alunocarro:
@@ -144,7 +171,7 @@ router.get('/carro/:matriculaRel', verificarToken, function (req, res) { // reto
  *      description: Cadastro de nome e matricula do servidor ou aluno
  *      tags: [Aluno/Servidor e Carros]
  */
-router.post('/aluno', verificarToken, function (req, res) { // insere aluno
+router.post('/aluno', verificarAdmin, function (req, res) { // insere aluno
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
@@ -182,7 +209,7 @@ router.post('/aluno', verificarToken, function (req, res) { // insere aluno
  *      description: Cadastra placa, modelo, marca e ano do carro junto com o código da etiqueta, validade da mesma e uma confirmação da validade da etiqueta.
  *      tags: [Aluno/Servidor e Carros]
  */
-router.post('/carro', verificarToken, function (req, res) { // insere carro
+router.post('/carro', verificarAdmin, function (req, res) { // insere carro
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
@@ -225,7 +252,7 @@ router.post('/carro', verificarToken, function (req, res) { // insere carro
  *      description: Edita todos os dados do aluno o buscando pela matrícula
  *      tags: [Aluno/Servidor e Carros]
  */
-router.put('/aluno/:matriculaAluno', verificarToken, function (req, res) { // altera aluno
+router.put('/aluno/:matriculaAluno', verificarAdmin, function (req, res) { // altera aluno
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
@@ -262,7 +289,7 @@ router.put('/aluno/:matriculaAluno', verificarToken, function (req, res) { // al
  *      description: Edita todos os dados do carro buscando pela placa
  *      tags: [Aluno/Servidor e Carros]
  */
-router.put('/carro/:placaCarro', verificarToken, function (req, res) { // altera carro
+router.put('/carro/:placaCarro', verificarAdmin, function (req, res) { // altera carro
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
@@ -315,7 +342,7 @@ router.put('/carro/:placaCarro', verificarToken, function (req, res) { // altera
  *      description: Deleta todos os dados do aluno o buscando pela matrícula
  *      tags: [Aluno/Servidor e Carros]
  */
-router.delete('/aluno/:matriculaAluno', verificarToken, function (req, res) { // exclui aluno
+router.delete('/aluno/:matriculaAluno', verificarAdmin, function (req, res) { // exclui aluno
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
@@ -351,7 +378,7 @@ router.delete('/aluno/:matriculaAluno', verificarToken, function (req, res) { //
  *      description: Deleta todos os dados do carro buscando pela placa
  *      tags: [Aluno/Servidor e Carros]
  */
-router.delete('/carro/:placaCarro', verificarToken, function (req, res) { // exclui carro
+router.delete('/carro/:placaCarro', verificarAdmin, function (req, res) { // exclui carro
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
