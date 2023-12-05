@@ -1,7 +1,7 @@
 <h2>Veículos registrados</h2>
 <div class="botoes">
     <div class="links">
-        <p-button [text]="true" (click)="cadastrar()" id="cadastrar" label="Cadastrar"></p-button>
+        <p-button *ngIf="admin" [text]="true" (click)="cadastrar()" id="cadastrar" label="Cadastrar"></p-button>
         <p-button [text]="true" severity="secondary" (click)="mqtt()" id="mensagens" label="Mensagens"></p-button>
         <p-button [text]="true" severity="secondary" (click)="scanner()" id="scanner" label="Pesquisa com QRcode"></p-button>
     </div>
@@ -55,8 +55,8 @@
                 </th>
                 <th pSortableColumn="CNHvalida">CNH válida <p-sortIcon field="CNHvalida"></p-sortIcon>
                 </th>
-                <th></th>
-                <th></th>
+                <th *ngIf="admin"></th>
+                <th *ngIf="admin"></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-dados>
@@ -70,12 +70,12 @@
                 <td> {{ dados.codigoEtiqueta }} </td>
                 <td> {{ dados.validadeEtiqueta }} </td>
                 <td> {{ dados.CNHvalida }} </td>
-                <td>
-                    <p-button (click)="editarDados(dados.Placa)" label="Editar" styleClass="p-button-link">
+                <td *ngIf="admin">
+                    <p-button *ngIf="admin" (click)="editarDados(dados.Placa)" label="Editar" styleClass="p-button-link">
                     </p-button>
                 </td>
-                <td>
-                    <p-button (click)="deletarDados(dados.Placa)" label="Excluir"
+                <td *ngIf="admin">
+                    <p-button *ngIf="admin" (click)="deletarDados(dados.Placa)" label="Excluir"
                         styleClass="p-button-danger"></p-button>
                 </td>
             </tr>

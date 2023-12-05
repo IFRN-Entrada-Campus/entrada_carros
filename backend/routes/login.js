@@ -94,7 +94,7 @@ router.post('/', function (req, res) { // autentica o usuário
                 const decodedToken = jwt.decode(token);
                 const expiraEm = decodedToken.exp;
 
-                res.status(200).json({ auth: true, message: 'Login bem-sucedido', token: token, expiraEm: expiraEm });
+                res.status(200).json({ auth: true, message: 'Login bem-sucedido', token: token, role: user.role, expiraEm: expiraEm });
             });
         });
     });

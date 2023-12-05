@@ -17,12 +17,14 @@ export class ListaComponent implements OnInit {
   dadosCopia: any[] = []; // copia dos dados do banco de dados
   carregando = true;  // variavel para mostrar o loading
   tipo_pesquisa = true; // true = placa e false = etiqueta;
+  admin = false; // variavel para verificar se o usuário é admin ou não
 
   constructor(private dadosService: DadosService, private router: Router, private sharedDataService: SharedDataService, private loginService: LoginService) {
   }
 
 
   ngOnInit(): void {
+    this.admin = this.loginService.isUserAdmin();
     this.onListar();
     this.sharedDataService.codigoEtiqueta$.subscribe((codigoEtiqueta) => {  // recebe o codigo da etiqueta do componente analise
       if (codigoEtiqueta) {
