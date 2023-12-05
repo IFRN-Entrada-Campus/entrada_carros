@@ -11,8 +11,10 @@ FROM docker.io/nginx:latest as certgen
 RUN apt-get update && apt-get install -y openssl
 RUN mkdir /etc/nginx/ssl
 WORKDIR /etc/nginx/ssl
+COPY .env .
+ENV HOST=$HOST
 RUN openssl genpkey -algorithm RSA -out private.key
-RUN openssl req -new -key private.key -out cert.csr -subj "/C=BR/ST=RN/L=PAR/O=IFRN/CN=localhost"
+RUN openssl req -new -key private.key -out cert.csr -subj "/C=BR/ST=RN/L=PAR/O=IFRN/CN=${HOST}"
 RUN openssl x509 -req -days 1826 -in cert.csr -signkey private.key -out cert.crt
 
 # Etapa de configuração do Nginx
