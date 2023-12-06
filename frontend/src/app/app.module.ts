@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { MqttModule } from 'ngx-mqtt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
+import { CookieService } from 'ngx-cookie-service';
 
 import { AppComponent } from './app.component';
 import { ListaComponent } from './lista/lista.component';
@@ -64,7 +65,7 @@ LOAD_WASM().subscribe();
     ProgressSpinnerModule,
     NgxScannerQrcodeModule
   ],
-  providers: [DadosService, SharedDataService],
+  providers: [DadosService, SharedDataService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

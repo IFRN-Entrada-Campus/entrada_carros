@@ -3,18 +3,17 @@ import { Dados } from './dados';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, switchMap, merge } from 'rxjs';
 import { environment } from '../environments/environment';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DadosService {
-
-  authToken: any = localStorage.getItem('authToken');
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
+  apiUrl = environment.apiUrl
+  authToken: any = this.cookieService.get('authToken');
   headers = new HttpHeaders()
   .set('x-access-token', this.authToken);
-
-  constructor(private http: HttpClient) { }
-  apiUrl = environment.apiUrl
 
   getDados(): Observable<any> { // Retorna os dados do banco da tabela aluno e carro
     return this.http.get(`${this.apiUrl}/alunocarro`, {headers: this.headers})

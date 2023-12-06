@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../environments/environment';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class LoginService {
   autenticado = false;
   isAdmin = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
   apiUrl = environment.apiUrl;
   
 
@@ -19,26 +20,26 @@ export class LoginService {
     .pipe(
       tap((response: any) => {
         if (response.token) { // Salva o token e a data de expiração no localStorage
-          localStorage.setItem('authToken', response.token);
-          localStorage.setItem('tokenExpiration', response.expiraEm);
+          this.cookieService.set('authToken', response.token);
+          this.cookieService.set('tokenExpiration', response.expiraEm);
 
           this.isAdmin = response.role == 'admin';
-          localStorage.setItem('isAdmin', this.isAdmin.toString());
+          this.cookieService.set('isAdmin', this.isAdmin.toString());
         }
       })
     );
   }
 
   logout(): void {
-    localStorage.clear(); // Limpa o localStorage
+    this.cookieService.deleteAll(); // Excluir todos os cookies
     this.autenticado = false; // Define a variavel autenticado como false
     this.isAdmin = false; // Define a variavel isAdmin como false
   }
 
   isAutenticado(): boolean { // Verifica se o usuário está autenticado
-    const authToken = localStorage.getItem('authToken');  // Verifica se o token existe e se está expirado
+    const authToken = this.cookieService.get('authToken');  // Verifica se o token existe e se está expirado
     if (authToken) {
-      const expiraEm = localStorage.getItem('tokenExpiration') || '';
+      const expiraEm = this.cookieService.get('tokenExpiration') || '';
       const tempoExpiraEm = new Date(Number(expiraEm) * 1000).getTime();
       const agora = new Date().getTime();
       if (agora > tempoExpiraEm) { 
@@ -47,7 +48,7 @@ export class LoginService {
         return false; 
       }
       this.autenticado = true;
-      this.isAdmin = localStorage.getItem('isAdmin') == 'true';
+      this.isAdmin = this.cookieService.get('isAdmin') == 'true';
       return true;
     }
   
