@@ -25,3 +25,7 @@ docker compose down --volumes
 * 3000: Express com Node.js (backend)
 * 3306: MySQL
 * 8081: PHPMyAdmin
+
+## Swagger
+
+Para acessar a documentação com os endpoints e suas funções entre em [https://<seu endereço>/api/docs/](https://localhost/api/docs/)
