@@ -2,15 +2,27 @@
 import requests
 import json
 
-url = "localhost:3000/placa"
+placa = "<placa>"
+url = f"https://<endereco>/api/placa/{placa}"
+loginURL = "https://<endereco>/api/login"
 
-payload = json.dumps({
-  "placa": "RNT7U76"
-})
-headers = {
+headersLogin = {
   'Content-Type': 'application/json'
 }
+payloadLogin = json.dumps({
+  "usuario": "<usuario>",
+  "senha": "<senha>"
+})
 
-response = requests.request("POST", url, headers=headers, data=payload)
+login_res = requests.post(loginURL, headers=headersLogin, data=payloadLogin, verify=False)
+if login_res.status_code == 200:
+  token = login_res.json().get('token')
 
-print(response.text)
+  headers = {
+    'x-access-token': token
+  }
+
+  response = requests.get(url, headers=headers, verify=False)
+  print(response.text)
+else:
+  print(login_res.text)
