@@ -19,7 +19,7 @@ var con = mysql.createPool({
  *   description: Operações relacionadas a login de usuários
  */
 
-function verificarAdmin(req, res, next) {
+function verificarAdmin(req, res, next) { // Verifica se o usuário é admin
     const token = req.headers['x-access-token'];
     if (!token) {
         res.status(401).json({
@@ -31,19 +31,24 @@ function verificarAdmin(req, res, next) {
             if (err) {
                 res.status(500).json({ auth: false, message: 'Token inválido.' });
             } else {
-                const role = decoded.role;
-
-                if (role === 'admin') {
-                    next();
+                const agoraEmSegundos = Math.floor(Date.now() / 1000);
+                if (decoded.exp < agoraEmSegundos) {
+                    res.status(401).json({ auth: false, message: 'Token expirado.' });
                 } else {
-                    res.status(403).json({
-                        auth: false,
-                        message: 'Acesso negado. Somente usuários com papel de admin podem realizar essa operação'
-                    });
+                    const role = decoded.role;
+
+                    if (role === 'admin') {
+                        next();
+                    } else {
+                        res.status(403).json({
+                            auth: false,
+                            message: 'Acesso negado. Somente usuários com papel de admin podem realizar essa operação'
+                        });
+                    }
                 }
             }
         });
-    } 
+    }
 }
 
 /**

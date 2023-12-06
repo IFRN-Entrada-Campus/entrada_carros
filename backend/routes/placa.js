@@ -18,21 +18,26 @@ var con = mysql.createPool({
  *   description: Operações relacionadas a dados de alunos, servidores e carros
  */
 
-function verificarToken(req, res, next) { // verifica se o token é válido
+function verificarToken(req, res, next) { //verifica se o token é válido
   const token = req.headers['x-access-token'];
   if (!token) {
-    res.status(401).json({
-      auth: false,
-      message: 'Nenhum token de autenticação informado.',
-    });
+      res.status(401).json({
+          auth: false,
+          message: 'Nenhum token de autenticação informado.',
+      });
   } else {
-    jwt.verify(token, process.env.JWT_SEGREDO, function (err, decoded) {
-      if (err) {
-        res.status(500).json({ auth: false, message: 'Token inválido.' });
-      } else {
-        next();
-      }
-    });
+      jwt.verify(token, process.env.JWT_SEGREDO, function (err, decoded) {
+          if (err) {
+              res.status(500).json({ auth: false, message: 'Token inválido.' });
+          } else {
+              const agoraEmSegundos = Math.floor(Date.now() / 1000);
+              if (decoded.exp < agoraEmSegundos) {
+                  res.status(401).json({ auth: false, message: 'Token expirado.' });
+              } else {
+                  next();
+              }
+          }
+      });
   }
 }
 

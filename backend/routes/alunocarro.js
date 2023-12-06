@@ -21,16 +21,21 @@ var con = mysql.createPool({ //cria pool com o banco de dados
 function verificarToken(req, res, next) { //verifica se o token é válido
     const token = req.headers['x-access-token'];
     if (!token) {
-        res.status(401).json({ 
+        res.status(401).json({
             auth: false,
             message: 'Nenhum token de autenticação informado.',
         });
     } else {
-        jwt.verify(token, process.env.JWT_SEGREDO, function (err, decoded) { 
+        jwt.verify(token, process.env.JWT_SEGREDO, function (err, decoded) {
             if (err) {
                 res.status(500).json({ auth: false, message: 'Token inválido.' });
             } else {
-                next();
+                const agoraEmSegundos = Math.floor(Date.now() / 1000);
+                if (decoded.exp < agoraEmSegundos) {
+                    res.status(401).json({ auth: false, message: 'Token expirado.' });
+                } else {
+                    next();
+                }
             }
         });
     }
@@ -48,19 +53,24 @@ function verificarAdmin(req, res, next) { // Verifica se o usuário é admin
             if (err) {
                 res.status(500).json({ auth: false, message: 'Token inválido.' });
             } else {
-                const role = decoded.role;
-
-                if (role === 'admin') {
-                    next();
+                const agoraEmSegundos = Math.floor(Date.now() / 1000);
+                if (decoded.exp < agoraEmSegundos) {
+                    res.status(401).json({ auth: false, message: 'Token expirado.' });
                 } else {
-                    res.status(403).json({
-                        auth: false,
-                        message: 'Acesso negado. Somente usuários com papel de admin podem realizar essa operação'
-                    });
+                    const role = decoded.role;
+
+                    if (role === 'admin') {
+                        next();
+                    } else {
+                        res.status(403).json({
+                            auth: false,
+                            message: 'Acesso negado. Somente usuários com papel de admin podem realizar essa operação'
+                        });
+                    }
                 }
             }
         });
-    } 
+    }
 }
 
 /**
