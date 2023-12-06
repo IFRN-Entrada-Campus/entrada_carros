@@ -118,6 +118,7 @@ export class FormsComponent implements OnInit {
     ) {
       this.dadosService.addDados(this.dado).subscribe({
         next: () => {
+          this.formInvalid = false;
           this.cadastroSucesso = true;
           setTimeout(() => {
           this.router.navigate(['/lista']);

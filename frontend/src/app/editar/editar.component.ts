@@ -96,6 +96,7 @@ export class EditarComponent implements OnInit {
     ) {
       this.dadosServico.editarDados(this.dado, this.placa).subscribe({
         next: () => {
+          this.formInvalid = false;
           this.cadastroSucesso = true;
           setTimeout(() => {
             this.router.navigate(['/lista']);
