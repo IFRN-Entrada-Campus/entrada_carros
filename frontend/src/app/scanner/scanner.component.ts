@@ -21,7 +21,11 @@ export class ScannerComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit(): void {
     this.action.isReady.subscribe((res: any) => { // Inicia o scanner
-      this.action.start();
+      const traseiraPadrao = (dispositivos: any[]) => {
+        const dispositivo = dispositivos.find(f => (/back|rear|environment/gi.test(f.label)));
+        this.action.playDevice(dispositivo ? dispositivo.deviceId : dispositivos[0].deviceId);
+      }
+      this.action.start(traseiraPadrao);
     });
   }
 
