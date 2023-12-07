@@ -26,6 +26,11 @@ docker compose down --volumes
 * 3306: MySQL
 * 8081: PHPMyAdmin
 
+### A configuração padrão do server nginx conta com dois endereços
+
+* [https://<seu endereço>/](https://localhost) : Interface web de cadastro
+* [https://<seu endereço>/api](https://localhost/api) : Solicitações para a api
+
 ## Swagger
 
 Para acessar a documentação com os endpoints e suas funções entre em [https://<seu endereço>/api/docs/](https://localhost/api/docs/)
