@@ -10,6 +10,7 @@ var con = mysql.createPool({
     password: '',
     database: 'dbentrada',
     connectionLimit: 50,
+    connectTimeout: 30000,
 });
 
 /**

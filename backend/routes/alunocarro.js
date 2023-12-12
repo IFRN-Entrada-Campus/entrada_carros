@@ -9,6 +9,7 @@ var con = mysql.createPool({ //cria pool com o banco de dados
     password: '',
     database: 'dbentrada',
     connectionLimit: 50,
+    connectTimeout: 30000,
 });
 
 /**
