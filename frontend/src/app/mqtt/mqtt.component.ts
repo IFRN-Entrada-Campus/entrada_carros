@@ -1,27 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { ReqresmqttService } from '../reqresmqtt.service';
+import { Component, OnDestroy } from '@angular/core';
+import { MqttService } from 'ngx-mqtt';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-mqtt',
   templateUrl: './mqtt.component.html',
   styleUrls: ['./mqtt.component.css']
 })
-export class MqttComponent implements OnInit{
+export class MqttComponent implements OnDestroy{
+  private sub: Subscription;
   mensagensRecebidas: any[] = [];
   mensagemEnvio: any = '';
+  topico = 'tartaruga_carrodeentrada_1283'
   
-  constructor(private servicoMqtt: ReqresmqttService) {}
-
-  ngOnInit(): void {
-    this.servicoMqtt.connect();
-    this.servicoMqtt.entrarNoTopico('carro77/pedido');
-    this.servicoMqtt.mensagemRecebida.subscribe((message: any) => {
-      this.mensagensRecebidas.push(message);
+  constructor(private servicoMqtt: MqttService) {
+    this.sub = this.servicoMqtt.observe(this.topico).subscribe((mensagem) => {
+      this.mensagensRecebidas.push(mensagem);
     });
   }
 
-  mandarMensagem(): void {
-    this.servicoMqtt.enviarMensagem('carro77/pedido', this.mensagemEnvio);
-    this.mensagemEnvio = '';
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
+
+  enviarMensagem() {
+    this.servicoMqtt.publish(this.topico, this.mensagemEnvio).subscribe({
+      next: () => {
+        console.log('Mensagem enviada');
+        this.mensagemEnvio = '';
+      },
+      error: (err) => {
+        console.error('Erro ao enviar mensagem', err);
+      },
+    });
+  }
+  
 }

@@ -56,7 +56,7 @@ LOAD_WASM().subscribe();
     InputNumberModule,
     MqttModule.forRoot({
       hostname: 'test.mosquitto.org',
-      port: 8883,
+      port: 8081,
       protocol: 'wss'
     }),
     CalendarModule,
