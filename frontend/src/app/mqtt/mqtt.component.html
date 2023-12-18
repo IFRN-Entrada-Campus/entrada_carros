@@ -1,14 +1,14 @@
-<h2> Mensagens Recebidas: </h2>
-<table *ngFor="let mensagem of mensagensRecebidas">
-    <tr>
-        <td><img *ngIf="isBase64Image(mensagem.payload.toString())" [src]="mensagem.payload.toString()" alt="Imagem Recebida"></td>
-    </tr>
-</table>
+<h2>Mensagens Recebidas:</h2>
+<div class="message-container">
+  <div *ngFor="let mensagem of mensagensRecebidas" class="message-item">
+    <img *ngIf="isBase64Image(mensagem.payload.toString())" [src]="mensagem.payload.toString()" alt="Imagem Recebida">
+  </div>
+</div>
 <hr>
-<label>Mensagem para envio:</label>
+<label for="fileInput">Mensagem para envio:</label>
 <br>
 <div class="container">
-<input type="file" (change)="handleFileInput($event)" accept="image/*">
+  <input type="file" (change)="handleFileInput($event)" accept="image/*" id="fileInput">
 </div>
 <br>
 <p-button (click)="enviarMensagem()" label="Enviar"></p-button>
