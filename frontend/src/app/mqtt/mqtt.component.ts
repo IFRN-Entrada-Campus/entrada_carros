@@ -23,6 +23,23 @@ export class MqttComponent implements OnDestroy{
     this.sub.unsubscribe();
   }
 
+  handleFileInput(event: any): void {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      this.mensagemEnvio = reader.result;
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
+
+  isBase64Image(str: string): boolean {
+    return str.startsWith('data:image');
+  }
+
   enviarMensagem() {
     this.servicoMqtt.publish(this.topico, this.mensagemEnvio).subscribe({
       next: () => {
