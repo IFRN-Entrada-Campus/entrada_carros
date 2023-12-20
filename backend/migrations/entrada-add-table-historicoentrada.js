@@ -18,7 +18,7 @@ module.exports = {
                 allowNull: false,
             },
             img: {
-                type: Sequelize.STRING(50),
+                type: Sequelize.STRING(250),
                 allowNull: false,
             },
             idCarroRel: {

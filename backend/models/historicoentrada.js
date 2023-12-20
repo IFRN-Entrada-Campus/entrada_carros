@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             allowNull: false,
         },
-        placaRel: {
+        placa: {
             type: DataTypes.STRING(50),
             allowNull: false,
         },
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         img: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING(250),
             allowNull: false,
         },
         idCarroRel: {

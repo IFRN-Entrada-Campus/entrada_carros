@@ -13,6 +13,7 @@ var indexRouter = require('./routes/index');
 var alunocarroRouter = require('./routes/alunocarro');
 var loginRouter = require('./routes/login');
 var placaRouter = require('./routes/placa');
+var entradaRouter = require('./routes/entrada');
 require('dotenv').config();
 
 var app = express();
@@ -46,6 +47,7 @@ app.use('/', indexRouter);
 app.use('/alunocarro', alunocarroRouter);
 app.use('/login', loginRouter);
 app.use('/placa', placaRouter);
+app.use('/entrada', entradaRouter);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 const sequelize = new Sequelize(dbConfig);
 module.exports = app, sequelize;
