@@ -1,14 +1,29 @@
-<h2>Mensagens Recebidas:</h2>
+<h2>Último carro detectado:</h2>
 <div class="message-container">
   <div *ngFor="let mensagem of mensagensRecebidas" class="message-item">
     <img *ngIf="isBase64Image(mensagem.payload.toString())" [src]="mensagem.payload.toString()" alt="Imagem Recebida">
   </div>
 </div>
 <hr>
+<div class="historico">
+  <h2>Histórico de entrada de carros:</h2>
+  <div>
+    <div *ngFor="let dado of dados">
+      <img [src]="dado.img" alt="Imagem do carro" style="max-width: 200px;">
+      <p>Passagem às: {{ dado.dataHora }}</p>
+    </div>
+    <div *ngFor="let dado of dadosPlaca">
+      <p>Placa: {{ dado.Placa }}</p>
+      <p>Motorista: {{ dado.Aluno }} - {{ dado.Matricula }}</p>
+    </div>
+    <br>
+  </div>
+</div>
+<!-- <hr>
 <label for="fileInput">Mensagem para envio:</label>
 <br>
 <div class="container">
   <input type="file" (change)="handleFileInput($event)" accept="image/*" id="fileInput">
 </div>
 <br>
-<p-button (click)="enviarMensagem()" label="Enviar"></p-button>
+<p-button (click)="enviarMensagem()" label="Enviar"></p-button> -->

@@ -31,6 +31,10 @@ export class DadosService {
     return this.http.get(`${this.apiUrl}/placa/${placa}`, {headers: this.headers})
   }
 
+  getHistoricoEntrada(): Observable<any> { // Retorna os dados do banco da tabela entrada
+    return this.http.get(`${this.apiUrl}/entrada`, {headers: this.headers})
+  }
+
   addDados(dado: Dados): Observable<any> { // Adiciona os dados no banco
         if (dado.CNHvalida == true) { // Converte o valor booleano para inteiro
           dado.CNHvalida = 1;
@@ -51,6 +55,11 @@ export class DadosService {
         let addAluno = this.http.post(`${this.apiUrl}/alunocarro/aluno`, reqAluno, {headers: this.headers}); // Faz a requisição para o aluno
         let addCarro = this.http.post(`${this.apiUrl}/alunocarro/carro`, reqCarro, {headers: this.headers}); // Faz a requisição para o carro
         return merge(addAluno, addCarro);
+  }
+
+  addHistoricoEntrada(dados: any): Observable<any> { // Adiciona os dados de entrada de veículos no banco
+    let reqHistorico = {placa: dados.placa, dataHora: dados.dataHora, img: dados.img, idCarroRel: dados.idCarroRel};
+    return this.http.post(`${this.apiUrl}/entrada`, reqHistorico, {headers: this.headers}); // Faz a requisição para o historico
   }
 
   editarDados(dado: Dados, placa: any): Observable<any> { // Edita os dados no banco
