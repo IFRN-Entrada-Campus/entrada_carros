@@ -18,7 +18,6 @@ export class MqttComponent implements OnDestroy, OnInit{
   constructor(private servicoMqtt: MqttService, private dadosService: DadosService) {
     this.sub = this.servicoMqtt.observe(this.topico).subscribe((mensagem) => {
       this.mensagensRecebidas.push(mensagem);
-      this.dadosService.addHistoricoEntrada(mensagem).subscribe();
     });
   }
 

@@ -1,31 +1,22 @@
 import { Injectable } from '@angular/core';
-import { IMqttMessage, MqttService } from 'ngx-mqtt';
-import { Subject } from 'rxjs';
+import { MqttService } from 'ngx-mqtt';
+import { DadosService } from './dados.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReqresmqttService {
-  mensagemRecebida: Subject<string> = new Subject<string>();
+  private topico = 'tartaruga_carrodeentrada_1283';
 
-  constructor(private servicoMqtt: MqttService) { }
+  constructor(private mqttService: MqttService, private dadosService: DadosService) {}
 
-  connect(): void {
-    this.servicoMqtt.connect({
-      hostname: 'test.mosquitto.org',
-      port: 8883,
-      protocol: 'wss'
+  iniciarConexao(): void {
+    this.mqttService.observe(this.topico).subscribe((mensagem) => {
+      this.processarMensagem(mensagem);
     });
   }
 
-  enviarMensagem(topic: any, message: any): void {
-    this.servicoMqtt.publish(topic, message);
-  }
-
-  entrarNoTopico(topic: any): void {
-    this.servicoMqtt.observe(topic).subscribe((message: IMqttMessage) => {
-      const payload = message.payload.toString()
-      this.mensagemRecebida.next(payload);
-    });
+  processarMensagem(mensagem: any): void {
+    this.dadosService.addHistoricoEntrada(mensagem);
   }
 }
