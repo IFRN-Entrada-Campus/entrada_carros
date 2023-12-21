@@ -7,17 +7,13 @@
 <hr>
 <div class="historico">
   <h2>Histórico de entrada de carros:</h2>
-  <div>
-    <div *ngFor="let dado of dados">
-      <img [src]="dado.img" alt="Imagem do carro" style="max-width: 200px;">
-      <p>Passagem às: {{ dado.dataHora }}</p>
-    </div>
-    <div *ngFor="let dado of dadosPlaca">
-      <p>Placa: {{ dado.Placa }}</p>
-      <p>Motorista: {{ dado.Aluno }} - {{ dado.Matricula }}</p>
-    </div>
+  <table *ngFor="let dado of dados">
+    <tr><img [src]="dado.img" alt="Imagem capturada do carro" style="max-width: 200px;"></tr>
+    <tr>Carro com placa {{ dado.placa }} às {{ dado.dataHora }}</tr>
+    <tr>Motorista: {{ dado.nome }} - {{ dado.matricula }}</tr>
     <br>
-  </div>
+    <br>
+  </table>
 </div>
 <!-- <hr>
 <label for="fileInput">Mensagem para envio:</label>

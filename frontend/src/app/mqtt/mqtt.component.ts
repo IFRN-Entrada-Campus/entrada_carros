@@ -14,7 +14,6 @@ export class MqttComponent implements OnDestroy, OnInit{
   mensagemEnvio: any = '';
   topico = 'tartaruga_carrodeentrada_1283'
   dados: any[] = [];
-  dadosPlaca: any[] = [];
   
   constructor(private servicoMqtt: MqttService, private dadosService: DadosService) {
     this.sub = this.servicoMqtt.observe(this.topico).subscribe((mensagem) => {
@@ -49,17 +48,6 @@ export class MqttComponent implements OnDestroy, OnInit{
       next: (resultado: any[]) => { 
         (this.dados = resultado.map((item: any) => {
           return {...item, dataHora: this.formatarData(item.dataHora)}}));
-        
-        if(resultado && resultado.length > 0) {
-          const placa = resultado[0].placa;
-          this.dadosService.getDadosporPlaca(placa).subscribe({
-            next: (dadosPorPlaca: any[]) => {
-              this.dadosPlaca = dadosPorPlaca;
-            },
-            error: (error: any) => { console.log(error) },
-          });
-        }
-        
       },
       error: (error: any) => { console.log(error) },
     });
