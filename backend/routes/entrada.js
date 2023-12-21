@@ -89,7 +89,7 @@ router.get('/', verificarToken, function (req, res) { //retorna todos os dados d
             throw erroConexao;
         }
 
-        con.query('SELECT * FROM historicoentrada', function (erroComandoSQL, result, fields) {
+        con.query('SELECT * FROM vwhistoricoaluno', function (erroComandoSQL, result, fields) {
             conexao.release();
             if (erroComandoSQL) {
                 throw erroComandoSQL;
@@ -108,7 +108,7 @@ router.get('/', verificarToken, function (req, res) { //retorna todos os dados d
  *      description: Cadastro de historico de entrada de veículos no estacionamento
  *      tags: [Aluno/Servidor e Carros]
  */
-router.post('/aluno', verificarAdmin, function (req, res) { // insere dados de entrada
+router.post('/', verificarAdmin, function (req, res) { // insere dados de entrada
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
