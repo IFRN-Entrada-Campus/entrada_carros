@@ -1,3 +1,4 @@
+<app-menu></app-menu>
 <select #select1 (change)="action.playDevice(select1.value)">
     <option [value]="null" selected>Selecione o dispositivo</option>
     <option *ngFor="let c of action.devices.value; let i = index" [value]="c.deviceId" [selected]="i == action.deviceIndexActive">{{c.label}}</option>

@@ -1,0 +1,18 @@
+.botoes {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.logout {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

@@ -28,6 +28,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ScannerComponent } from './scanner/scanner.component';
 import { AnaliseComponent } from './analise/analise.component';
 import { ReqresmqttService } from './reqresmqtt.service';
+import { MenuComponent } from './menu/menu.component';
 
 LOAD_WASM().subscribe();
 
@@ -40,7 +41,8 @@ LOAD_WASM().subscribe();
     LoginComponent,
     EditarComponent,
     ScannerComponent,
-    AnaliseComponent
+    AnaliseComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

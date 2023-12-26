@@ -79,18 +79,6 @@ export class ListaComponent implements OnInit {
     
   }
 
-  cadastrar(): void { // navega para o componente forms
-    this.router.navigate(['/forms']);
-  }
-
-  mqtt(): void {  // navega para o componente mqtt
-    this.router.navigate(['/mqtt']);
-  }
-
-  scanner(): void { // navega para o componente analise
-    this.router.navigate(['/analise']);
-  }
-
   editarDados(Placa: any): void { // navega para o componente editar
     this.router.navigate([`/editar/${Placa}`]);
   }
@@ -124,10 +112,5 @@ export class ListaComponent implements OnInit {
     } else {
       this.tipo_pesquisa = true;
     }
-  }
-
-  logout(): void {
-    this.loginService.logout();
-    window.location.reload();
   }
 }
