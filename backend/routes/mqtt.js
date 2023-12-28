@@ -96,7 +96,11 @@ client.on('message', function (topic, message) {
                         }
                         if (result.affectedRows > 0) {
                             console.log('Registro incluído com sucesso!');
-                            ultimaMensagem = dados;
+                            ultimaMensagem = [{
+                                "placa": dados.placa,
+                                "dataHora": dataHora,
+                                "img": dados.img
+                            }];
                         } else {
                             console.log('Erro ao incluir registro.');
                         }

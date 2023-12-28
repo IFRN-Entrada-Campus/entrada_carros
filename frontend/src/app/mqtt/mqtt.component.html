@@ -1,9 +1,10 @@
 <app-menu></app-menu>
 <h2>Último carro detectado:</h2>
 <div class="message-container">
-  <div *ngFor="let mensagem of mensagensRecebidas" class="message-item">
-    <img *ngIf="isBase64Image(mensagem.payload.toString())" [src]="mensagem.payload.toString()" alt="Imagem Recebida">
-  </div>
+  <table *ngFor="let mensagem of mensagensRecebidas" class="message-item">
+    <tr><img [src]="mensagem.img" alt="Imagem Recebida" style="max-width: 400px;"></tr>
+    <tr>Carro com placa {{ mensagem.placa }} às {{ mensagem.dataHora }}</tr>
+  </table>
 </div>
 <hr>
 <div class="historico">

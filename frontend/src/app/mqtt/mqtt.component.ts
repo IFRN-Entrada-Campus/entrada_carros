@@ -1,6 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MqttService } from 'ngx-mqtt';
-import { Subscription } from 'rxjs';
 import { DadosService } from '../dados.service';
 
 @Component({
@@ -8,25 +6,15 @@ import { DadosService } from '../dados.service';
   templateUrl: './mqtt.component.html',
   styleUrls: ['./mqtt.component.css']
 })
-export class MqttComponent implements OnDestroy, OnInit{
-  private sub: Subscription;
+export class MqttComponent implements OnInit{
   mensagensRecebidas: any[] = [];
-  mensagemEnvio: any = '';
-  topico = 'tartaruga_carrodeentrada_1283'
+  // mensagemEnvio: any = '';
   dados: any[] = [];
   
-  constructor(private servicoMqtt: MqttService, private dadosService: DadosService) {
-    this.sub = this.servicoMqtt.observe(this.topico).subscribe((mensagem) => {
-      this.mensagensRecebidas.push(mensagem);
-    });
-  }
+  constructor(private dadosService: DadosService) {}
 
   ngOnInit(): void {
     this.onListar();
-  }
-
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
   }
 
   formatarData(data: string): string {
@@ -50,6 +38,14 @@ export class MqttComponent implements OnDestroy, OnInit{
       },
       error: (error: any) => { console.log(error) },
     });
+    this.dadosService.getUltimaMensagem().subscribe({
+      next: (resultado: any[]) => {
+        console.log(resultado);
+        (this.mensagensRecebidas = resultado.map((item: any) => {
+          return {...item, dataHora: this.formatarData(item.dataHora)}}));
+      },
+      error: (error: any) => { console.log(error) },
+    });
   }
 
   // handleFileInput(event: any): void {
@@ -65,9 +61,9 @@ export class MqttComponent implements OnDestroy, OnInit{
   //   }
   // }
 
-  isBase64Image(str: string): boolean {
-    return str.startsWith('data:image');
-  }
+  // isBase64Image(str: string): boolean {
+  //   return str.startsWith('data:image');
+  // }
 
   // enviarMensagem() {
   //   this.servicoMqtt.publish(this.topico, this.mensagemEnvio).subscribe({

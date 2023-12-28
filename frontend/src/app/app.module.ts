@@ -27,7 +27,6 @@ import { PasswordModule } from 'primeng/password';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ScannerComponent } from './scanner/scanner.component';
 import { AnaliseComponent } from './analise/analise.component';
-import { ReqresmqttService } from './reqresmqtt.service';
 import { MenuComponent } from './menu/menu.component';
 
 LOAD_WASM().subscribe();
@@ -66,7 +65,7 @@ LOAD_WASM().subscribe();
     ProgressSpinnerModule,
     NgxScannerQrcodeModule
   ],
-  providers: [DadosService, SharedDataService, CookieService, ReqresmqttService],
+  providers: [DadosService, SharedDataService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

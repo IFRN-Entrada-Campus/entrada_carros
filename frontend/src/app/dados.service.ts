@@ -35,6 +35,10 @@ export class DadosService {
     return this.http.get(`${this.apiUrl}/entrada`, {headers: this.headers})
   }
 
+  getUltimaMensagem(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/mqtt/ult-msg`, {headers: this.headers})
+  }
+
   addDados(dado: Dados): Observable<any> { // Adiciona os dados no banco
         if (dado.CNHvalida == true) { // Converte o valor booleano para inteiro
           dado.CNHvalida = 1;
