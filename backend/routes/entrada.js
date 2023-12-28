@@ -88,7 +88,7 @@ router.get('/', verificarToken, function (req, res) { //retorna todos os dados d
             throw erroConexao;
         }
 
-        con.query('SELECT * FROM vwhistoricoaluno', function (erroComandoSQL, result, fields) {
+        con.query('SELECT * FROM vwhistoricoaluno ORDER BY dataHora DESC', function (erroComandoSQL, result, fields) {
             conexao.release();
             if (erroComandoSQL) {
                 throw erroComandoSQL;
