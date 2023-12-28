@@ -36,6 +36,29 @@ var con = mysql.createPool({ //cria pool com o banco de dados
     connectTimeout: 30000,
 });
 
+function verificarToken(req, res, next) { //verifica se o token é válido
+    const token = req.headers['x-access-token'];
+    if (!token) {
+        res.status(401).json({
+            auth: false,
+            message: 'Nenhum token de autenticação informado.',
+        });
+    } else {
+        jwt.verify(token, process.env.JWT_SEGREDO, function (err, decoded) {
+            if (err) {
+                res.status(500).json({ auth: false, message: 'Token inválido.' });
+            } else {
+                const agoraEmSegundos = Math.floor(Date.now() / 1000);
+                if (decoded.exp < agoraEmSegundos) {
+                    res.status(401).json({ auth: false, message: 'Token expirado.' });
+                } else {
+                    next();
+                }
+            }
+        });
+    }
+}
+
 client.on('message', function (topic, message) {
     const payload = message.toString();
     console.log(`Mensagem recebida: ${payload}`);
@@ -97,7 +120,7 @@ client.on('message', function (topic, message) {
  *      description: Retorna última mensagem enviada ao tópico MQTT
  *      tags: [MQTT]
  */
-router.get('/ult-msg', function (req, res) {
+router.get('/ult-msg', verificarToken, function (req, res) {
     if (ultimaMensagem) {
         res.status(200).send(ultimaMensagem);
     } else {
