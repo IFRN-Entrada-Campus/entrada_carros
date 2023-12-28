@@ -10,6 +10,7 @@ export class MqttComponent implements OnInit{
   mensagensRecebidas: any[] = [];
   // mensagemEnvio: any = '';
   dados: any[] = [];
+  carregando = true;  // variavel para mostrar o loading
   
   constructor(private dadosService: DadosService) {}
 
@@ -35,6 +36,7 @@ export class MqttComponent implements OnInit{
       next: (resultado: any[]) => { 
         (this.dados = resultado.map((item: any) => {
           return {...item, dataHora: this.formatarData(item.dataHora)}}));
+        this.carregando = false;
       },
       error: (error: any) => { console.log(error) },
     });
