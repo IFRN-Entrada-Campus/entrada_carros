@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../environments/environment';
@@ -8,6 +8,9 @@ import { CookieService } from 'ngx-cookie-service';
   providedIn: 'root'
 })
 export class LoginService {
+  authToken: any = this.cookieService.get('authToken');
+  headers = new HttpHeaders()
+  .set('x-access-token', this.authToken);
   autenticado = false;
   isAdmin = false;
 
@@ -59,5 +62,13 @@ export class LoginService {
 
   isUserAdmin(): boolean {
     return this.isAdmin;
+  }
+
+  novoUsuario(login: any): Observable<any> {
+    let reqUsuario = {
+      usuario: login.usuario,
+      senha: login.senha,
+      role: login.role};
+    return this.http.post(`${this.apiUrl}/login/novo`, reqUsuario, {headers: this.headers});
   }
 }

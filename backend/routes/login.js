@@ -128,19 +128,19 @@ router.post('/novo', verificarAdmin, function (req, res) { // cria um novo usuá
             conexao.release();
             if (erroComandoSQL) {
                 console.error('Erro ao executar consulta:', erroComandoSQL);
-                res.status(500).send('Erro do servidor');
+                res.status(500).send({message: 'Erro do servidor'});
                 return;
             }
 
             if (result.length > 0) {
-                res.status(409).send('Login existente');
+                res.status(409).send({message: 'Login existente'});
                 return;
             }
 
             bcrypt.hash(senha, 10, function (erro, hash) {
                 if (erro) {
                     console.error('Erro ao gerar hash:', erro);
-                    res.status(500).send('Erro do servidor');
+                    res.status(500).send({message: 'Erro do servidor'});
                     return;
                 }
 
@@ -148,11 +148,11 @@ router.post('/novo', verificarAdmin, function (req, res) { // cria um novo usuá
                 con.query(sqlinsert, [usuario, hash, role], function (erro) {
                     if (erro) {
                         console.error('Erro ao inserir novo login:', erro);
-                        res.status(500).send('Erro do servidor');
+                        res.status(500).send({message:'Erro do servidor'});
                         return;
                     }
 
-                    res.status(200).send('Login criado com sucesso');
+                    res.status(200).send({message: 'Login criado com sucesso'});
                 });
             });
         });

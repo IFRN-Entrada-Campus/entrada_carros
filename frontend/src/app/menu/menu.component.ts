@@ -20,6 +20,10 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['/forms']);
   }
 
+  usuario(): void { // redireciona para o componente usuario/novo
+    this.router.navigate(['/usuario/novo'])
+  }
+
   mqtt(): void {  // navega para o componente mqtt
     this.router.navigate(['/mqtt']);
   }

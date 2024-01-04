@@ -1,6 +1,7 @@
 <div class="botoes">
     <div class="links">
-        <p-button *ngIf="admin" [text]="true" (click)="cadastrar()" id="cadastrar" label="Cadastrar"></p-button>
+        <p-button *ngIf="admin" [text]="true" (click)="cadastrar()" id="cadastrar" label="Cadastrar registro"></p-button>
+        <p-button *ngIf="admin" [text]="true" (click)="usuario()" id="usuario" label="Cadastrar usuário"></p-button>
         <p-button [text]="true" severity="secondary" (click)="lista()" id="lista" label="Lista"></p-button>
         <p-button [text]="true" severity="secondary" (click)="mqtt()" id="mensagens" label="Mensagens"></p-button>
         <p-button [text]="true" severity="secondary" (click)="scanner()" id="scanner" label="Pesquisa com QRcode"></p-button>

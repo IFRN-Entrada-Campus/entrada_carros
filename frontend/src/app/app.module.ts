@@ -28,6 +28,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ScannerComponent } from './scanner/scanner.component';
 import { AnaliseComponent } from './analise/analise.component';
 import { MenuComponent } from './menu/menu.component';
+import { NovousuarioComponent } from './novousuario/novousuario.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 LOAD_WASM().subscribe();
 
@@ -41,7 +43,8 @@ LOAD_WASM().subscribe();
     EditarComponent,
     ScannerComponent,
     AnaliseComponent,
-    MenuComponent
+    MenuComponent,
+    NovousuarioComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,8 @@ LOAD_WASM().subscribe();
     BrowserAnimationsModule,
     PasswordModule,
     ProgressSpinnerModule,
-    NgxScannerQrcodeModule
+    NgxScannerQrcodeModule,
+    DropdownModule,
   ],
   providers: [DadosService, SharedDataService, CookieService],
   bootstrap: [AppComponent]
