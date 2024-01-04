@@ -14,8 +14,8 @@ let ultimaMensagem = null;
 
 const client = mqtt.connect({
     protocol: 'mqtt',
-    host: 'test.mosquitto.org',
-    port: '1883',
+    host: 'broker-mqtt',
+    port: '1884',
 });
 
 client.on('connect', () => {
@@ -118,7 +118,7 @@ client.on('message', function (topic, message) {
 
 /**
  * @swagger
- * /api/entrada:
+ * /api/mqtt:
  *  get:
  *      summary: Retorna última mensagem
  *      description: Retorna última mensagem enviada ao tópico MQTT

@@ -75,6 +75,7 @@ services:
 
   broker-mqtt:
     image: eclipse-mosquitto:latest
+    container_name: broker-mqtt
     depends_on:
       - backend
     networks:
