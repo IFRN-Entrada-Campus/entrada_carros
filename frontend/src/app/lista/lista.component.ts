@@ -14,9 +14,10 @@ export class ListaComponent implements OnInit {
   dadoSelecionado?: any;  // variavel para armazenar o dado selecionado
   placaPesquisada: string = ''; // variavel para pesquisar a placa
   etiquetaPesquisada: string = '';  // variavel para pesquisar a etiqueta
+  nomePesquisado: string = ''; // variavel para pesquisar o nome
   dadosCopia: any[] = []; // copia dos dados do banco de dados
   carregando = true;  // variavel para mostrar o loading
-  tipo_pesquisa = true; // true = placa e false = etiqueta;
+  tipo_pesquisa = 1; // 1 = placa, 2 = etiqueta e 3 = nome;
   admin = false; // variavel para verificar se o usuário é admin ou não
 
   constructor(private dadosService: DadosService, private router: Router, private sharedDataService: SharedDataService, private loginService: LoginService) {
@@ -28,7 +29,7 @@ export class ListaComponent implements OnInit {
     this.onListar();
     this.sharedDataService.codigoEtiqueta$.subscribe((codigoEtiqueta) => {  // recebe o codigo da etiqueta do componente analise
       if (codigoEtiqueta) {
-        this.tipo_pesquisa = false;
+        this.tipo_pesquisa = 2;
         this.etiquetaPesquisada = codigoEtiqueta;
         setTimeout(() => {
           this.filtrarEtiquetas();
@@ -106,11 +107,23 @@ export class ListaComponent implements OnInit {
     }
   }
 
-  trocarPesquisa(): void {  // troca o tipo de pesquisa
-    if (this.tipo_pesquisa) {
-      this.tipo_pesquisa = false;
+  filtrarNome(): void { // filtra os nomes
+    if (this.nomePesquisado) {
+      let p = this.nomePesquisado.toUpperCase();
+
+      this.dadosFormulario = this.dadosCopia.filter((dados) => {
+        return dados.Aluno.toUpperCase().includes(p);
+      });
     } else {
-      this.tipo_pesquisa = true;
+      this.dadosFormulario = [...this.dadosCopia];
+    }
+  }
+
+  trocarPesquisa(): void {  // troca o tipo de pesquisa
+    if (this.tipo_pesquisa == 1 || this.tipo_pesquisa == 2) {
+      this.tipo_pesquisa = this.tipo_pesquisa + 1;
+    } else {
+      this.tipo_pesquisa = 1;
     }
   }
 }

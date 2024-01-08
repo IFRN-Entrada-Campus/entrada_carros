@@ -4,16 +4,21 @@
 <h2>Veículos registrados</h2>
 <br>
 <br>
-<div *ngIf="tipo_pesquisa" class="input-group">
+<div *ngIf="tipo_pesquisa == 1" class="input-group">
     <input [(ngModel)]="placaPesquisada" (keyup)="filtrarPlacas()" class="pesquisar" pInputText
-        placeholder="Pesquisa por placa...">
-    <p-button size="small" [text]="true" [plain]="true" label="Filtrar por placa/etiqueta" (click)="trocarPesquisa()">
+        placeholder="Pesquisar por placa...">
+    <p-button size="small" [text]="true" [plain]="true" label="Mudar filtro" (click)="trocarPesquisa()">
     </p-button>
 </div>
-<div *ngIf="!tipo_pesquisa" class="input-group">
-    <input pInputText placeholder="Pesquisa por etiqueta..." class="pesquisar" [(ngModel)]="etiquetaPesquisada"
+<div *ngIf="tipo_pesquisa == 2" class="input-group">
+    <input pInputText placeholder="Pesquisar por etiqueta..." class="pesquisar" [(ngModel)]="etiquetaPesquisada"
         (keyup)="filtrarEtiquetas()">
-    <p-button size="small" [text]="true" [plain]="true" label="Filtrar por placa/etiqueta" (click)="trocarPesquisa()">
+    <p-button size="small" [text]="true" [plain]="true" label="Mudar filtro" (click)="trocarPesquisa()">
+    </p-button>
+</div>
+<div *ngIf="tipo_pesquisa == 3" class="input-group">
+    <input pInputText placeholder="Pesquisar por nome..." class="pesquisar" [(ngModel)]="nomePesquisado" (keyup)="filtrarNome()">
+    <p-button size="small" [text]="true" [plain]="true" label="Mudar filtro" (click)="trocarPesquisa()">
     </p-button>
 </div>
 <div *ngIf="carregando">
