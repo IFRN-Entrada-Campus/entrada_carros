@@ -120,10 +120,24 @@ export class ListaComponent implements OnInit {
   }
 
   trocarPesquisa(): void {  // troca o tipo de pesquisa
-    if (this.tipo_pesquisa == 1 || this.tipo_pesquisa == 2) {
+    if (this.tipo_pesquisa == 1) {
       this.tipo_pesquisa = this.tipo_pesquisa + 1;
+      this.placaPesquisada = '';
+      this.nomePesquisado = '';
+      this.etiquetaPesquisada = '';
+      this.filtrarPlacas();
+    } else if (this.tipo_pesquisa == 2) {
+      this.tipo_pesquisa = this.tipo_pesquisa + 1;
+      this.placaPesquisada = '';
+      this.nomePesquisado = '';
+      this.etiquetaPesquisada = '';
+      this.filtrarEtiquetas();
     } else {
       this.tipo_pesquisa = 1;
+      this.placaPesquisada = '';
+      this.nomePesquisado = '';
+      this.etiquetaPesquisada = '';
+      this.filtrarNome();
     }
   }
 }
