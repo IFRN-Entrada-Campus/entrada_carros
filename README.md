@@ -1,36 +1,40 @@
 # Guia para instalação e execução do sistema.
 
-O programa foi planejado para ser executado em contêineres através do uso do Docker se utilizando do Docker compose.
-Veja [aqui](https://docs.docker.com/engine/install/) como instalar o Docker no seu sistema operacional e [aqui](https://docs.docker.com/compose/install/) como instalar o Docker Compose.
+O programa foi planejado para ser executado em contêineres através do uso do Docker se utilizando do Docker compose. A maneira mais fácil é instalando o [Docker Desktop](https://www.docker.com/products/docker-desktop/) que na instalação já inclui ambos serviços.
+
+Caso queira instalar os serviços individualmente, veja [aqui](https://docs.docker.com/engine/install/) como instalar o Docker no seu sistema operacional e [aqui](https://docs.docker.com/compose/install/) como instalar o Docker Compose.
 
 ## Comandos para rodar a aplicação com contêineres:
 
-~~~shell
-docker compose up --build
+Para construir e subir os contêineres que rodam toda a aplicação:
+~~~bash
+docker compose up --build -d
 ~~~
 
 No caso de querer apagar os contêineres:
-~~~shell
+~~~bash
 docker compose down
 ~~~
 
 Se for também necessário apagar o banco de dados e os outros volumes:
-~~~shell
+~~~bash
 docker compose down --volumes
 ~~~
 
 ### As seguintes portas serão ocupadas uma vez que o sistema estiver rodando:
 
-* 8080: Angular com Nginx (frontend)
+* 80 e 443: Angular (frontend)
 * 3000: Express com Node.js (backend)
 * 3306: MySQL
 * 8081: PHPMyAdmin
+* 1884: MQTT broker
 
 ### A configuração padrão do server nginx conta com dois endereços
 
-* [https://<seu endereço>/](https://localhost) : Interface web de cadastro
-* [https://<seu endereço>/api](https://localhost/api) : Solicitações para a api
+* https://seu_endereço/ : Interface web de cadastro
+* https://seu_endereço/api : Solicitações para a api
+Substitua "seu_endereço" pelo IP da sua máquina ou nome do host.
 
 ## Swagger
 
-Para acessar a documentação com os endpoints e suas funções entre em [https://<seu endereço>/api/docs/](https://localhost/api/docs/)
+Para acessar a documentação com os endpoints e suas funções entre em https://seu_endereço/api/docs/
