@@ -36,9 +36,9 @@ export class MqttComponent implements OnInit{
       next: (resultado: any[]) => { 
         (this.dados = resultado.map((item: any) => {
           return {...item, dataHora: this.formatarData(item.dataHora)}}));
-        this.carregando = false;
       },
       error: (error: any) => { console.log(error) },
+      complete: () => this.carregando = false
     });
     this.dadosService.getUltimaMensagem().subscribe({
       next: (resultado: any[]) => {
