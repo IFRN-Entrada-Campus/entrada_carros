@@ -15,7 +15,7 @@ services:
       - MYSQL_DB=dbentrada
     volumes:
       - ./backend/dbentrada.sql:/docker-entrypoint-initdb.d/dbentrada.sql
-      - shared-volume:/usr/share/nginx/html/assets/images/entrada/
+      - shared-volume:/imagens/
     depends_on:
       - db
       - migration
@@ -92,5 +92,6 @@ services:
     
 volumes:
   mysql-data:
+  shared-volume:
 networks:
   my-networks:

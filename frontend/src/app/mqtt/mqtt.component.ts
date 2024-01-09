@@ -35,7 +35,7 @@ export class MqttComponent implements OnInit{
     this.dadosService.getHistoricoEntrada().subscribe({
       next: (resultado: any[]) => { 
         (this.dados = resultado.map((item: any) => {
-          return {...item, dataHora: this.formatarData(item.dataHora)}}));
+          return {...item, img: `../assets/images/entrada/${item.img}`, dataHora: this.formatarData(item.dataHora)}}));
       },
       error: (error: any) => { console.log(error) },
       complete: () => this.carregando = false
@@ -44,7 +44,7 @@ export class MqttComponent implements OnInit{
       next: (resultado: any[]) => {
         console.log(resultado);
         (this.mensagensRecebidas = resultado.map((item: any) => {
-          return {...item, dataHora: this.formatarData(item.dataHora)}}));
+          return {...item, img: `../assets/images/entrada/${item.img}`, dataHora: this.formatarData(item.dataHora)}}));
       },
       error: (error: any) => { console.log(error) },
     });

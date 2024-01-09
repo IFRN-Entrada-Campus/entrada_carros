@@ -74,8 +74,10 @@ client.on('message', function (topic, message) {
             const imgBuffer = Buffer.from(dados.img, 'base64');
 
             // Caminho para salvamento da imagem
-            const caminhoArquivo = `/usr/share/nginx/html/assets/images/entrada/imagem_${Date.now()}.png`
+            const nomeArquivo = `imagem_${Date.now()}.png`
+            const caminhoArquivo = `/imagens/${nomeArquivo}`
             fs.writeFileSync(caminhoArquivo, imgBuffer);
+            
 
             // Busca o idCarro
             const get_id = 'SELECT idCarro FROM carro WHERE placaCarro = ?';
@@ -94,7 +96,8 @@ client.on('message', function (topic, message) {
                     // Insere os dados no banco de dados
                     const query = 'INSERT INTO historicoentrada(placa, dataHora, img, idCarroRel) VALUES (?, ?, ?, ?)';
                     const dataHora = new Date();
-                    const valores = [dados.placa, dataHora, caminhoArquivo, id];
+                    const valores = [dados.placa, dataHora, nomeArquivo, id];
+                    console.log(valores)
 
                     con.query(query, valores, function (erroComandoSQL, result, fields) {
                         conexao.release();
@@ -106,7 +109,7 @@ client.on('message', function (topic, message) {
                             ultimaMensagem = [{
                                 "placa": dados.placa,
                                 "dataHora": dataHora,
-                                "img": caminhoArquivo
+                                "img": nomeArquivo
                             }];
                         } else {
                             console.log('Erro ao incluir registro.');
