@@ -3,6 +3,7 @@ const router = express.Router();
 const mysql = require('mysql2');
 const jwt = require('jsonwebtoken');
 const mqtt = require('mqtt');
+const fs = require('fs');
 
 let ultimaMensagem = null;
 /**
@@ -61,7 +62,6 @@ function verificarToken(req, res, next) { //verifica se o token é válido
 
 client.on('message', function (topic, message) {
     const payload = message.toString();
-    console.log(`Mensagem recebida: ${payload}`);
 
     try {
         con.getConnection(function (erroConexao, conexao) {
@@ -69,6 +69,13 @@ client.on('message', function (topic, message) {
                 throw erroConexao;
             }
             const dados = JSON.parse(payload);
+
+            // Decodifica a imagem base64
+            const imgBuffer = Buffer.from(dados.img, 'base64');
+
+            // Caminho para salvamento da imagem
+            const caminhoArquivo = `/usr/share/nginx/html/assets/images/entrada/imagem_${Date.now()}.png`
+            fs.writeFileSync(caminhoArquivo, imgBuffer);
 
             // Busca o idCarro
             const get_id = 'SELECT idCarro FROM carro WHERE placaCarro = ?';
@@ -87,7 +94,7 @@ client.on('message', function (topic, message) {
                     // Insere os dados no banco de dados
                     const query = 'INSERT INTO historicoentrada(placa, dataHora, img, idCarroRel) VALUES (?, ?, ?, ?)';
                     const dataHora = new Date();
-                    const valores = [dados.placa, dataHora, dados.img, id];
+                    const valores = [dados.placa, dataHora, caminhoArquivo, id];
 
                     con.query(query, valores, function (erroComandoSQL, result, fields) {
                         conexao.release();
@@ -99,7 +106,7 @@ client.on('message', function (topic, message) {
                             ultimaMensagem = [{
                                 "placa": dados.placa,
                                 "dataHora": dataHora,
-                                "img": dados.img
+                                "img": caminhoArquivo
                             }];
                         } else {
                             console.log('Erro ao incluir registro.');
