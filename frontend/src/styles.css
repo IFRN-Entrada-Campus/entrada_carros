@@ -1,4 +1,4 @@
-@import "primeng/resources/themes/lara-dark-blue/theme.css";
+@import "./assets/themes/theme.css";
 @import "primeng/resources/primeng.css";
 body {
     font-family: var(--font-family);
