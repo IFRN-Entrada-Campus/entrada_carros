@@ -1,32 +1,41 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .forms {
-    margin-top: 20px;
-  }
-  
-  .forms td {
-    padding: 10px;
-  }
-  
-  .forms input{
-    width: 215px;
-    padding: 8px;
-    font-size: 18px;
-  }
-  
-  .p-button-text {
-    margin-top: auto;
-    margin-bottom: 30px;
-  }
-  
-  p {
-    text-align: center;
-    color: #ff0000;
-    margin-bottom: 20px;
-  }
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+h2 {
+  text-align: center;
+  font-size: 24px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+p.error-message {
+  text-align: center;
+  font-size: 14px;
+  color: #ff0000;
+  margin-bottom: 20px;
+}
+
+p.success-message {
+  text-align: center;
+  font-size: 14px;
+  color: #00ff00;
+  margin-bottom: 20px;
+}
+
+table.forms {
+  width: 400px;
+  border-radius: 6px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+table.forms td {
+  padding: 5px;
+}
