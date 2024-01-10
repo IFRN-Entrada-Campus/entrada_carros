@@ -7,18 +7,18 @@
 <div *ngIf="tipo_pesquisa == 1" class="input-group">
     <input [(ngModel)]="placaPesquisada" (keyup)="filtrarPlacas()" class="pesquisar" pInputText
         placeholder="Pesquisar por placa...">
-    <p-button size="small" [text]="true" [plain]="true" label="Mudar filtro" (click)="trocarPesquisa()">
+    <p-button size="small" [text]="true" severity="secondary" label="Mudar filtro" (click)="trocarPesquisa()">
     </p-button>
 </div>
 <div *ngIf="tipo_pesquisa == 2" class="input-group">
     <input pInputText placeholder="Pesquisar por etiqueta..." class="pesquisar" [(ngModel)]="etiquetaPesquisada"
         (keyup)="filtrarEtiquetas()">
-    <p-button size="small" [text]="true" [plain]="true" label="Mudar filtro" (click)="trocarPesquisa()">
+    <p-button size="small" [text]="true" severity="secondary" label="Mudar filtro" (click)="trocarPesquisa()">
     </p-button>
 </div>
 <div *ngIf="tipo_pesquisa == 3" class="input-group">
     <input pInputText placeholder="Pesquisar por nome..." class="pesquisar" [(ngModel)]="nomePesquisado" (keyup)="filtrarNome()">
-    <p-button size="small" [text]="true" [plain]="true" label="Mudar filtro" (click)="trocarPesquisa()">
+    <p-button size="small" [text]="true" severity="secondary" label="Mudar filtro" (click)="trocarPesquisa()">
     </p-button>
 </div>
 <div *ngIf="carregando">
@@ -30,7 +30,7 @@
     </h2>
 </div>
 <div *ngIf="!carregando">
-    <p-table [value]="dadosFormulario" [rows]="100" [paginator]="true" [showCurrentPageReport]="true"
+    <p-table [value]="dadosFormulario" styleClass="p-datatable-gridlines" [rows]="100" [paginator]="true" [showCurrentPageReport]="true"
         currentPageReportTemplate="{first} a {last} de {totalRecords}" [rowsPerPageOptions]="[100, 200, 400]"
         selectionMode="single" [(selection)]="dadoSelecionado" dataKey="Matricula">
         <ng-template pTemplate="header">
@@ -55,8 +55,9 @@
                 </th>
                 <th pSortableColumn="CNHvalida">CNH válida <p-sortIcon field="CNHvalida"></p-sortIcon>
                 </th>
-                <th *ngIf="admin"></th>
-                <th *ngIf="admin"></th>
+                <th *ngIf="admin">
+                    Opções
+                </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-dados>
@@ -71,12 +72,11 @@
                 <td> {{ dados.validadeEtiqueta }} </td>
                 <td> {{ dados.CNHvalida }} </td>
                 <td *ngIf="admin">
-                    <p-button *ngIf="admin" (click)="editarDados(dados.Placa)" label="Editar" styleClass="p-button-link">
+                    <p-button *ngIf="admin" (click)="editarDados(dados.Placa)" label="Editar" [text]="true">
                     </p-button>
-                </td>
-                <td *ngIf="admin">
-                    <p-button *ngIf="admin" (click)="deletarDados(dados.Placa)" label="Excluir"
-                        styleClass="p-button-danger"></p-button>
+                    <br>
+                    <p-button *ngIf="admin" (click)="deletarDados(dados.Placa)" [text]="true" label="Excluir" severity="danger">
+                    </p-button>
                 </td>
             </tr>
         </ng-template>
