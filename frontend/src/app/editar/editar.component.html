@@ -33,7 +33,6 @@
         <tr>
             <td><label htmlFor="codigo">Código da etiqueta: </label></td>
             <td><input pInputText class="p-inputtext-sm" id="codigo" [(ngModel)]="dado.codigoEtiqueta"></td>
-            <td><p-button label="Escanear" (click)="escanear()"></p-button></td>
         </tr>
         <tr>
             <td><label for="validade">Validade da etiqueta: </label></td>
@@ -46,8 +45,9 @@
         <br>
         <tr>
             <td>
-                <p-button styleClass="p-button-text" (click)="editarDados()" label="Enviar"></p-button> 
+                <p-button styleClass="p-button-text" (click)="editarDados()" label="Enviar" icon="pi pi-arrow-right"></p-button> 
             </td>
+            <td><p-button label="Escanear QRcode" (click)="escanear()" icon="pi pi-camera"></p-button></td>
         </tr>
     </table>
 </div>
