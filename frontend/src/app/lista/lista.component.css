@@ -2,15 +2,17 @@ h2 {
     text-align: center;
 }
 
-input {
-    width: 550%;
+.input-group input {
+    width: 100%;
+    flex: 1
 }
 
 .input-group {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-bottom: 10px;
+    width: 100%;
 }
 
 .botoes {
