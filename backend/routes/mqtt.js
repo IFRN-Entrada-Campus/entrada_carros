@@ -4,6 +4,8 @@ const mysql = require('mysql2');
 const jwt = require('jsonwebtoken');
 const mqtt = require('mqtt');
 const fs = require('fs');
+const path = require('path');
+const moment = require('moment');
 
 let ultimaMensagem = null;
 /**
@@ -142,5 +144,38 @@ router.get('/ult-msg', verificarToken, function (req, res) {
     }
 });
 
+function removerImagensAntigas() {
+    const folderPath = path.join(__dirname, 'imagens');
+
+    fs.readdir(folderPath, (err, files) => {
+        if (err) {
+            console.error('Erro ao ler a pasta de imagens:', err)
+            return;
+        }
+
+        files.forEach((file) => {
+            const filePath = path.join(folderPath, file);
+
+            fs.stat(filePath, (err, stats) => {
+                if (err) {
+                    console.error(`Erro ao obter estatísticas do arquivo ${file}.`);
+                    return;
+                }
+
+                const diffDias = moment().diff(moment(stats.mtime), 'days');
+
+                if (diffDias > 100) {
+                    fs.unlink(filePath, (err) => {
+                        if (err) {
+                            console.error(`Erro ao apagar o arquivo ${file}.`);
+                          } else {
+                            console.log(`Arquivo ${file} removido com sucesso.`);
+                          }
+                    });
+                }
+            });
+        });
+    });
+}
 
 module.exports = router, client;
