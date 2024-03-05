@@ -9,8 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class LoginService {
   authToken: any = this.cookieService.get('authToken');
-  headers = new HttpHeaders()
-  .set('x-access-token', this.authToken);
+  headers = new HttpHeaders().set('x-access-token', this.authToken);
   autenticado = false;
   isAdmin = false;
 
@@ -69,6 +68,7 @@ export class LoginService {
       usuario: login.usuario,
       senha: login.senha,
       role: login.role};
+    let headers = new HttpHeaders().set('x-access-token', this.authToken);
     return this.http.post(`${this.apiUrl}/login/novo`, reqUsuario, {headers: this.headers});
   }
 }
