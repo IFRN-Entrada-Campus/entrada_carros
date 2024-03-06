@@ -14,6 +14,7 @@ import { LoginService } from '../login.service';
 
 export class FormsComponent implements OnInit {
   dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: 0, validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
+  usuarioJaCadastrado: boolean = false;
   matriculas: any[] = []; // variavel para armazenar as matriculas dos alunos
   formInvalid = false;  // variavel para mostrar o alerta de erro
   erroSQL = false;  // variavel para mostrar o alerta de erro do banco
@@ -94,7 +95,7 @@ export class FormsComponent implements OnInit {
   validatePlacaCarro(placa: string): boolean {  // Valida a placa do carro
     // Verifica se a placa está no formato antigo brasileiro
     const formatoAntigoRegex = /^[A-Z]{3}\d{4}$/;
-    
+
     // Verifica se a placa está no formato Mercosul 
     const placaRegex = /^[A-Z]{3}\d[A-Z]\d{2}$/;
 
@@ -105,30 +106,57 @@ export class FormsComponent implements OnInit {
     const anoAtual = new Date().getFullYear();
     return ano >= 1900 && ano <= anoAtual;
   }
-  
+
   addDados(): void {  // Adiciona os dados no banco de dados
     if (
       this.dado.marcaCarro != '' &&
       this.dado.modeloCarro != '' &&
       this.validatePlacaCarro(this.dado.placaCarro) &&
       this.validateAnoCarro(this.dado.anoCarro) &&
-      this.dado.aluno != '' &&
       this.dado.matriculaAluno != 0 &&
       this.dado.codigoEtiqueta != ''
     ) {
-      this.dadosService.addDados(this.dado).subscribe({
-        next: () => {
-          this.formInvalid = false;
-          this.cadastroSucesso = true;
-          setTimeout(() => {
-          this.router.navigate(['/lista']);
-          }, 1000);
-        },
-        error: (erro: any) => {
-          console.log(erro);
-          this.erroSQL = true;
+      if (this.usuarioJaCadastrado) {
+        let dadocarro = {
+          marcaCarro: this.dado.marcaCarro,
+          modeloCarro: this.dado.modeloCarro,
+          anoCarro: this.dado.anoCarro,
+          codigoEtiqueta: this.dado.codigoEtiqueta,
+          validadeEtiqueta: this.dado.validadeEtiqueta,
+          CNHvalida: this.dado.CNHvalida,
+          matriculaRel: this.dado.matriculaAluno,
+          placaCarro: this.dado.placaCarro
         }
-      });
+        this.dadosService.addCarro(dadocarro).subscribe({
+          next: () => {
+            this.formInvalid = false;
+            this.cadastroSucesso = true;
+            setTimeout(() => {
+              this.router.navigate(['/lista']);
+            }, 1000);
+          },
+          error: (erro: any) => {
+            console.log(erro);
+            this.erroSQL = true;
+          }
+        });
+      } else {
+        if (this.dado.aluno != '') {
+          this.dadosService.addDados(this.dado).subscribe({
+            next: () => {
+              this.formInvalid = false;
+              this.cadastroSucesso = true;
+              setTimeout(() => {
+                this.router.navigate(['/lista']);
+              }, 1000);
+            },
+            error: (erro: any) => {
+              console.log(erro);
+              this.erroSQL = true;
+            }
+          });
+        }
+      }
     } else {
       this.formInvalid = true;
     }

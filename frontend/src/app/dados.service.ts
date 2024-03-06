@@ -61,6 +61,21 @@ export class DadosService {
         return merge(addAluno, addCarro);
   }
 
+  addCarro(dado: any): Observable<any> {
+    let dataFormatada = dado.validadeEtiqueta.toISOString().slice(0, 19).replace('T', ' ');
+    let req = {
+      marcaCarro: dado.marcaCarro,
+      modeloCarro: dado.modeloCarro,
+      anoCarro: dado.anoCarro,
+      codigoEtiqueta: dado.codigoEtiqueta,
+      validadeEtiqueta: dataFormatada,
+      validaCnh: dado.CNHvalida,
+      matriculaRel: dado.matriculaRel,
+      placaCarro: dado.placaCarro
+    };
+    return this.http.post(`${this.apiUrl}/alunocarro/carro`, req, {headers: this.headers});
+  }
+
   addHistoricoEntrada(dados: any): Observable<any> { // Adiciona os dados de entrada de veículos no banco
     let reqHistorico = {placa: dados.placa, dataHora: dados.dataHora, img: dados.img, idCarroRel: dados.idCarroRel};
     return this.http.post(`${this.apiUrl}/entrada`, reqHistorico, {headers: this.headers}); // Faz a requisição para o historico
