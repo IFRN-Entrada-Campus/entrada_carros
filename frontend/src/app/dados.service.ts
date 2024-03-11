@@ -23,10 +23,6 @@ export class DadosService {
     return this.http.get(`${this.apiUrl}/alunocarro/matricula`, {headers: this.headers})
   }
 
-  getDadosporMatricula(matricula: any): Observable<any> { // Retorna os dados do banco da tabela aluno e carro baseado na matricula
-    return this.http.get(`${this.apiUrl}/alunocarro/${matricula}`, {headers: this.headers})
-  }
-
   getDadosporPlaca(placa: any): Observable<any> { // Retorna os dados do banco da tabela aluno e carro baseado na placa
     return this.http.get(`${this.apiUrl}/placa/${placa}`, {headers: this.headers})
   }

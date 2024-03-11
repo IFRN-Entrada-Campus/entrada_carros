@@ -101,47 +101,24 @@ router.get('/', verificarToken, function (req, res) { //retorna todos os alunos 
 
 /**
  * @swagger
- * /api/alunocarro/<matricula>:
- *  get:
- *      summary: Retorna os alunos/servidores e carros de acordo com a matrícula
- *      description: Retorna todos os dados organizados das tabelas aluno e carro de acordo com a matrícula
- *      tags: [Aluno/Servidor e Carros]
- */
-router.get('/:Matricula', verificarToken, function (req, res) { // retorna aluno e carro pela matricula
-    con.getConnection(function (erroConexao, conexao) {
-        if (erroConexao) {
-            throw erroConexao;
-        }
-        const Matricula = req.params.Matricula
-        con.query('SELECT * FROM vwalunocarro WHERE Matricula = ?', [Matricula], function (erroComandoSQL, result, fields) {
-            conexao.release();
-            if (erroComandoSQL) {
-                throw erroComandoSQL;
-            }
-
-            res.status(200).send(result);
-        });
-    });
-});
-
-/**
- * @swagger
  * /api/alunocarro/matricula:
  *  get:
  *      summary: Retorna todas as matrículas
  *      description: Retorna todos as matrículas de todos os alunos/servidores cadastrados
  *      tags: [Aluno/Servidor e Carros]
  */
-router.get('/matricula', verificarToken, function (req, res) { // retorna todas as matriculas
+router.get('/matricula', verificarToken, function (req, res) { //retorna todos os alunos
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
         }
-        con.query('SELECT Matricula FROM vwalunocarro', function (erroComandoSQL, result, fields) {
+
+        con.query('SELECT matriculaAluno FROM aluno', function (erroComandoSQL, result, fields) {
             conexao.release();
             if (erroComandoSQL) {
                 throw erroComandoSQL;
             }
+
             res.status(200).send(result);
         });
     });

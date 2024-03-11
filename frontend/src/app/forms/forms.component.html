@@ -6,14 +6,14 @@
 </div>
 <div *ngIf="admin">
     <h1>Cadastro de dados</h1>
-    <br>
     <p *ngIf="formInvalid" class="error-message">O formulário contém erros. Preencha todos os campos e verifique se: O ano do carro está entre 1900 e o ano atual. A placa está digitada no padrão(LLL1111 ou LLL11L1).</p>
     <p *ngIf="erroSQL" class="error-message">Não foi possível cadastrar. Verifique se não há dados incorretos e tente novamente.</p>
     <p *ngIf="cadastroSucesso" class="success-message">Dados cadastrados com sucesso!</p>
+    <p class="error-message">{{ erroUsuario }}</p>
     <br>
     <table class="forms">
         <tr>
-            <td><label htmlFor="cadastro">Usuário já cadastrado?</label></td>
+            <td><label htmlFor="cadastro">Condutor já cadastrado?</label></td>
             <td><p-checkbox [(ngModel)]="usuarioJaCadastrado" [binary]="true" inputId="cadastro"> </p-checkbox> </td>
         </tr>
         <tr>

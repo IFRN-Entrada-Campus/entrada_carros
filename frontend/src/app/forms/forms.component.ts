@@ -18,6 +18,7 @@ export class FormsComponent implements OnInit {
   matriculas: any[] = []; // variavel para armazenar as matriculas dos alunos
   formInvalid = false;  // variavel para mostrar o alerta de erro
   erroSQL = false;  // variavel para mostrar o alerta de erro do banco
+  erroUsuario = '';
   cadastroSucesso = false;  // variavel para mostrar o alerta de sucesso
   admin = false; // variavel para verificar se o usuário é admin ou não
 
@@ -28,7 +29,7 @@ export class FormsComponent implements OnInit {
   ngOnInit(): void {
     this.admin = this.loginService.isUserAdmin();
     this.dadosService.getMatriculas().subscribe({ // Preenche o select com as matrículas dos alunos
-      next: (resultado: any) => (this.matriculas = resultado),
+      next: (resultado: any) => this.matriculas = resultado,
       error: (erro: any) => console.log(erro)
     });
     this.sharedData.codigoEtiqueta$.subscribe((codigo: string) => { // Recebe os dados do formulário
@@ -130,6 +131,8 @@ export class FormsComponent implements OnInit {
         this.dadosService.addCarro(dadocarro).subscribe({
           next: () => {
             this.formInvalid = false;
+            this.erroUsuario = '';
+            this.erroSQL = false;
             this.cadastroSucesso = true;
             setTimeout(() => {
               this.router.navigate(['/lista']);
@@ -137,14 +140,29 @@ export class FormsComponent implements OnInit {
           },
           error: (erro: any) => {
             console.log(erro);
+            this.formInvalid = false;
             this.erroSQL = true;
+            this.erroUsuario = '';
+            this.cadastroSucesso = false;
           }
         });
       } else {
-        if (this.dado.aluno != '') {
+        let i = 0;
+        for (this.matriculas.length; i < this.matriculas.length; i++) {
+          if (this.dado.matriculaAluno == this.matriculas[i].matriculaAluno) {
+            this.formInvalid = false;
+            this.erroSQL = false;
+            this.erroUsuario = 'O condutor já está cadastrado! Caso queira cadastrar novo carro, por favor marcar a opção de condutor já cadastrado.';
+            this.cadastroSucesso = false;
+            break;
+          }
+        }
+        if (this.erroUsuario == '') {
           this.dadosService.addDados(this.dado).subscribe({
             next: () => {
               this.formInvalid = false;
+              this.erroUsuario = '';
+              this.erroSQL = false;
               this.cadastroSucesso = true;
               setTimeout(() => {
                 this.router.navigate(['/lista']);
@@ -152,7 +170,10 @@ export class FormsComponent implements OnInit {
             },
             error: (erro: any) => {
               console.log(erro);
+              this.formInvalid = false;
               this.erroSQL = true;
+              this.erroUsuario = '';
+              this.cadastroSucesso = false;
             }
           });
         }
