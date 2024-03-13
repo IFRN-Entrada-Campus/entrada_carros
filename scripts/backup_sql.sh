@@ -13,7 +13,7 @@ BACKUP_DIR="/backup/sql"
 BACKUP_FILE="${BACKUP_DIR}/backup_$(date '+%Y%m%d%H%M%S').sql"
 
 # Comando mysqldump para criar o backup
-docker exec -i db mysqldump -u$DB_USER -p$DB_PASSWORD -h$DB_HOST $DB_NAME > $BACKUP_FILE
+docker exec -i db mysqldump -u$DB_USER -p$DB_PASSWORD -h$DB_HOST --complete-insert $DB_NAME > $BACKUP_FILE
 
 # Verificar se o backup foi criado com sucesso
 if [ $? -eq 0 ]; then
