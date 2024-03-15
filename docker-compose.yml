@@ -21,7 +21,7 @@ services:
       - migration
     networks:
       - my-networks
-    restart: always
+    restart: unless-stopped
     command: sh -c "npm start NODE_ENV=production"
 
   frontend:
@@ -38,6 +38,7 @@ services:
       - migration
     networks:
       - my-networks
+    restart: unless-stopped
 
   db:
     image: mysql:8.0.33
@@ -45,7 +46,7 @@ services:
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_DATABASE=dbentrada
-    restart: always
+    restart: unless-stopped
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
@@ -60,7 +61,7 @@ services:
       - PMA_HOST=db
       - PMA_PORT=3306
       - PMA_ARBITRARY=1
-    restart: always
+    restart: unless-stopped
     ports:
       - 8081:80
     networks:
@@ -89,6 +90,7 @@ services:
       - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
       - ./mosquitto/data:/mosquitto/data
       - ./mosquitto/log:/mosquitto/log
+    restart: unless-stopped
     
 volumes:
   mysql-data:
