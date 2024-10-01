@@ -36,6 +36,7 @@ services:
     depends_on:
       - db
       - migration
+
     networks:
       - my-networks
     restart: unless-stopped
@@ -84,12 +85,14 @@ services:
       - backend
     ports:
       - 1884:1884
+      - 8883:8883
     networks:
       - my-networks
     volumes:
       - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
       - ./mosquitto/data:/mosquitto/data
       - ./mosquitto/log:/mosquitto/log
+      - ./certificados:/mosquitto/certificados
     restart: unless-stopped
     
 volumes:

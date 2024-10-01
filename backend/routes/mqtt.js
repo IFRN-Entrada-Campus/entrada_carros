@@ -16,9 +16,11 @@ let ultimaMensagem = null;
  */
 
 const client = mqtt.connect({
-    protocol: 'mqtt',
+    protocol: 'wss',
     host: 'broker-mqtt',
-    port: '1884',
+    port: 8883,
+    path: '/',
+    rejectUnauthorized: false,  // Para ignorar erros de certificado durante o desenvolvimento
 });
 
 client.on('connect', () => {

@@ -1,21 +1,32 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DadosService } from '../dados.service';
+import { MqttService } from '../mqtt.service';  // Importa o serviço MQTT
 
 @Component({
   selector: 'app-mqtt',
   templateUrl: './mqtt.component.html',
   styleUrls: ['./mqtt.component.css']
 })
-export class MqttComponent implements OnInit{
+export class MqttComponent implements OnInit, OnDestroy {
   mensagensRecebidas: any[] = [];
-  // mensagemEnvio: any = '';
   dados: any[] = [];
-  carregando = true;  // variavel para mostrar o loading
-  
-  constructor(private dadosService: DadosService) {}
+  carregando = true;  // Variável para mostrar o loading
+
+  constructor(private dadosService: DadosService, private mqttService: MqttService) {}
 
   ngOnInit(): void {
     this.onListar();
+
+    // Escutar mensagens do MQTT e atualizar os dados quando uma mensagem for recebida
+    this.mqttService.onMessageReceived = (msg: string) => {
+      console.log('Nova mensagem MQTT recebida:', msg);
+      this.onListar();  // Atualiza a lista de dados ao receber uma mensagem
+    };
+  }
+
+  ngOnDestroy(): void {
+    // Aqui você pode adicionar lógica de limpeza, se necessário
+    // Por exemplo, desconectar do serviço MQTT ou cancelar assinaturas
   }
 
   formatarData(data: string): string {
@@ -31,52 +42,19 @@ export class MqttComponent implements OnInit{
     return dataFormatada.toLocaleString('pt-BR', opcoes);
   }
 
-  onListar(): void {  // lista os dados do banco de dados
+  onListar(): void {  // Lista os dados do banco de dados
     this.dadosService.getHistoricoEntrada().subscribe({
       next: (resultado: any[]) => { 
-        (this.dados = resultado.map((item: any) => {
-          return {...item, img: `../assets/images/entrada/${item.img}`, dataHora: this.formatarData(item.dataHora)}}));
+        this.dados = resultado.map((item: any) => {
+          return { 
+            ...item, 
+            img: `../assets/images/entrada/${item.img}`, 
+            dataHora: this.formatarData(item.dataHora)
+          };
+        });
       },
       error: (error: any) => { console.log(error) },
       complete: () => this.carregando = false
     });
-    this.dadosService.getUltimaMensagem().subscribe({
-      next: (resultado: any[]) => {
-        console.log(resultado);
-        (this.mensagensRecebidas = resultado.map((item: any) => {
-          return {...item, img: `../assets/images/entrada/${item.img}`, dataHora: this.formatarData(item.dataHora)}}));
-      },
-      error: (error: any) => { console.log(error) },
-    });
   }
-
-  // handleFileInput(event: any): void {
-  //   const file = event.target.files[0];
-  //   const reader = new FileReader();
-
-  //   reader.onloadend = () => {
-  //     this.mensagemEnvio = reader.result;
-  //   };
-
-  //   if (file) {
-  //     reader.readAsDataURL(file);
-  //   }
-  // }
-
-  // isBase64Image(str: string): boolean {
-  //   return str.startsWith('data:image');
-  // }
-
-  // enviarMensagem() {
-  //   this.servicoMqtt.publish(this.topico, this.mensagemEnvio).subscribe({
-  //     next: () => {
-  //       console.log('Mensagem enviada');
-  //       this.mensagemEnvio = '';
-  //     },
-  //     error: (err) => {
-  //       console.error('Erro ao enviar mensagem', err);
-  //     },
-  //   });
-  // }
-  
 }
