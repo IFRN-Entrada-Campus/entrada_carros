@@ -33,9 +33,4 @@ export class MqttService {
     console.log('Mensagem processada:', msg);
     // Aqui você pode executar a lógica desejada, como chamar this.onListar()
   }
-
-  // Método para publicar uma mensagem no tópico
-  publish(topic: string, message: string) {
-    this.ngxMqttService.unsafePublish(topic, message, { qos: 1, retain: false });
-  }
 }
