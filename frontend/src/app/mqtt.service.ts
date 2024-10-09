@@ -21,7 +21,6 @@ export class MqttService {
     this.ngxMqttService.observe('carro/cam_vec_1').subscribe({
       next: (message: IMqttMessage) => {
         const msg = message.payload.toString();
-        console.log('Mensagem recebida no tópico carro/cam_vec_1:', msg);
         this.onMessageReceived(msg);
       },
       error: (err) => console.error('Erro ao receber mensagem', err)

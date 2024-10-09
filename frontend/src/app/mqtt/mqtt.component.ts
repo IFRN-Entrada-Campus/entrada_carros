@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DadosService } from '../dados.service';
-import { MqttService } from '../mqtt.service';  // Importa o serviço MQTT
+import { MqttService } from '../mqtt.service';  
+import { Mensagem } from './mqtt.ultima-msg';
 
 @Component({
   selector: 'app-mqtt',
@@ -8,7 +9,7 @@ import { MqttService } from '../mqtt.service';  // Importa o serviço MQTT
   styleUrls: ['./mqtt.component.css']
 })
 export class MqttComponent implements OnInit, OnDestroy {
-  mensagensRecebidas: any[] = [];
+  mensagem: Mensagem | null = null;
   dados: any[] = [];
   carregando = true;  // Variável para mostrar o loading
 
@@ -16,11 +17,12 @@ export class MqttComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.onListar();
-
-    // Escutar mensagens do MQTT e atualizar os dados quando uma mensagem for recebida
     this.mqttService.onMessageReceived = (msg: string) => {
       console.log('Nova mensagem MQTT recebida:', msg);
-      this.onListar();  // Atualiza a lista de dados ao receber uma mensagem
+      this.carregando = true
+      setTimeout(() => {
+        this.onListar();
+      }, 100); 
     };
   }
 
@@ -52,6 +54,9 @@ export class MqttComponent implements OnInit, OnDestroy {
             dataHora: this.formatarData(item.dataHora)
           };
         });
+        if (this.dados[this.dados.length - 1]) {
+          this.mensagem = this.dados[0];
+        }
       },
       error: (error: any) => { console.log(error) },
       complete: () => this.carregando = false
