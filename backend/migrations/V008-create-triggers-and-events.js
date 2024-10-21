@@ -28,7 +28,7 @@ module.exports = {
             'UPDATE', 
             'root@localhost', 
             NOW(), 
-            CONCAT('Registro afetado: idPessoa=', OLD.idPessoa, ', nomePessoa=', OLD.nomePessoa, ', tipoId=', OLD.tipoId, ', vinculo=', OLD.vinculo, ' -> idPessoa=', NEW.idPessoa, ', nome=', NEW.nome, ', tipoId=', NEW.tipoId, ', vinculo=', NEW.vinculo, '. Tabela pessoa')
+            CONCAT('Registro afetado: idPessoa=', OLD.idPessoa, ', nomePessoa=', OLD.nomePessoa, ', tipoId=', OLD.tipoId, ', vinculo=', OLD.vinculo, ' -> idPessoa=', NEW.idPessoa, ', nomePessoa=', NEW.nomePessoa, ', tipoId=', NEW.tipoId, ', vinculo=', NEW.vinculo, '. Tabela pessoa')
         );
       END;
     `);

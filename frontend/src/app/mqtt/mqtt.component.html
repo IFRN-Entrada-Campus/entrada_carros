@@ -21,7 +21,7 @@
         <div class="message-item">
             <img [src]="mensagem.img" alt="Imagem Recebida" style="max-width: 400px;">
             <p>Carro com placa {{ mensagem.placa }} às {{ mensagem.dataHora }}</p>
-            <p>Motorista: {{ mensagem.nome }}</p>
+            <p>Motorista: {{ mensagem.nomePessoa }}, Vínculo: {{ mensagem.vinculo }}</p>
         </div>
     </div>  
     <hr>
@@ -32,12 +32,13 @@
         currentPageReportTemplate="{first} a {last} de {totalRecords}" [rowsPerPageOptions]="[10, 20, 30]">
         <ng-template pTemplate="header">
             <tr>
-                <th>Imagem do carro</th>
-                <th>Placa</th>
-                <th>Data/Hora</th>
-                <th>Motorista</th>
-                <th>tipoId</th>
-                <th>Id</th>
+                <th> Imagem do carro </th>
+                <th> Placa </th>
+                <th> Data/Hora </th>
+                <th> Motorista </th>
+                <th> Tipo de Identificação </th>
+                <th> Identificação </th>
+                <th> Vinculo </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-dado>
@@ -48,6 +49,7 @@
                 <td>{{ dado.nomePessoa }}</td>
                 <td>{{ dado.tipoId }}</td>
                 <td>{{ dado.idPessoa }}</td>
+                <td>{{ dado.vinculo }}</td>
             </tr>
         </ng-template>
     </p-table>

@@ -6,10 +6,10 @@ module.exports = {
     await queryInterface.sequelize.query(`
       CREATE VIEW vwPessoaCarro AS
       SELECT
-        a.nomePessoa AS Nome,
-        a.idPessoa AS Identificacao,
-        a.tipoId AS TipoID,
-        a.vinculo AS Vinculo,
+        a.nomePessoa,
+        a.idPessoa,
+        a.tipoId,
+        a.vinculo,
         c.marcaCarro AS Marca,
         c.modeloCarro AS Modelo,
         c.anoCarro AS Ano,

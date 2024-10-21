@@ -8,8 +8,10 @@ module.exports = {
       SELECT he.placa,
              he.dataHora,
              he.img,
-             a.nomePessoa AS nome,
-             a.idPessoa AS identificacao
+             a.nomePessoa,
+             a.tipoId,
+             a.idPessoa,
+             a.vinculo
       FROM historicoEntrada he
       JOIN carro c ON he.idCarroRel = c.idCarro
       JOIN pessoa a ON c.idPessoaRel = a.idPessoa;
