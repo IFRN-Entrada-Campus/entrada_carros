@@ -9,6 +9,16 @@ module.exports = {
         primaryKey: true,
         allowNull: false,
       },
+      idPessoaRel: {
+        type: Sequelize.BIGINT,
+        allowNull: false,
+        references: {
+          model: 'pessoa', // Nome da tabela referenciada
+          key: 'idPessoa', // Coluna referenciada
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
       marcaCarro: {
         type: Sequelize.STRING(50),
         allowNull: false,
@@ -33,16 +43,7 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      matriculaRel: {
-        type: Sequelize.BIGINT,
-        allowNull: false,
-        references: {
-          model: 'aluno', // Nome da tabela referenciada
-          key: 'matriculaAluno', // Coluna referenciada
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-      },
+
       placaCarro: {
         type: Sequelize.STRING(50),
         allowNull: false,

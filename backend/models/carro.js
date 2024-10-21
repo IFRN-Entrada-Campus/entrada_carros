@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         allowNull: false,
       },
-      matriculaRel: {
+      idPessoaRel: {
         type: DataTypes.BIGINT,
         allowNull: false,
       },
@@ -42,8 +42,8 @@ module.exports = (sequelize, DataTypes) => {
   
     Carro.associate = (models) => {
       Carro.belongsTo(models.Aluno, {
-        foreignKey: 'matriculaRel',
-        as: 'aluno',
+        foreignKey: 'idPessoaRel',
+        as: 'pessoa',
       });
     };
   

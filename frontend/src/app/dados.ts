@@ -1,10 +1,11 @@
 export interface Dados {
-
     modeloCarro: any;
     marcaCarro: any;
     anoCarro: any;
-    aluno: any;
-    matriculaAluno: any;
+    nomePessoa: any;
+    tipoId: any;
+    idPessoa: any;
+    vinculo: any,
     codigoEtiqueta: any;
     validadeEtiqueta: Date;
     CNHvalida: any;

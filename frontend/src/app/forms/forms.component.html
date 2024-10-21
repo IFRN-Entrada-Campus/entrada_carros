@@ -35,11 +35,20 @@
         </tr>
         <tr *ngIf="!usuarioJaCadastrado">
             <td><label htmlFor="nome">Nome completo do condutor: </label></td>
-            <td><input pInputText class="p-inputtext-sm" id="nome" [(ngModel)]="dado.aluno" required></td>
+            <td><input pInputText class="p-inputtext-sm" id="nome" [(ngModel)]="dado.nomePessoa" required></td>
         </tr>
+        <tr *ngIf="!usuarioJaCadastrado">
+            <td><label htmlFor="tipoId">tipoId: </label></td>
+            <td><input pInputText class="p-inputtext-sm" id="tipoId" [(ngModel)]="dado.tipoId" required></td>
+        </tr>
+        <tr *ngIf="!usuarioJaCadastrado">
+            <td><label htmlFor="vinculo">vinculo: </label></td>
+            <td><input pInputText class="p-inputtext-sm" id="vinculo" [(ngModel)]="dado.vinculo" required></td>
+        </tr>
+
         <tr>
-            <td><label htmlFor="matricula">Matrícula: </label></td>
-            <td><p-inputNumber class="p-inputtext-sm" id="matricula" [(ngModel)]="dado.matriculaAluno"
+            <td><label htmlFor="idPessoa"> Identificação </label></td>
+            <td><p-inputNumber class="p-inputtext-sm" id="idPessoa" [(ngModel)]="dado.idPessoa"
                     [useGrouping]="false"></p-inputNumber></td>
         </tr>
         <tr>

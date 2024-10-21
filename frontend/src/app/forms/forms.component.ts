@@ -13,9 +13,10 @@ import { LoginService } from '../login.service';
 })
 
 export class FormsComponent implements OnInit {
-  dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: 0, validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
+  dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', nomePessoa: '',tipoId: '', idPessoa: '', vinculo: '', codigoEtiqueta: 0, validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
+
   usuarioJaCadastrado: boolean = false;
-  matriculas: any[] = []; // variavel para armazenar as matriculas dos alunos
+  idPessoas: any[] = []; // variavel para armazenar as identificações das pessoas
   formInvalid = false;  // variavel para mostrar o alerta de erro
   erroSQL = false;  // variavel para mostrar o alerta de erro do banco
   erroUsuario = '';
@@ -28,18 +29,24 @@ export class FormsComponent implements OnInit {
 
   ngOnInit(): void {
     this.admin = this.loginService.isUserAdmin();
-    this.dadosService.getMatriculas().subscribe({ // Preenche o select com as matrículas dos alunos
-      next: (resultado: any) => this.matriculas = resultado,
+    this.dadosService.getIdPessoas().subscribe({ // Preenche o select com as identificações dos pessoas
+      next: (resultado: any) => this.idPessoas = resultado,
       error: (erro: any) => console.log(erro)
     });
     this.sharedData.codigoEtiqueta$.subscribe((codigo: string) => { // Recebe os dados do formulário
       this.dado.codigoEtiqueta = codigo
     });
-    this.sharedData.matriculaAluno$.subscribe((matricula: number) => {
-      this.dado.matriculaAluno = matricula
+    this.sharedData.tipoId$.subscribe((tipoId: string) => {
+      this.dado.tipoId = tipoId
     });
-    this.sharedData.aluno$.subscribe((aluno: string) => {
-      this.dado.aluno = aluno
+    this.sharedData.idPessoa$.subscribe((idPessoa: number) => {
+      this.dado.idPessoa = idPessoa
+    });
+    this.sharedData.nomePessoa$.subscribe((nomePessoa: string) => {
+      this.dado.nomePessoa = nomePessoa
+    });
+    this.sharedData.vinculo$.subscribe((vinculo: string) => {
+      this.dado.vinculo = vinculo
     });
     this.sharedData.modeloCarro$.subscribe((modelo: string) => {
       this.dado.modeloCarro = modelo
@@ -60,8 +67,10 @@ export class FormsComponent implements OnInit {
       this.dado.validadeEtiqueta = validade
     });
 
-    const aluno = this.dado.aluno;
-    const matriculaAluno = this.dado.matriculaAluno;
+    const nomePessoa = this.dado.nomePessoa;
+    const tipoId = this.dado.tipoId;
+    const idPessoa = this.dado.idPessoa;
+    const vinculo = this.dado.vinculo;
     const codigoEtiqueta = this.dado.codigoEtiqueta;
     const modeloCarro = this.dado.modeloCarro;
     const marcaCarro = this.dado.marcaCarro;
@@ -70,8 +79,10 @@ export class FormsComponent implements OnInit {
     const CNHvalida = this.dado.CNHvalida;
     const validadeEtiqueta = this.dado.validadeEtiqueta;
 
-    this.sharedData.setAluno('');
-    this.sharedData.setMatriculaAluno(0);
+    this.sharedData.setNomePessoa('');
+    this.sharedData.setTipoId('')
+    this.sharedData.setIdPessoa(0);
+    this.sharedData.setVinculo('');
     this.sharedData.setCodigoEtiqueta('');
     this.sharedData.setModeloCarro('');
     this.sharedData.setMarcaCarro('');
@@ -81,8 +92,10 @@ export class FormsComponent implements OnInit {
     this.sharedData.setCNHvalida(false);
     this.formInvalid = false;
 
-    this.dado.aluno = aluno;
-    this.dado.matriculaAluno = matriculaAluno;
+    this.dado.nomePessoa = nomePessoa;
+    this.dado.tipoId = tipoId;
+    this.dado.idPessoa = idPessoa;
+    this.dado.vinculo = vinculo
     this.dado.codigoEtiqueta = codigoEtiqueta;
     this.dado.modeloCarro = modeloCarro;
     this.dado.marcaCarro = marcaCarro;
@@ -114,7 +127,7 @@ export class FormsComponent implements OnInit {
       this.dado.modeloCarro != '' &&
       this.validatePlacaCarro(this.dado.placaCarro) &&
       this.validateAnoCarro(this.dado.anoCarro) &&
-      this.dado.matriculaAluno != 0 &&
+      this.dado.idPessoa != 0 &&
       this.dado.codigoEtiqueta != ''
     ) {
       if (this.usuarioJaCadastrado) {
@@ -125,7 +138,7 @@ export class FormsComponent implements OnInit {
           codigoEtiqueta: this.dado.codigoEtiqueta,
           validadeEtiqueta: this.dado.validadeEtiqueta,
           CNHvalida: this.dado.CNHvalida,
-          matriculaRel: this.dado.matriculaAluno,
+          idPessoaRel: this.dado.idPessoa,
           placaCarro: this.dado.placaCarro
         }
         this.dadosService.addCarro(dadocarro).subscribe({
@@ -148,8 +161,8 @@ export class FormsComponent implements OnInit {
         });
       } else {
         let i = 0;
-        for (this.matriculas.length; i < this.matriculas.length; i++) {
-          if (this.dado.matriculaAluno == this.matriculas[i].matriculaAluno) {
+        for (this.idPessoas.length; i < this.idPessoas.length; i++) {
+          if (this.dado.idPessoa == this.idPessoas[i].idPessoa) {
             this.formInvalid = false;
             this.erroSQL = false;
             this.erroUsuario = 'O condutor já está cadastrado! Caso queira cadastrar novo carro, por favor marcar a opção de condutor já cadastrado.';
@@ -184,8 +197,10 @@ export class FormsComponent implements OnInit {
   }
 
   escanear(): void {  // Navega para a página de scanner
-    this.sharedData.setAluno(this.dado.aluno);
-    this.sharedData.setMatriculaAluno(this.dado.matriculaAluno);
+    this.sharedData.setNomePessoa(this.dado.nomePessoa);
+    this.sharedData.setTipoId(this.dado.tipoId)
+    this.sharedData.setIdPessoa(this.dado.idPessoa);
+    this.sharedData.setVinculo(this.dado.vinculo);
     this.sharedData.setCodigoEtiqueta(this.dado.codigoEtiqueta);
     this.sharedData.setModeloCarro(this.dado.modeloCarro);
     this.sharedData.setMarcaCarro(this.dado.marcaCarro);

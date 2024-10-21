@@ -10,7 +10,7 @@ var swaggerJSDoc = require('swagger-jsdoc');
 var swaggerUi = require('swagger-ui-express');
 
 var indexRouter = require('./routes/index');
-var alunocarroRouter = require('./routes/alunocarro');
+var pessoacarroRouter = require('./routes/pessoacarro');
 var loginRouter = require('./routes/login');
 var placaRouter = require('./routes/placa');
 var entradaRouter = require('./routes/entrada');
@@ -45,7 +45,7 @@ const opcoes = {
 const swaggerSpec = swaggerJSDoc(opcoes);
 
 app.use('/', indexRouter);
-app.use('/alunocarro', alunocarroRouter);
+app.use('/pessoacarro', pessoacarroRouter);
 app.use('/login', loginRouter);
 app.use('/placa', placaRouter);
 app.use('/entrada', entradaRouter);

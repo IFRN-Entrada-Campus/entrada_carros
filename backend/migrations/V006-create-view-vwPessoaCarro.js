@@ -2,24 +2,28 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    // Criação da view vwPessoaCarro
     await queryInterface.sequelize.query(`
-      CREATE VIEW vwalunocarro AS
+      CREATE VIEW vwPessoaCarro AS
       SELECT
+        a.nomePessoa AS Nome,
+        a.idPessoa AS Identificacao,
+        a.tipoId AS TipoID,
+        a.vinculo AS Vinculo,
         c.marcaCarro AS Marca,
         c.modeloCarro AS Modelo,
         c.anoCarro AS Ano,
-        a.noAluno AS Aluno,
-        a.matriculaAluno AS Matricula,
         c.codigoEtiqueta,
         c.validaCnh AS CNHvalida,
         c.placaCarro AS Placa,
         c.validadeEtiqueta
       FROM carro c
-      JOIN aluno a ON a.matriculaAluno = c.matriculaRel;
+      JOIN pessoa a ON a.idPessoa = c.idPessoaRel;
     `);
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.sequelize.query('DROP VIEW vwalunocarro;');
+    // Remoção da view vwPessoaCarro
+    await queryInterface.sequelize.query('DROP VIEW IF EXISTS vwPessoaCarro;');
   },
 };

@@ -13,7 +13,7 @@ import { LoginService } from '../login.service';
 })
 export class EditarComponent implements OnInit {
 
-  dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', aluno: '', matriculaAluno: '', codigoEtiqueta: '', validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
+  dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', nomePessoa: '', tipoId: '', idPessoa: '', vinculo:'', codigoEtiqueta: '', validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
   formInvalid = false;  // variavel para mostrar o alerta de erro
   placa = ''; // variavel para armazenar a placa do carro
   erroSQL = false;  // variavel para mostrar o alerta de erro do banco
@@ -39,9 +39,9 @@ export class EditarComponent implements OnInit {
           next: (retorno: any) => {
             this.dado.modeloCarro = retorno[0].Modelo;
             this.dado.marcaCarro = retorno[0].Marca;
-            this.dado.matriculaAluno = retorno[0].Matricula;
+            this.dado.idPessoa = retorno[0].IdPessoa;
             this.dado.anoCarro = retorno[0].Ano;
-            this.dado.aluno = retorno[0].Aluno;
+            this.dado.nomePessoa = retorno[0].NomePessoa;
             this.dado.codigoEtiqueta = retorno[0].codigoEtiqueta;
             if (retorno[0].codigoEtiqueta == 0 || '') {
               this.sharedDataService.codigoEtiqueta$.subscribe(
@@ -91,7 +91,7 @@ export class EditarComponent implements OnInit {
       this.dado.modeloCarro != '' &&
       this.validatePlacaCarro(this.dado.placaCarro) &&
       this.validateAnoCarro(this.dado.anoCarro) &&
-      this.dado.aluno != '' &&
+      this.dado.nomePessoa != '' &&
       this.dado.codigoEtiqueta != ''
     ) {
       this.dadosServico.editarDados(this.dado, this.placa).subscribe({

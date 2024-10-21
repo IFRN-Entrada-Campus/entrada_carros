@@ -6,8 +6,10 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SharedDataService { // Serviço para compartilhar os dados entre os componentes
   private codigoEtiquetaSubject = new BehaviorSubject<string>('');
-  private matriculaAlunoSubject = new BehaviorSubject<number>(0); // Inicia a matricula com 0
-  private alunoSubject = new BehaviorSubject<string>('');
+  private tipoIdSubject = new BehaviorSubject<string>('');
+  private idPessoaSubject = new BehaviorSubject<number>(0); // Inicia a matricula com 0
+  private vinculoSubject = new BehaviorSubject<string>('');
+  private nomePessoaSubject = new BehaviorSubject<string>('');
   private modeloCarroSubject = new BehaviorSubject<string>('');
   private marcaCarroSubject = new BehaviorSubject<string>('');
   private anoCarroSubject = new BehaviorSubject<number>(2000); // Inicia o ano com 2000
@@ -16,8 +18,10 @@ export class SharedDataService { // Serviço para compartilhar os dados entre os
   private validadeEtiquetaSubject = new BehaviorSubject<Date>(new Date()); // Inicia a data com a data atual
 
   codigoEtiqueta$ = this.codigoEtiquetaSubject.asObservable();
-  matriculaAluno$ = this.matriculaAlunoSubject.asObservable();
-  aluno$ = this.alunoSubject.asObservable();
+  tipoId$ = this.tipoIdSubject.asObservable();
+  idPessoa$ = this.idPessoaSubject.asObservable();
+  nomePessoa$ = this.nomePessoaSubject.asObservable();
+  vinculo$ = this.vinculoSubject.asObservable();
   modeloCarro$ = this.modeloCarroSubject.asObservable();
   marcaCarro$ = this.marcaCarroSubject.asObservable();
   anoCarro$ = this.anoCarroSubject.asObservable();
@@ -30,12 +34,19 @@ export class SharedDataService { // Serviço para compartilhar os dados entre os
     this.codigoEtiquetaSubject.next(codigo);
   }
 
-  setMatriculaAluno(matricula: number): void {
-    this.matriculaAlunoSubject.next(matricula);
+  setTipoId(tipoId: string): void {
+    this.tipoIdSubject.next(tipoId);
   }
 
-  setAluno(aluno: string): void {
-    this.alunoSubject.next(aluno);
+  setVinculo(vinculo: string): void {
+    this.vinculoSubject.next(vinculo);
+  }
+  setIdPessoa(idPessoa: number): void {
+    this.idPessoaSubject.next(idPessoa);
+  }
+
+  setNomePessoa(nomePessoa: string): void {
+    this.nomePessoaSubject.next(nomePessoa);
   }
 
   setModeloCarro(modelo: string): void {

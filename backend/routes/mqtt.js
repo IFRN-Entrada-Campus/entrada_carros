@@ -98,7 +98,7 @@ client.on('message', function (topic, message) {
                     const id = result[0].idCarro;
 
                     // Insere os dados no banco de dados
-                    const query = 'INSERT INTO historicoentrada(placa, dataHora, img, idCarroRel) VALUES (?, ?, ?, ?)';
+                    const query = 'INSERT INTO historicoEntrada(placa, dataHora, img, idCarroRel) VALUES (?, ?, ?, ?)';
                     const dataHora = new Date();
                     const valores = [dados.placa, dataHora, nomeArquivo, id];
                     console.log(valores)

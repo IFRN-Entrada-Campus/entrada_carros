@@ -88,7 +88,7 @@ router.get('/', verificarToken, function (req, res) { //retorna todos os dados d
             throw erroConexao;
         }
 
-        con.query('SELECT * FROM vwhistoricoaluno ORDER BY dataHora DESC', function (erroComandoSQL, result, fields) {
+        con.query('SELECT * FROM vwHistoricoPessoa ORDER BY dataHora DESC', function (erroComandoSQL, result, fields) {
             conexao.release();
             if (erroComandoSQL) {
                 throw erroComandoSQL;
@@ -116,9 +116,9 @@ router.post('/', verificarAdmin, function (req, res) { // insere dados de entrad
         const dataHora = req.body.dataHora;
         const img = req.body.img;
         const idCarroRel = req.body.idCarroRel;
-        console.log(`POST historicoentrada: ${placa}`);
+        console.log(`POST historicoEntrada: ${placa}`);
 
-        const sql = `INSERT INTO historicoentrada (placa, dataHora, img, idCarroRel) VALUES (?, ?, ?, ?)`; //insere dados de entrada
+        const sql = `INSERT INTO historicoEntrada (placa, dataHora, img, idCarroRel) VALUES (?, ?, ?, ?)`; //insere dados de entrada
         con.query(
             sql,
             [placa, dataHora, img, idCarroRel],

@@ -112,7 +112,7 @@ export class ListaComponent implements OnInit {
       let p = this.nomePesquisado.toUpperCase();
 
       this.dadosFormulario = this.dadosCopia.filter((dados) => {
-        return dados.Aluno.toUpperCase().includes(p);
+        return dados.nomePessoa.toUpperCase().includes(p);
       });
     } else {
       this.dadosFormulario = [...this.dadosCopia];

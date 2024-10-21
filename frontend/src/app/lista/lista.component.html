@@ -41,7 +41,7 @@
 <div *ngIf="!carregando">
     <p-table [value]="dadosFormulario" styleClass="p-datatable-gridlines" [rows]="100" [paginator]="true" [showCurrentPageReport]="true"
         currentPageReportTemplate="{first} a {last} de {totalRecords}" [rowsPerPageOptions]="[100, 200, 400]"
-        selectionMode="single" [(selection)]="dadoSelecionado" dataKey="Matricula">
+        selectionMode="single" [(selection)]="dadoSelecionado" dataKey="idPessoa">
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="Modelo">Modelo do carro <p-sortIcon field="Modelo"></p-sortIcon>
@@ -52,12 +52,13 @@
                 </th>
                 <th pSortableColumn="Ano">Ano do carro <p-sortIcon field="Ano"></p-sortIcon>
                 </th>
-                <th pSortableColumn="Aluno">Nome do aluno/servidor <p-sortIcon field="Aluno"></p-sortIcon>
+                <th pSortableColumn="nomePessoa">Nome da Pessoa <p-sortIcon field="nomePessoa"></p-sortIcon>
                 </th>
-                <th pSortableColumn="Matricula">Matrícula <p-sortIcon field="Matricula"></p-sortIcon>
+                <th pSortableColumn="idPessoa"> Identificação <p-sortIcon field="idPessoa"></p-sortIcon>
                 </th>
-                <th pSortableColumn="codigoEtiqueta">Código da etiqueta <p-sortIcon field="codigoEtiqueta">
-                    </p-sortIcon>
+                <th pSortableColumn="vinculo"> Vínculo <p-sortIcon field="vinculo"></p-sortIcon>
+                </th>
+                <th pSortableColumn="codigoEtiqueta">Código da etiqueta <p-sortIcon field="codigoEtiqueta"></p-sortIcon>
                 </th>
                 <th pSortableColumn="validadeEtiqueta">Validade da etiqueta <p-sortIcon field="validadeEtiqueta">
                     </p-sortIcon>
@@ -75,8 +76,9 @@
                 <td> {{ dados.Marca }}</td>
                 <td> {{ dados.Placa }}</td>
                 <td> {{ dados.Ano }} </td>
-                <td> {{ dados.Aluno }} </td>
-                <td> {{ dados.Matricula }} </td>
+                <td> {{ dados.nomePessoa }} </td>
+                <td> {{ dados.idPessoa }} </td>
+                <td> {{ dados.vinculo }}</td>
                 <td> {{ dados.codigoEtiqueta }} </td>
                 <td> {{ dados.validadeEtiqueta }} </td>
                 <td> {{ dados.CNHvalida }} </td>

@@ -15,15 +15,15 @@ export class DadosService {
   headers = new HttpHeaders()
   .set('x-access-token', this.authToken);
 
-  getDados(): Observable<any> { // Retorna os dados do banco da tabela aluno e carro
-    return this.http.get(`${this.apiUrl}/alunocarro`, {headers: this.headers})
+  getDados(): Observable<any> { // Retorna os dados do banco da tabela pessoa e carro
+    return this.http.get(`${this.apiUrl}/pessoacarro`, {headers: this.headers})
   }
 
-  getMatriculas(): Observable<any> { // Retorna as matriculas do banco
-    return this.http.get(`${this.apiUrl}/alunocarro/matricula`, {headers: this.headers})
+  getIdPessoas(): Observable<any> { // Retorna as identificações do banco
+    return this.http.get(`${this.apiUrl}/pessoacarro/idPessoa`, {headers: this.headers})
   }
 
-  getDadosporPlaca(placa: any): Observable<any> { // Retorna os dados do banco da tabela aluno e carro baseado na placa
+  getDadosporPlaca(placa: any): Observable<any> { // Retorna os dados do banco da tabela pessoa e carro baseado na placa
     return this.http.get(`${this.apiUrl}/placa/${placa}`, {headers: this.headers})
   }
 
@@ -36,25 +36,25 @@ export class DadosService {
   }
 
   addDados(dado: Dados): Observable<any> { // Adiciona os dados no banco
-        if (dado.CNHvalida == true) { // Converte o valor booleano para inteiro
-          dado.CNHvalida = 1;
-        } else {
-          dado.CNHvalida = 0;
-        }
-        let dataFormatada = dado.validadeEtiqueta.toISOString().slice(0, 19).replace('T', ' '); // Converte a data para o formato do banco
-        let reqAluno = {noAluno: dado.aluno, matriculaAluno: dado.matriculaAluno}; // Cria o objeto para o aluno
-        let reqCarro ={ // Cria o objeto para o carro
-          marcaCarro: dado.marcaCarro,
-          modeloCarro: dado.modeloCarro,
-          anoCarro: dado.anoCarro,
-          codigoEtiqueta: dado.codigoEtiqueta,
-          validadeEtiqueta: dataFormatada,
-          validaCnh: dado.CNHvalida,
-          matriculaRel: dado.matriculaAluno,
-          placaCarro: dado.placaCarro};
-        let addAluno = this.http.post(`${this.apiUrl}/alunocarro/aluno`, reqAluno, {headers: this.headers}); // Faz a requisição para o aluno
-        let addCarro = this.http.post(`${this.apiUrl}/alunocarro/carro`, reqCarro, {headers: this.headers}); // Faz a requisição para o carro
-        return merge(addAluno, addCarro);
+    if (dado.CNHvalida == true) { // Converte o valor booleano para inteiro
+      dado.CNHvalida = 1;
+    } else {
+      dado.CNHvalida = 0;
+    }
+    let dataFormatada = dado.validadeEtiqueta.toISOString().slice(0, 19).replace('T', ' '); // Converte a data para o formato do banco
+    let reqPessoa = {nomePessoa: dado.nomePessoa, idPessoa: dado.idPessoa, tipoId: dado.tipoId, vinculo: dado.vinculo}; // Cria o objeto para o pessoa
+    let reqCarro ={ // Cria o objeto para o carro
+      marcaCarro: dado.marcaCarro,
+      modeloCarro: dado.modeloCarro,
+      anoCarro: dado.anoCarro,
+      codigoEtiqueta: dado.codigoEtiqueta,
+      validadeEtiqueta: dataFormatada,
+      validaCnh: dado.CNHvalida,
+      idPessoaRel: dado.idPessoa,
+      placaCarro: dado.placaCarro};
+    let addPessoa = this.http.post(`${this.apiUrl}/pessoacarro/pessoa`, reqPessoa, {headers: this.headers}); // Faz a requisição para o pessoa
+    let addCarro = this.http.post(`${this.apiUrl}/pessoacarro/carro`, reqCarro, {headers: this.headers}); // Faz a requisição para o carro
+    return merge(addPessoa, addCarro);
   }
 
   addCarro(dado: any): Observable<any> {
@@ -66,10 +66,10 @@ export class DadosService {
       codigoEtiqueta: dado.codigoEtiqueta,
       validadeEtiqueta: dataFormatada,
       validaCnh: dado.CNHvalida,
-      matriculaRel: dado.matriculaRel,
+      idPessoaRel: dado.idPessoaRel,
       placaCarro: dado.placaCarro
     };
-    return this.http.post(`${this.apiUrl}/alunocarro/carro`, req, {headers: this.headers});
+    return this.http.post(`${this.apiUrl}/pessoacarro/carro`, req, {headers: this.headers});
   }
 
   addHistoricoEntrada(dados: any): Observable<any> { // Adiciona os dados de entrada de veículos no banco
@@ -78,35 +78,35 @@ export class DadosService {
   }
 
   editarDados(dado: Dados, placa: any): Observable<any> { // Edita os dados no banco
-        let dataFormatada = dado.validadeEtiqueta.toISOString().slice(0, 19).replace('T', ' '); 
-        if (dado.CNHvalida === true) {
-          dado.CNHvalida = 1;
-        } else {
-          dado.CNHvalida = 0;
-        }
-        let reqAluno = {noAluno: dado.aluno, matriculaAluno: dado.matriculaAluno};
-        let reqCarro ={
-          marcaCarro: dado.marcaCarro,
-          modeloCarro: dado.modeloCarro,
-          anoCarro: dado.anoCarro,
-          codigoEtiqueta: dado.codigoEtiqueta,
-          validadeEtiqueta: dataFormatada,
-          validaCnh: dado.CNHvalida,
-          matriculaRel: dado.matriculaAluno,
-          placaCarro: dado.placaCarro};
-        let putAluno = this.http.put(`${this.apiUrl}/alunocarro/aluno/${dado.matriculaAluno}`, reqAluno, {headers: this.headers});
-        let putCarro = this.http.put(`${this.apiUrl}/alunocarro/carro/${placa}`, reqCarro, {headers: this.headers});
-        return merge(putAluno, putCarro) // Faz a requisição para o aluno e para o carro utilizando o merge
+    let dataFormatada = dado.validadeEtiqueta.toISOString().slice(0, 19).replace('T', ' '); 
+    if (dado.CNHvalida === true) {
+      dado.CNHvalida = 1;
+    } else {
+      dado.CNHvalida = 0;
+    }
+    let reqPessoa = {nomePessoa: dado.nomePessoa, idPessoa: dado.idPessoa, tipoId: dado.tipoId, vinculo: dado.vinculo};
+    let reqCarro ={
+      marcaCarro: dado.marcaCarro,
+      modeloCarro: dado.modeloCarro,
+      anoCarro: dado.anoCarro,
+      codigoEtiqueta: dado.codigoEtiqueta,
+      validadeEtiqueta: dataFormatada,
+      validaCnh: dado.CNHvalida,
+      idPessoaRel: dado.idPessoa,
+      placaCarro: dado.placaCarro};
+    let putPessoa = this.http.put(`${this.apiUrl}/pessoacarro/pessoa/${dado.idPessoa}`, reqPessoa, {headers: this.headers});
+    let putCarro = this.http.put(`${this.apiUrl}/pessoacarro/carro/${placa}`, reqCarro, {headers: this.headers});
+    return merge(putPessoa, putCarro) // Faz a requisição para o pessoa e para o carro utilizando o merge
         
   }
 
   deletarDados(placa: any): Observable<any> {
     return this.http.get(`${this.apiUrl}/placa/${placa}`, {headers: this.headers}).pipe(
       switchMap((resultado: any) => {
-        let matricula = resultado[0].Matricula; // Pega a matricula do aluno
-        let deleteCarro = this.http.delete(`${this.apiUrl}/alunocarro/carro/${placa}`, {headers: this.headers}); // Requisição para o carro
-        let deleteAluno = this.http.delete(`${this.apiUrl}/alunocarro/aluno/${matricula}`, {headers: this.headers}); // Requisição para o aluno
-        return merge(deleteCarro, deleteAluno); // Faz a requisição para o aluno e para o carro utilizando o merge
+        let idPessoa = resultado[0].idPessoa; // Pega a identificação da pessoa
+        let deleteCarro = this.http.delete(`${this.apiUrl}/pessoacarro/carro/${placa}`, {headers: this.headers}); // Requisição para o carro
+        let deletePessoa = this.http.delete(`${this.apiUrl}/pessoacarro/pessoa/${idPessoa}`, {headers: this.headers}); // Requisição para pessoa
+        return merge(deleteCarro, deletePessoa); // Faz a requisição para o passoa e para o carro utilizando o merge
       })
     );
   }

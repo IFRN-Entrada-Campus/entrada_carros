@@ -57,7 +57,7 @@ router.get('/:placa', verificarToken, function (req, res) { // busca os dados pe
     }
     const placa = req.params.placa;
 
-    const sql = 'SELECT * FROM vwalunocarro WHERE Placa = ?';
+    const sql = 'SELECT * FROM vwPessoaCarro WHERE Placa = ?';
     con.query(sql, [placa], function (erroComandoSQL, result) {
       conexao.release();
       if (erroComandoSQL) {

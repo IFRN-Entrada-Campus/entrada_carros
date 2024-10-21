@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-    const vwHistoricoAluno = sequelize.define(
-        'vwHistoricoAluno',
+    const vwHistoricoPessoa = sequelize.define(
+        'vwHistoricoPessoa',
         {
           idHistoricoEntrada: {
             type: DataTypes.INTEGER,
@@ -22,20 +22,28 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
           },
-          nome: {
+          nomePessoa: {     
             type: DataTypes.STRING(100),
             allowNull: false,
           },
-          matricula: {
-            type: DataTypes.BIGINT,
+          vinculo: {  // Indica se é um aluno, servidor ou visita.
+            type: DataTypes.STRING(20),
             allowNull: false,
           },
+          tipoId: {   // Indica se é uma Matrícula, CPF ou CNPJ
+            type: DataTypes.STRING(20),
+            allowNull: false,
+          },
+          idPessoa: { // Número da Matrícula, do CPF ou CNPJ
+            type: DataTypes.BIGINT,
+            allowNull: false,
+          }
         },
         {
-          tableName: 'vwhistoricoaluno',
+          tableName: 'vwHistoricPessoa',
           timestamps: false,
         }
       );
 
-      return vwHistoricoAluno
+      return vwHistoricoPessoa
 };

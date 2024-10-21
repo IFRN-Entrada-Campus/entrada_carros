@@ -1,40 +1,63 @@
 <app-menu></app-menu>
 <br>
 <br>
+
+<h2>Último carro detectado:</h2>
+<br>
+<br>
+
+<!-- Seção de carregamento -->
 <div *ngIf="carregando">
-  <h2>
-    Aguarde, carregando dados...
-  </h2>
-  <h2>
-    <p-progressSpinner></p-progressSpinner>
-  </h2>
+    <h2>Aguarde, carregando dados...</h2>
+    <h2><p-progressSpinner></p-progressSpinner></h2>
 </div>
+
+<!-- Se não estiver carregando, exibe o conteúdo -->
 <div *ngIf="!carregando">
-  <h2>Último carro detectado:</h2>
-  <div class="message-container" *ngIf="mensagem">
-    <div class="message-item">
-      <img [src]="mensagem.img" alt="Imagem Recebida" style="max-width: 400px;">
-      <p>Carro com placa {{ mensagem.placa }} às {{ mensagem.dataHora }}</p>
-      <p>Motorista: {{ mensagem.nome }}</p>
-    </div>
-  </div>  
-  <hr>
-  <div class="historico">
+    
+    <h2>Último carro detectado:</h2>
+    <!-- Último carro detectado -->
+    <div class="message-container" *ngIf="mensagem">
+        <div class="message-item">
+            <img [src]="mensagem.img" alt="Imagem Recebida" style="max-width: 400px;">
+            <p>Carro com placa {{ mensagem.placa }} às {{ mensagem.dataHora }}</p>
+            <p>Motorista: {{ mensagem.nome }}</p>
+        </div>
+    </div>  
+    <hr>
+
+    <!-- Histórico de entrada de carros -->
     <h2>Histórico de entrada de carros:</h2>
-    <table *ngFor="let dado of dados">
-      <tr><img [src]="dado.img" alt="Imagem capturada do carro" style="max-width: 200px;"></tr>
-      <tr>Carro com placa {{ dado.placa }} às {{ dado.dataHora }}</tr>
-      <tr>Motorista: {{ dado.nome }} - {{ dado.matricula }}</tr>
-      <br>
-      <br>
-    </table>
-  </div>
+    <p-table [value]="dados" styleClass="p-datatable-gridlines" [rows]="10" [paginator]="true" [showCurrentPageReport]="true"
+        currentPageReportTemplate="{first} a {last} de {totalRecords}" [rowsPerPageOptions]="[10, 20, 30]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Imagem do carro</th>
+                <th>Placa</th>
+                <th>Data/Hora</th>
+                <th>Motorista</th>
+                <th>tipoId</th>
+                <th>Id</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-dado>
+            <tr>
+                <td><img [src]="dado.img" alt="Imagem capturada do carro" style="max-width: 200px;"></td>
+                <td>{{ dado.placa }}</td>
+                <td>{{ dado.dataHora }}</td>
+                <td>{{ dado.nomePessoa }}</td>
+                <td>{{ dado.tipoId }}</td>
+                <td>{{ dado.idPessoa }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>
-<!-- <hr>
-<label for="fileInput">Mensagem para envio:</label>
-<br>
+
+<!-- 
 <div class="container">
+  <label for="fileInput">Mensagem para envio:</label>
   <input type="file" (change)="handleFileInput($event)" accept="image/*" id="fileInput">
+  <br>
+  <p-button (click)="enviarMensagem()" label="Enviar"></p-button>
 </div>
-<br>
-<p-button (click)="enviarMensagem()" label="Enviar"></p-button> -->
+-->

@@ -15,8 +15,8 @@ var con = mysql.createPool({ //cria pool com o banco de dados
 /**
  * @swagger
  * tags:
- *   name: Aluno/Servidor e Carros
- *   description: Operações relacionadas a dados de alunos, servidores e carros
+ *   name: Aluno/Servidor/Visita e Carros
+ *   description: Operações relacionadas a dados de alunos, servidores, visitas e carros
  */
 
 function verificarToken(req, res, next) { //verifica se o token é válido
@@ -76,19 +76,19 @@ function verificarAdmin(req, res, next) { // Verifica se o usuário é admin
 
 /**
  * @swagger
- * /api/alunocarro:
+ * /api/pessoaCarro:
  *  get:
- *      summary: Retorna os alunos/servidores e carros
- *      description: Retorna todos os dados organizados das tabelas aluno e carro
- *      tags: [Aluno/Servidor e Carros]
+ *      summary: Retorna os alunos/servidores/visitas e carros
+ *      description: Retorna todos os dados organizados das tabelas pessoa e carro
+ *      tags: [Aluno/Servidor/Visita e Carros]
  */
-router.get('/', verificarToken, function (req, res) { //retorna todos os alunos e carros
+router.get('/', verificarToken, function (req, res) { //retorna todas as pessoas e carros
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
         }
 
-        con.query('SELECT * FROM vwalunocarro', function (erroComandoSQL, result, fields) {
+        con.query('SELECT * FROM vwPessoaCarro', function (erroComandoSQL, result, fields) {
             conexao.release();
             if (erroComandoSQL) {
                 throw erroComandoSQL;
@@ -101,19 +101,19 @@ router.get('/', verificarToken, function (req, res) { //retorna todos os alunos 
 
 /**
  * @swagger
- * /api/alunocarro/matricula:
+ * /api/pessoaCarro/idPessoa:
  *  get:
- *      summary: Retorna todas as matrículas
- *      description: Retorna todos as matrículas de todos os alunos/servidores cadastrados
+ *      summary: Retorna todas os ID
+ *      description: Retorna todas as identificações de todos os alunos/servidores cadastrados
  *      tags: [Aluno/Servidor e Carros]
  */
-router.get('/matricula', verificarToken, function (req, res) { //retorna todos os alunos
+router.get('/idPessoa', verificarToken, function (req, res) { //retorna todos as pessoa
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
         }
 
-        con.query('SELECT matriculaAluno FROM aluno', function (erroComandoSQL, result, fields) {
+        con.query('SELECT idPessoa FROM pessoa', function (erroComandoSQL, result, fields) {
             conexao.release();
             if (erroComandoSQL) {
                 throw erroComandoSQL;
@@ -126,21 +126,21 @@ router.get('/matricula', verificarToken, function (req, res) { //retorna todos o
 
 /**
  * @swagger
- * /api/alunocarro/carro/<matricula>:
+ * /api/pessoaCarro/carro/<idPessoa>:
  *  get:
- *      summary: Retorna carros pela matrícula do condutor
- *      description: Retorna todos os carros relacionados a uma matrícula
+ *      summary: Retorna carros pela identificação do condutor
+ *      description: Retorna todos os carros relacionados a um ID
  *      tags: [Aluno/Servidor e Carros]
  */
-router.get('/carro/:matriculaRel', verificarToken, function (req, res) { // retorna carro pela matricula do responsavel
+router.get('/carro/:idPessoaRel', verificarToken, function (req, res) { // retorna carro pela identificação do responsavel
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
         }
-        const matriculaRel = req.params.matriculaRel;
+        const idPessoaRel = req.params.idPessoaRel;
 
-        const sql = `SELECT idCarro FROM carro WHERE matriculaRel = ?`
-        con.query(sql, [matriculaRel], function (erroComandoSQL, result, fields) {
+        const sql = `SELECT idCarro FROM carro WHERE idPessoaRel = ?`
+        con.query(sql, [idPessoaRel], function (erroComandoSQL, result, fields) {
             conexao.release();
             if (erroComandoSQL) {
                 throw erroComandoSQL;
@@ -153,25 +153,27 @@ router.get('/carro/:matriculaRel', verificarToken, function (req, res) { // reto
 
 /**
  * @swagger
- * /api/alunocarro/aluno:
+ * /api/pessoaCarro/Pessoa:
  *  post:
  *      summary: Cadastro de aluno ou servidor
  *      description: Cadastro de nome e matricula do servidor ou aluno
  *      tags: [Aluno/Servidor e Carros]
  */
-router.post('/aluno', verificarAdmin, function (req, res) { // insere aluno
+router.post('/pessoa', verificarAdmin, function (req, res) { // insere pessoa
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
         }
-        const noAluno = req.body.noAluno;
-        const matriculaAluno = req.body.matriculaAluno;
-        console.log(`POST aluno: ${matriculaAluno}`);
+        const nomePessoa = req.body.nomePessoa;
+        const idPessoa = req.body.idPessoa;
+        const tipoId = req.body.tipoId;
+        const vinculo = req.body.vinculo;
+        console.log(`POST pessoa: ${idPessoa}`);
 
-        const sql = `INSERT INTO aluno (noAluno, matriculaAluno) VALUES (?, ?)`;
+        const sql = `INSERT INTO pessoa (nomePessoa, idPessoa, tipoId, vinculo) VALUES (?, ?, ?, ?)`;
         con.query(
             sql,
-            [noAluno, matriculaAluno],
+            [nomePessoa, idPessoa, tipoId, vinculo],
             function (erroComandoSQL, result, fields) {
                 conexao.release();
                 if (erroComandoSQL) {
@@ -191,7 +193,7 @@ router.post('/aluno', verificarAdmin, function (req, res) { // insere aluno
 
 /**
  * @swagger
- * /api/alunocarro/carro:
+ * /api/pessoaCarro/carro:
  *  post:
  *      summary: Cadastra um novo carro e o relaciona a um condutor(aluno/servidor)
  *      description: Cadastra placa, modelo, marca e ano do carro junto com o código da etiqueta, validade da mesma e uma confirmação da validade da etiqueta.
@@ -208,14 +210,14 @@ router.post('/carro', verificarAdmin, function (req, res) { // insere carro
         const codigoEtiqueta = req.body.codigoEtiqueta;
         const validadeEtiqueta = req.body.validadeEtiqueta;
         const validaCnh = req.body.validaCnh;
-        const matriculaRel = req.body.matriculaRel;
+        const idPessoaRel = req.body.idPessoaRel;
         const placaCarro = req.body.placaCarro;
-        console.log(`POST carro de ${matriculaRel}`);
+        console.log(`POST carro de ${idPessoaRel}`);
 
-        const sql = `INSERT INTO carro (marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validadeEtiqueta, validaCnh, matriculaRel, placaCarro) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+        const sql = `INSERT INTO carro (marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validadeEtiqueta, validaCnh, idPessoaRel, placaCarro) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
         con.query(
             sql,
-            [marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validadeEtiqueta, validaCnh, matriculaRel, placaCarro],
+            [marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validadeEtiqueta, validaCnh, idPessoaRel, placaCarro],
             function (erroComandoSQL, result, fields) {
                 conexao.release();
                 if (erroComandoSQL) {
@@ -234,25 +236,25 @@ router.post('/carro', verificarAdmin, function (req, res) { // insere carro
 
 /**
  * @swagger
- * /api/alunocarro/aluno/<matricula>:
+ * /api/pessoaCarro/pessoa/<idPessoa>:
  *  put:
  *      summary: Edita aluno ou servidor pela matrícula
  *      description: Edita todos os dados do aluno o buscando pela matrícula
  *      tags: [Aluno/Servidor e Carros]
  */
-router.put('/aluno/:matriculaAluno', verificarAdmin, function (req, res) { // altera aluno
+router.put('/pessoa/:idPessoa', verificarAdmin, function (req, res) { // altera pessoa
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
         }
-        const noAluno = req.body.noAluno;
-        const matriculaAluno = req.body.matriculaAluno;
-        console.log(`PUT aluno: ${matriculaAluno}`);
+        const nomePessoa = req.body.nomePessoa;
+        const idPessoa = req.body.idPessoa;
+        console.log(`PUT pessoa: ${idPessoa}`);
 
-        const sql = `UPDATE aluno SET noAluno = ?, matriculaAluno = ? WHERE matriculaAluno = ?`;
+        const sql = `UPDATE pessoa SET nomePessoa = ?, idPessoa = ? WHERE idPessoa = ?`;
         con.query(
             sql,
-            [noAluno, matriculaAluno, matriculaAluno],
+            [nomePessoa, idPessoa, idPessoa],
             function (erroComandoSQL, result, fields) {
                 conexao.release();
                 if (erroComandoSQL) {
@@ -271,7 +273,7 @@ router.put('/aluno/:matriculaAluno', verificarAdmin, function (req, res) { // al
 
 /**
  * @swagger
- * /api/alunocarro/carro/<placa>:
+ * /api/pessoaCarro/carro/<placa>:
  *  put:
  *      summary: Edita carro pela placa
  *      description: Edita todos os dados do carro buscando pela placa
@@ -288,24 +290,24 @@ router.put('/carro/:placaCarro', verificarAdmin, function (req, res) { // altera
         const codigoEtiqueta = req.body.codigoEtiqueta;
         const validadeEtiqueta = req.body.validadeEtiqueta;
         const validaCnh = req.body.validaCnh;
-        const matriculaRel = req.body.matriculaRel;
+        const idPessoaRel = req.body.idPessoaRel;
         const placaCarroAntiga = req.params.placaCarro;
         const placaCarro = req.body.placaCarro;
         console.log(`PUT carro: ${placaCarro}`);
 
         const sql = `UPDATE carro 
-    SET marcaCarro = ?,
-    modeloCarro = ?,
-    anoCarro = ?,
-    codigoEtiqueta = ?,
-    validadeEtiqueta = ?,
-    validaCnh = ?,
-    matriculaRel = ?,
-    placaCarro = ?
-    WHERE placaCarro = ?`;
+        SET marcaCarro = ?,
+        modeloCarro = ?,
+        anoCarro = ?,
+        codigoEtiqueta = ?,
+        validadeEtiqueta = ?,
+        validaCnh = ?,
+        idPessoaRel = ?,
+        placaCarro = ?
+        WHERE placaCarro = ?`;
         con.query(
             sql,
-            [marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validadeEtiqueta, validaCnh, matriculaRel, placaCarro, placaCarroAntiga],
+            [marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validadeEtiqueta, validaCnh, idPessoaRel, placaCarro, placaCarroAntiga],
             function (erroComandoSQL, result, fields) {
                 conexao.release();
                 if (erroComandoSQL) {
@@ -324,24 +326,24 @@ router.put('/carro/:placaCarro', verificarAdmin, function (req, res) { // altera
 
 /**
  * @swagger
- * /api/alunocarro/aluno/<matricula>:
+ * /api/pessoaCarro/pessoa/<idPessoa>:
  *  delete:
  *      summary: Deleta aluno ou servidor pela matrícula
  *      description: Deleta todos os dados do aluno o buscando pela matrícula
  *      tags: [Aluno/Servidor e Carros]
  */
-router.delete('/aluno/:matriculaAluno', verificarAdmin, function (req, res) { // exclui aluno
+router.delete('/pessoa/:idPessoa', verificarAdmin, function (req, res) { // exclui pessoa
     con.getConnection(function (erroConexao, conexao) {
         if (erroConexao) {
             throw erroConexao;
         }
-        const matriculaAluno = req.params.matriculaAluno;
-        console.log(`DELETE aluno: ${matriculaAluno}`);
+        const idPessoa = req.params.idPessoa;
+        console.log(`DELETE pessoa: ${idPessoa}`);
 
-        const sql = `DELETE FROM aluno WHERE matriculaAluno = ?`;
+        const sql = `DELETE FROM pessoa WHERE idPessoa = ?`;
         con.query(
             sql,
-            [matriculaAluno],
+            [idPessoa],
             function (erroComandoSQL, result, fields) {
                 conexao.release();
                 if (erroComandoSQL) {
