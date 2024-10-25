@@ -1,6 +1,18 @@
 <app-menu></app-menu>
 <br>
 <br>
+<div *ngIf="carregando_ult_msg">
+    <h2>
+        Aguarde, carregando dados...
+    </h2>
+    <h2>
+        <p-progressSpinner></p-progressSpinner>
+    </h2>
+</div>
+<div *ngIf="!carregando_ult_msg">  
+    <app-ultima-msg></app-ultima-msg>
+</div>
+<br>
 <h2>Veículos registrados</h2>
 <br>
 <br>
@@ -38,7 +50,8 @@
         <p-progressSpinner></p-progressSpinner>
     </h2>
 </div>
-<div *ngIf="!carregando">
+<div *ngIf="!carregando">  
+    <br>
     <p-table [value]="dadosFormulario" styleClass="p-datatable-gridlines" [rows]="100" [paginator]="true" [showCurrentPageReport]="true"
         currentPageReportTemplate="{first} a {last} de {totalRecords}" [rowsPerPageOptions]="[100, 200, 400]"
         selectionMode="single" [(selection)]="dadoSelecionado" dataKey="idPessoa">

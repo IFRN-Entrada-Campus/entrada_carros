@@ -3,6 +3,7 @@ import { DadosService } from '../dados.service';
 import { Router } from '@angular/router';
 import { SharedDataService } from '../shared-data.service';
 import { LoginService } from '../login.service';
+import { MqttService } from '../mqtt.service';
 
 @Component({
   selector: 'app-lista',
@@ -17,10 +18,11 @@ export class ListaComponent implements OnInit {
   nomePesquisado: string = ''; // variavel para pesquisar o nome
   dadosCopia: any[] = []; // copia dos dados do banco de dados
   carregando = true;  // variavel para mostrar o loading
-  tipo_pesquisa = 1; // 1 = placa, 2 = etiqueta e 3 = nome;
+  tipo_pesquisa = 1; // 1 false= placa, 2 = etiqueta e 3 = nome;
   admin = false; // variavel para verificar se o usuário é admin ou não
+  carregando_ult_msg = false
 
-  constructor(private dadosService: DadosService, private router: Router, private sharedDataService: SharedDataService, private loginService: LoginService) {
+  constructor(private dadosService: DadosService, private router: Router, private sharedDataService: SharedDataService, private loginService: LoginService, private mqttService: MqttService) {
   }
 
 
@@ -36,6 +38,15 @@ export class ListaComponent implements OnInit {
         }, 500);
       }
     });
+
+    this.mqttService.onMessageReceived = (msg: string) => {
+      console.log('Nova mensagem MQTT recebida:', msg);
+      this.carregando_ult_msg  = true
+      setTimeout(() => {
+        this.carregando_ult_msg = false
+      }, 100); 
+    };
+
     this.sharedDataService.setCodigoEtiqueta('');
   }
 

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DadosService } from '../dados.service';
 import { MqttService } from '../mqtt.service';  
-import { Mensagem } from './mqtt.ultima-msg';
 
 @Component({
   selector: 'app-mqtt',
@@ -9,9 +8,8 @@ import { Mensagem } from './mqtt.ultima-msg';
   styleUrls: ['./mqtt.component.css']
 })
 export class MqttComponent implements OnInit, OnDestroy {
-  mensagem: Mensagem | null = null;
   dados: any[] = [];
-  carregando = true;  // Variável para mostrar o loading
+  carregando = true;  
 
   constructor(private dadosService: DadosService, private mqttService: MqttService) {}
 
@@ -27,8 +25,7 @@ export class MqttComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Aqui você pode adicionar lógica de limpeza, se necessário
-    // Por exemplo, desconectar do serviço MQTT ou cancelar assinaturas
+    
   }
 
   formatarData(data: string): string {
@@ -54,9 +51,6 @@ export class MqttComponent implements OnInit, OnDestroy {
             dataHora: this.formatarData(item.dataHora)
           };
         });
-        if (this.dados[this.dados.length - 1]) {
-          this.mensagem = this.dados[0];
-        }
       },
       error: (error: any) => { console.log(error) },
       complete: () => this.carregando = false
