@@ -1,25 +1,40 @@
 .botoes {
     display: flex;
-    align-items: center;
+    align-items: start;
+    flex-direction: column;
     justify-content: space-between;
-    margin-bottom: 10px;
     width: 100%;
     flex-wrap: wrap;
-}
 
+}
 .links {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    background-color: #FFFFFF;
+    padding: 7px;
+    align-items:start;
     justify-content: flex-start;
     flex-wrap: wrap;
+    
+}
+.p-button-secundary{
+    background-color: #DDDDDD;
+    color: #595959 ;
+    border-radius: 20px;
+    border: none;
+    margin: 2px;
+    
+}
+.p-titulo{
+    color: black;
+    padding: 6px 30px 6px 30px;
+    background-color: #D9D9D9;
+    border-radius: 15px 15px 0px 0px;
+
 }
 
-.logout {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-}
+
+
 
 @media only screen and (max-width: 600px){
     .botoes {

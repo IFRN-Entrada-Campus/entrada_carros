@@ -1,11 +1,6 @@
 <app-menu></app-menu>
 <br>
 <br>
-
-<h2>Último carro detectado:</h2>
-<br>
-<br>
-
 <!-- Seção de carregamento -->
 <div *ngIf="carregando">
     <h2>Aguarde, carregando dados...</h2>
@@ -14,18 +9,18 @@
 
 <!-- Se não estiver carregando, exibe o conteúdo -->
 <div *ngIf="!carregando">
-    
-    <h2>Último carro detectado:</h2>
-    <!-- Último carro detectado -->
-    <div class="message-container" *ngIf="mensagem">
-        <div class="message-item">
-            <img [src]="mensagem.img" alt="Imagem Recebida" style="max-width: 400px;">
-            <p>Carro com placa {{ mensagem.placa }} às {{ mensagem.dataHora }}</p>
-            <p>Motorista: {{ mensagem.nomePessoa }}, Vínculo: {{ mensagem.vinculo }}</p>
-        </div>
-    </div>  
-    <hr>
-
+<!--
+    <div class="mensagem">
+        <h2 clss="p-titulo">Último veículo detectado</h2>
+        <div class="message-container" *ngIf="mensagem">
+            <div class="message-item">
+                <img [src]="mensagem.img" alt="Imagem Recebida" style="max-width: 400px;">
+                <p>Carro com placa {{ mensagem.placa }} às {{ mensagem.dataHora }}</p>
+                <p>Motorista: {{ mensagem.nomePessoa }}, Vínculo: {{ mensagem.vinculo }}</p>
+            </div>
+        </div>  
+    </div>
+-->
     <!-- Histórico de entrada de carros -->
     <h2>Histórico de entrada de carros:</h2>
     <p-table [value]="dados" styleClass="p-datatable-gridlines" [rows]="10" [paginator]="true" [showCurrentPageReport]="true"

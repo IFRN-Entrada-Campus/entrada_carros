@@ -1,17 +1,17 @@
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display:flex;
+    margin: 20px 0px 20px 20px; 
+    flex-direction:row;
     height: 100vh;
-    margin: 0;
     font-family: "Roboto", sans-serif;
   }
-  
+  .cadastroDados{ 
+    text-align: start;
+  }
   h1 {
     text-align: center;
     font-size: 24px;
-    color: #fff;
+    color: #595959;
     margin-bottom: 10px;
   }
   
@@ -34,6 +34,7 @@ body {
     border-radius: 6px;
     padding: 20px;
     margin: 0 auto;
+    color:black;
   }
   
   table.forms td {

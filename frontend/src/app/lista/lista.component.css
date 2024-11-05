@@ -6,20 +6,33 @@ h2 {
     width: 100%;
     flex: 1
 }
+body {
+    font-family: "Roboto", sans-serif;
+    color: black;
 
+  }
 .input-group {
-    display: flex;
+    display:flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
+    justify-content: center;   
+    margin: 0px 0px 10px 10px;
     width: 100%;
 }
-
+.input-group p-button{
+    margin-left: 10px;
+    background-color: #21AF6D;
+}
+.p-input-icon-left {
+    width: 40%;
+}
 .botoes {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
+}
+h2{
+    color: #595959;
 }
 
 .links {

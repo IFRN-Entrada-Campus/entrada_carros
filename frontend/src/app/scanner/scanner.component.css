@@ -1,5 +1,12 @@
 h1,
 h5,
+body {
+  display:flex;
+  margin: 20px 0px 20px 20px; 
+  flex-direction:row;
+  height: 100vh;
+  font-family: "Roboto", sans-serif;
+}
 p {
   font-weight: 600;
   word-break: break-all;

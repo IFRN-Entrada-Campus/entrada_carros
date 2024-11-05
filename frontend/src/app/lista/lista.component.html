@@ -1,16 +1,35 @@
-<app-menu></app-menu>
-<br>
-<br>
+<body >
+    <app-menu></app-menu>
+    <h1>Table</h1>
+    <table>
+        <tr>
+            <td>
+                <tr>
+                <td>
+                    1
+                </td>
+                <td>
+                    2
+                </td>
+                <td>
+                    3
+                </td>
+                </tr>
+            </td>
+            <td>Gomes</td>
+        </tr>
+        
+    </table>
+</body>
 <h2>Veículos registrados</h2>
-<br>
-<br>
+
 <div *ngIf="tipo_pesquisa == 1" class="input-group">
     <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
         <input [(ngModel)]="placaPesquisada" (keyup)="filtrarPlacas()" class="pesquisar" pInputText
             placeholder="Pesquisar por placa...">
     </span>
-    <p-button size="small" [text]="true" severity="secondary" label="Mudar filtro" (click)="trocarPesquisa()">
+    <p-button [raised]="true" [text]="true" severity="secondary" label="Mudar filtro" (click)="trocarPesquisa()">
     </p-button>
 </div>
 <div *ngIf="tipo_pesquisa == 2" class="input-group">
@@ -19,7 +38,7 @@
         <input pInputText placeholder="Pesquisar por etiqueta..." class="pesquisar" [(ngModel)]="etiquetaPesquisada"
             (keyup)="filtrarEtiquetas()">
     </span>
-    <p-button size="small" [text]="true" severity="secondary" label="Mudar filtro" (click)="trocarPesquisa()">
+    <p-button [raised]="true" [text]="true" severity="secondary" label="Mudar filtro" (click)="trocarPesquisa()">
     </p-button>
 </div>
 <div *ngIf="tipo_pesquisa == 3" class="input-group">
@@ -27,7 +46,7 @@
         <i class="pi pi-search"></i>
         <input pInputText placeholder="Pesquisar por nome..." class="pesquisar" [(ngModel)]="nomePesquisado" (keyup)="filtrarNome()">
     </span>
-    <p-button size="small" [text]="true" severity="secondary" label="Mudar filtro" (click)="trocarPesquisa()">
+    <p-button [raised]="true"[text]="true" severity="secondary" label="Mudar filtro" (click)="trocarPesquisa()">
     </p-button>
 </div>
 <div *ngIf="carregando">
