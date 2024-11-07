@@ -25,6 +25,9 @@ const transporter = nodemailer.createTransport({
         user: process.env.USER,
         pass: process.env.PASS,
     },
+    tls: {
+        rejectUnauthorized: false,
+    },
 });
 
 
@@ -161,7 +164,7 @@ router.post('/novo', verificarAdmin, function (req, res) { // cria um novo usuá
                 }
 
                 const sqlinsert = 'INSERT INTO login(usuario, senha, email, role) VALUES (?, ?, ?, ?)';
-                con.query(sqlinsert, [usuario, hash, role], function (erro) {
+                con.query(sqlinsert, [usuario, hash, email, role], function (erro) {
                     if (erro) {
                         console.error('Erro ao inserir novo login:', erro);
                         res.status(500).send({message:'Erro do servidor'});
