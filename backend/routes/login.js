@@ -145,7 +145,7 @@ router.post('/novo', verificarAdmin, function (req, res) { // cria um novo usuá
                     return;
                 }
 
-                const sqlinsert = 'INSERT INTO login(usuario, senha, email, role) VALUES (?, ?, ?)';
+                const sqlinsert = 'INSERT INTO login(usuario, senha, email, role) VALUES (?, ?, ?, ?)';
                 con.query(sqlinsert, [usuario, hash, role], function (erro) {
                     if (erro) {
                         console.error('Erro ao inserir novo login:', erro);
