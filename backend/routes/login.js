@@ -121,6 +121,7 @@ router.post('/novo', verificarAdmin, function (req, res) { // cria um novo usuá
         }
         const usuario = req.body.usuario;
         const senha = req.body.senha;
+        const email = req.body.email;
         const role = req.body.role;
 
         const sqlselect = 'SELECT * FROM login WHERE usuario = ?';
