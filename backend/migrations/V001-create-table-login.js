@@ -15,6 +15,10 @@ module.exports = {
         type: Sequelize.STRING(150),
         allowNull: false,
       },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: true,  // Permite nulos
+      },
       role: {
       type: Sequelize.STRING,
       allowNull: false,
