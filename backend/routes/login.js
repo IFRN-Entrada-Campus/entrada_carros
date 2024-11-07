@@ -3,6 +3,8 @@ const router = express.Router();
 const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
+require('dotenv').config();
 
 var con = mysql.createPool({
     host: 'db',
@@ -12,6 +14,19 @@ var con = mysql.createPool({
     connectionLimit: 50,
     connectTimeout: 30000,
 });
+
+
+// Configura o transporte de e-mail (Nodemailer) usando variáveis do dotenv
+const transporter = nodemailer.createTransport({
+    host: process.env.HOST,
+    port: 587,
+    secure: false,
+    auth:{
+        user: process.env.USER,
+        pass: process.env.PASS,
+    },
+});
+
 
 /**
  * @swagger
@@ -159,4 +174,86 @@ router.post('/novo', verificarAdmin, function (req, res) { // cria um novo usuá
         });
     });
 });
+
+// Rota para solicitar recuperação de senha
+router.post('/solicitar-recuperacao', async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        const sql = 'SELECT * FROM login WHERE email = ?'; // Verifique se a coluna email existe
+        con.query(sql, [email], function (erroComandoSQL, result) {
+            if (erroComandoSQL) {
+                return res.status(500).json({ message: 'Erro ao consultar o banco de dados' });
+            }
+
+            if (result.length === 0) {
+                return res.status(404).json({ message: 'Usuário não encontrado' });
+            }
+
+            const usuario = result[0];
+
+            // Criar um token JWT válido por 1 hora
+            const token = jwt.sign({ id: usuario.id }, process.env.JWT_SEGREDO, { expiresIn: '1h' });
+
+            // Enviar o e-mail de recuperação de senha
+            const mailOptions = {
+                from: process.env.USER, // seu email
+                to: email,
+                subject: 'Recuperação de senha',
+                text: `Use o link abaixo para redefinir sua senha: http://localhost:8080/redefinir-senha/${token}`
+            };
+
+            transporter.sendMail(mailOptions, (error) => {
+                if (error) {
+                    return res.status(500).json({ message: 'Erro ao enviar o e-mail' });
+                }
+                res.status(200).json({ message: 'E-mail enviado com sucesso' });
+            });
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Erro no servidor' });
+    }
+});
+
+// Rota para redefinir a senha
+router.post('/redefinir-senha/:token', async (req, res) => {
+    const { token } = req.params;
+    const { novaSenha } = req.body;
+
+    try {
+        // Verificar o token
+        const decoded = jwt.verify(token, process.env.JWT_SEGREDO);
+
+        // Buscar o usuário pelo ID
+        const sql = 'SELECT * FROM login WHERE id = ?';
+        con.query(sql, [decoded.id], function (erroComandoSQL, result) {
+            if (erroComandoSQL || result.length === 0) {
+                return res.status(404).json({ message: 'Usuário não encontrado' });
+            }
+
+            const usuario = result[0];
+
+            // Criptografar a nova senha
+            bcrypt.hash(novaSenha, 10, function (erro, senhaHash) {
+                if (erro) {
+                    return res.status(500).json({ message: 'Erro ao gerar hash' });
+                }
+
+                // Atualizar a senha no banco de dados
+                const sqlUpdate = 'UPDATE login SET senha = ? WHERE id = ?';
+                con.query(sqlUpdate, [senhaHash, usuario.id], function (erro) {
+                    if (erro) {
+                        return res.status(500).json({ message: 'Erro ao atualizar a senha' });
+                    }
+
+                    res.status(200).json({ message: 'Senha redefinida com sucesso' });
+                });
+            });
+        });
+    } catch (error) {
+        res.status(400).json({ message: 'Token inválido ou expirado' });
+    }
+});
+
+
 module.exports = router;
