@@ -6,6 +6,11 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
+// Desativa a verificação de certificado TLS para conexões seguras autoassinadas (apenas para desenvolvimento)
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
+
+
 var con = mysql.createPool({
     host: 'db',
     user: 'root',
@@ -27,6 +32,7 @@ const transporter = nodemailer.createTransport({
     },
     tls: {
         rejectUnauthorized: false,
+        ciphers: 'SSLv3'
     },
 });
 
@@ -206,12 +212,14 @@ router.post('/solicitar-recuperacao', async (req, res) => {
                 text: `Use o link abaixo para redefinir sua senha: http://localhost:8080/redefinir-senha/${token}`
             };
 
-            transporter.sendMail(mailOptions, (error) => {
+            transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
-                    return res.status(500).json({ message: 'Erro ao enviar o e-mail' });
+                    console.error('Erro ao enviar e-mail:', error);
+                    return res.status(500).json({ message: 'Erro ao enviar o e-mail', error: error });
                 }
+                console.log('Mensagem enviada:', info);
                 res.status(200).json({ message: 'E-mail enviado com sucesso' });
-            });
+            });            
         });
     } catch (error) {
         res.status(500).json({ message: 'Erro no servidor' });
