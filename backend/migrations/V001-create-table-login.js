@@ -20,10 +20,14 @@ module.exports = {
         allowNull: true,  // Permite nulos
       },
       role: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      defaultValue: 'user'
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: 'user'
       },
+      codigo_recuperacao: {
+        type: Sequelize.STRING(10),
+        allowNull: true,  // Código pode ser nulo inicialmente
+      }
     });
   },
 

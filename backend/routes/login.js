@@ -184,87 +184,65 @@ router.post('/novo', verificarAdmin, function (req, res) { // cria um novo usuá
     });
 });
 
-// Rota para solicitar recuperação de senha
-router.post('/solicitar-recuperacao', async (req, res) => {
+// Gerar um código de recuperação numérico de 6 dígitos
+function gerarCodigoRecuperacao() {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+// Rota para solicitar recuperação de senha (envio de código)
+router.post('/solicitar-recuperacao', (req, res) => {
     const { email } = req.body;
+    const codigoRecuperacao = gerarCodigoRecuperacao();
 
-    try {
-        const sql = 'SELECT * FROM login WHERE email = ?'; // Verifique se a coluna email existe
-        con.query(sql, [email], function (erroComandoSQL, result) {
-            if (erroComandoSQL) {
-                return res.status(500).json({ message: 'Erro ao consultar o banco de dados' });
+    const sql = 'UPDATE login SET codigo_recuperacao = ? WHERE email = ?';
+    con.query(sql, [codigoRecuperacao, email], (erroComandoSQL, result) => {
+        if (erroComandoSQL || result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Usuário não encontrado' });
+        }
+
+        // Envia o código por email
+        const mailOptions = {
+            from: process.env.USER,
+            to: email,
+            subject: 'Código de recuperação de senha',
+            text: `Seu código de recuperação de senha é: ${codigoRecuperacao}`
+        };
+
+        transporter.sendMail(mailOptions, (error) => {
+            if (error) {
+                return res.status(500).json({ message: 'Erro ao enviar o e-mail' });
             }
-
-            if (result.length === 0) {
-                return res.status(404).json({ message: 'Usuário não encontrado' });
-            }
-
-            const usuario = result[0];
-
-            // Criar um token JWT válido por 1 hora
-            const token = jwt.sign({ id: usuario.id }, process.env.JWT_SEGREDO, { expiresIn: '1h' });
-
-            // Enviar o e-mail de recuperação de senha
-            const mailOptions = {
-                from: process.env.USER, // seu email
-                to: email,
-                subject: 'Recuperação de senha',
-                text: `Use o link abaixo para redefinir sua senha: http://localhost:8080/redefinir-senha/${token}`
-            };
-
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                    console.error('Erro ao enviar e-mail:', error);
-                    return res.status(500).json({ message: 'Erro ao enviar o e-mail', error: error });
-                }
-                console.log('Mensagem enviada:', info);
-                res.status(200).json({ message: 'E-mail enviado com sucesso' });
-            });            
+            res.status(200).json({ message: 'Código de recuperação enviado para o e-mail' });
         });
-    } catch (error) {
-        res.status(500).json({ message: 'Erro no servidor' });
-    }
+    });
 });
 
-// Rota para redefinir a senha
-router.post('/redefinir-senha/:token', async (req, res) => {
-    const { token } = req.params;
-    const { novaSenha } = req.body;
+// Rota para redefinir senha com o código
+router.post('/redefinir-senha', (req, res) => {
+    const { email, codigoRecuperacao, novaSenha } = req.body;
 
-    try {
-        // Verificar o token
-        const decoded = jwt.verify(token, process.env.JWT_SEGREDO);
+    // Consulta o usuário pelo email e código de recuperação
+    const sql = 'SELECT * FROM login WHERE email = ? AND codigo_recuperacao = ?';
+    con.query(sql, [email, codigoRecuperacao], (erroComandoSQL, result) => {
+        if (erroComandoSQL || result.length === 0) {
+            return res.status(400).json({ message: 'Código inválido ou expirado' });
+        }
 
-        // Buscar o usuário pelo ID
-        const sql = 'SELECT * FROM login WHERE id = ?';
-        con.query(sql, [decoded.id], function (erroComandoSQL, result) {
-            if (erroComandoSQL || result.length === 0) {
-                return res.status(404).json({ message: 'Usuário não encontrado' });
+        // Criptografa a nova senha e redefine-a no banco
+        bcrypt.hash(novaSenha, 10, (erro, senhaHash) => {
+            if (erro) {
+                return res.status(500).json({ message: 'Erro ao gerar hash da senha' });
             }
 
-            const usuario = result[0];
-
-            // Criptografar a nova senha
-            bcrypt.hash(novaSenha, 10, function (erro, senhaHash) {
-                if (erro) {
-                    return res.status(500).json({ message: 'Erro ao gerar hash' });
+            const sqlUpdate = 'UPDATE login SET senha = ?, codigo_recuperacao = NULL WHERE email = ?';
+            con.query(sqlUpdate, [senhaHash, email], (erroUpdate) => {
+                if (erroUpdate) {
+                    return res.status(500).json({ message: 'Erro ao atualizar a senha' });
                 }
-
-                // Atualizar a senha no banco de dados
-                const sqlUpdate = 'UPDATE login SET senha = ? WHERE id = ?';
-                con.query(sqlUpdate, [senhaHash, usuario.id], function (erro) {
-                    if (erro) {
-                        return res.status(500).json({ message: 'Erro ao atualizar a senha' });
-                    }
-
-                    res.status(200).json({ message: 'Senha redefinida com sucesso' });
-                });
+                res.status(200).json({ message: 'Senha redefinida com sucesso' });
             });
         });
-    } catch (error) {
-        res.status(400).json({ message: 'Token inválido ou expirado' });
-    }
+    });
 });
-
 
 module.exports = router;
