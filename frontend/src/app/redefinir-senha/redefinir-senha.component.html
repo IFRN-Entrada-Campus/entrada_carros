@@ -1,1 +1,57 @@
 <p>redefinir-senha works!</p>
+<div class="card flex justify-content-center">
+    <div class="flex flex-column gap-2">
+      <label for="email">E-Mail</label>
+      <input 
+        pInputText 
+        id="email" 
+        [(ngModel)]="email" 
+        placeholder="Digite seu e-mail" 
+        required />
+    </div>
+  </div>
+  
+  <div class="card flex justify-content-center">
+    <div class="flex flex-column gap-2">
+      <label for="codigoRecuperacao">Código de Recuperação</label>
+      <input 
+        pInputText 
+        id="codigoRecuperacao" 
+        [(ngModel)]="codigoRecuperacao" 
+        placeholder="Digite o código de recuperação" 
+        required />
+    </div>
+  </div>
+  
+  <div class="card flex justify-content-center">
+    <div class="flex flex-column gap-2">
+      <label for="novaSenha">Nova Senha</label>
+      <input 
+        pInputText 
+        id="novaSenha" 
+        [(ngModel)]="novaSenha" 
+        placeholder="Digite sua nova senha" 
+        type="password" 
+        required />
+    </div>
+  </div>
+  
+  <div *ngIf="mensagemErro" class="card p-3 mb-3 p-component p-message p-message-error">
+    <i class="pi pi-exclamation-triangle"></i> {{ mensagemErro }}
+  </div>
+  
+  <div *ngIf="mensagemSucesso" class="card p-3 mb-3 p-component p-message p-message-success">
+    <i class="pi pi-check-circle"></i> {{ mensagemSucesso }}
+  </div>
+  
+  <div class="card flex justify-content-center">
+    <button 
+      pButton 
+      pRipple 
+      label="Redefinir Senha" 
+      (click)="redefinirSenha()" 
+      class="p-button-success"
+      [disabled]="!email || !codigoRecuperacao || !novaSenha">        
+    </button>
+  </div>
+  
