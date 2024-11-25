@@ -22,7 +22,7 @@ const routes: Routes = [
     { path: 'scanner/:placa', component: ScannerComponent, canActivate: [AuthGuard] },
     { path: 'analise', component: AnaliseComponent, canActivate: [AuthGuard] },
     { path: 'usuario/novo', component: NovousuarioComponent, canActivate: [AuthGuard] },
-    { path: 'solicitar-recuperacao', component: SolicitarRecuperacaoComponent }, // Rota para o componente de recuperação de senha
+    { path: 'solicitar-recuperacao', component: SolicitarRecuperacaoComponent },
 ];
 
 @NgModule({
