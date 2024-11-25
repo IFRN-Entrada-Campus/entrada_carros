@@ -10,6 +10,7 @@ import { ScannerComponent } from './scanner/scanner.component';
 import { AnaliseComponent } from './analise/analise.component';
 import { NovousuarioComponent } from './novousuario/novousuario.component';
 import { SolicitarRecuperacaoComponent } from './solicitar-recuperacao/solicitar-recuperacao.component';
+import { RedefinirSenhaComponent } from './redefinir-senha/redefinir-senha.component';
 
 const routes: Routes = [
     { path:'lista', component: ListaComponent, canActivate: [AuthGuard] },
@@ -23,6 +24,7 @@ const routes: Routes = [
     { path: 'analise', component: AnaliseComponent, canActivate: [AuthGuard] },
     { path: 'usuario/novo', component: NovousuarioComponent, canActivate: [AuthGuard] },
     { path: 'solicitar-recuperacao', component: SolicitarRecuperacaoComponent },
+    { path: 'redefinir-senha', component: RedefinirSenhaComponent }
 ];
 
 @NgModule({
