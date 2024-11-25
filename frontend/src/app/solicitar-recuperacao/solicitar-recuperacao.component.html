@@ -5,12 +5,23 @@
             pInputText
             id="email" 
             aria-describedby="email-help" 
-            [(ngModel)]="email" />
+            [(ngModel)]="email" 
+            placeholder="Digite seu e-mail" 
+            required />
         <small id="email-help">
             Digite o e-mail cadastrado para receber as instruções de recuperação de senha.
         </small>
     </div>
     <br><br>
+</div>
+
+<!-- Mensagens de Sucesso ou Erro -->
+<div *ngIf="mensagemErro" class="card p-3 mb-3 p-component p-message p-message-error">
+    <i class="pi pi-exclamation-triangle"></i> {{ mensagemErro }}
+</div>
+
+<div *ngIf="mensagemSucesso" class="card p-3 mb-3 p-component p-message p-message-success">
+    <i class="pi pi-check-circle"></i> {{ mensagemSucesso }}
 </div>
 
 <br>
@@ -20,7 +31,8 @@
         pButton 
         pRipple 
         label="Enviar" 
-        (click)="solicitarRecuperacao()"
-        class="p-button-success">        
+        (click)="solicitarRecuperacao()" 
+        class="p-button-success"
+        [disabled]="!email">        
     </button>
 </div>
