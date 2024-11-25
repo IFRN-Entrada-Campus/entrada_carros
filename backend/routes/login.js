@@ -201,12 +201,79 @@ router.post('/solicitar-recuperacao', (req, res) => {
         }
 
         // Envia o código por email
-        const mailOptions = {
-            from: process.env.USER,
-            to: email,
-            subject: 'Código de recuperação de senha',
-            text: `Seu código de recuperação de senha é: ${codigoRecuperacao}`
-        };
+        // Envia o código por e-mail com um design melhorado
+const mailOptions = {
+    from: process.env.USER,
+    to: email,
+    subject: 'Aqui está o seu código de recuperação de senha',
+    html: `
+        <html>
+            <head>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f4f4f4;
+                        color: #333;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .email-container {
+                        background-color: #ffffff;
+                        width: 100%;
+                        max-width: 600px;
+                        margin: 20px auto;
+                        padding: 20px;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                    }
+                    .email-header {
+                        text-align: center;
+                        margin-bottom: 20px;
+                    }
+                    .email-header h1 {
+                        color: #4CAF50;
+                    }
+                    .email-content {
+                        font-size: 16px;
+                        line-height: 1.5;
+                        margin-bottom: 20px;
+                    }
+                    .code {
+                        font-size: 24px;
+                        font-weight: bold;
+                        color: #4CAF50;
+                        display: block;
+                        text-align: center;
+                        margin: 20px 0;
+                    }
+                    .footer {
+                        text-align: center;
+                        font-size: 12px;
+                        color: #777;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="email-container">
+                    <div class="email-header">
+                        <h1>Recuperação de Senha</h1>
+                    </div>
+                    <div class="email-content">
+                        <p>Olá,</p>
+                        <p>Você solicitou um código de recuperação de senha. Use o código abaixo para redefinir sua senha:</p>
+                        <span class="code">${codigoRecuperacao}</span>
+                        <p>Este código expirará em 15 minutos.</p>
+                    </div>
+                    <div class="footer">
+                        <p>Se você não solicitou esta recuperação de senha, por favor ignore este e-mail.</p>
+                        <p>Atenciosamente, Equipe de Suporte.</p>
+                    </div>
+                </div>
+            </body>
+        </html>
+    `
+};
+
 
         transporter.sendMail(mailOptions, (error) => {
             if (error) {
