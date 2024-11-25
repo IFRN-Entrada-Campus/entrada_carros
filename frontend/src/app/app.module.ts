@@ -31,6 +31,7 @@ import { MenuComponent } from './menu/menu.component';
 import { NovousuarioComponent } from './novousuario/novousuario.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { UltimaMsgComponent } from './ultima-msg/ultima-msg.component';
+import { SolicitarRecuperacaoComponent } from './solicitar-recuperacao/solicitar-recuperacao.component';
 
 LOAD_WASM().subscribe();
 
@@ -59,6 +60,7 @@ LOAD_WASM().subscribe();
     ButtonModule,
     HttpClientModule,
     InputNumberModule,
+    SolicitarRecuperacaoComponent,
     MqttModule.forRoot({
       hostname: 'test.mosquitto.org',
       port: 8081,

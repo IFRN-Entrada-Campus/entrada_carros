@@ -27,4 +27,9 @@ export class LoginComponent {
       }
     )
   }
+
+  esqueciMinhaSenha() {
+    // Navega para o componente de Solicitação de Recuperação de Senha
+    this.router.navigate(['/solicitar-recuperacao']);
+  }
 }

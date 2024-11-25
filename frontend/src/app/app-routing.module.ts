@@ -9,6 +9,7 @@ import { EditarComponent } from './editar/editar.component';
 import { ScannerComponent } from './scanner/scanner.component';
 import { AnaliseComponent } from './analise/analise.component';
 import { NovousuarioComponent } from './novousuario/novousuario.component';
+import { SolicitarRecuperacaoComponent } from './solicitar-recuperacao/solicitar-recuperacao.component';
 
 const routes: Routes = [
     { path:'lista', component: ListaComponent, canActivate: [AuthGuard] },
@@ -20,7 +21,8 @@ const routes: Routes = [
     { path: 'scanner', component: ScannerComponent, canActivate: [AuthGuard] },
     { path: 'scanner/:placa', component: ScannerComponent, canActivate: [AuthGuard] },
     { path: 'analise', component: AnaliseComponent, canActivate: [AuthGuard] },
-    { path: 'usuario/novo', component: NovousuarioComponent, canActivate: [AuthGuard] }
+    { path: 'usuario/novo', component: NovousuarioComponent, canActivate: [AuthGuard] },
+    { path: 'solicitar-recuperacao', component: SolicitarRecuperacaoComponent }, // Rota para o componente de recuperação de senha
 ];
 
 @NgModule({

@@ -1,0 +1,25 @@
+<div class="card flex justify-content-center">
+    <div class="flex flex-column gap-2">
+        <label for="email">E-Mail</label>
+        <input 
+            pInputText
+            id="email" 
+            aria-describedby="email-help" 
+            [(ngModel)]="email" />
+        <small id="email-help">
+            Digite o e-mail cadastrado para receber as instruções de recuperação de senha.
+        </small>
+    </div>
+    <br><br>
+</div>
+
+<br>
+
+<div class="card flex justify-content-center">
+    <button 
+        pButton 
+        pRipple 
+        label="Enviar" 
+        class="p-button-success">
+    </button>
+</div>
