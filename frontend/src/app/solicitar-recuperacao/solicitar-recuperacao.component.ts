@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { SolicitarRecuperacaoService } from '../solicitar-recuperacao.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-solicitar-recuperacao',
@@ -16,20 +17,25 @@ import { Router } from '@angular/router';
 
 export class SolicitarRecuperacaoComponent {
   email: string = '';  // A variável que vai armazenar o e-mail do usuário
-  mensagemErro: string = ''; // variável para armazenar mensagens de erro
-  mensagemSucesso: string = ''; //variável para armazenar mensagens de sucesso
+  mensagemSucesso: string | null = null;  // A mensagem de sucesso ao enviar o e-mail
+  mensagemErro: string | null = null; // A mensagem de erro ao enviar o e-mail
 
-  constructor(private solicitarRecuperacaoService: SolicitarRecuperacaoService, private router: Router) { }
+  constructor(private solicitarRecuperacaoService: SolicitarRecuperacaoService, private router: Router, private http: HttpClient) { }
 
   solicitarRecuperacao() {
-    this.solicitarRecuperacaoService.solicitarCodigoRecuperacao(this.email).subscribe(
-      (response) => {
+    // Envia o e-mail para o back-end para gerar o código
+    this.http.post('/api/solicitar-recuperacao', { email: this.email }).subscribe(
+      (response: any) => {
+        // Sucesso ao enviar o e-mail
         this.mensagemSucesso = response.message;
-        this.mensagemErro = '';  // Limpa mensagens de erro
+        this.mensagemErro = null;
+        // Redireciona para a página de redefinir senha
+        setTimeout(() => this.router.navigate(['/redefinir-senha']), 3000);
       },
       (error) => {
-        this.mensagemErro = error.error.message || 'Erro ao enviar o código de recuperação';
-        this.mensagemSucesso = '';  // Limpa mensagens de sucesso
+        // Erro ao enviar o e-mail
+        this.mensagemErro = error.error.message;
+        this.mensagemSucesso = null;
       }
     );
   }
