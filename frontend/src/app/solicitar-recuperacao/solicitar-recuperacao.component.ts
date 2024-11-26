@@ -24,7 +24,7 @@ export class SolicitarRecuperacaoComponent {
 
   solicitarRecuperacao() {
     // Envia o e-mail para o back-end para gerar o código
-    this.http.post('/api/solicitar-recuperacao', { email: this.email }).subscribe(
+    this.http.post('/api/login/solicitar-recuperacao', { email: this.email }).subscribe(
       (response: any) => {
         // Sucesso ao enviar o e-mail
         this.mensagemSucesso = response.message;

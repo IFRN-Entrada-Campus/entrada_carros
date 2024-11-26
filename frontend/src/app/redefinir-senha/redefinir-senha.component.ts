@@ -23,7 +23,7 @@ export class RedefinirSenhaComponent {
     }
 
     // Envia os dados para o back-end para redefinir a senha
-    this.http.post('/api/redefinir-senha', {
+    this.http.post('/api/login/redefinir-senha', {
       email: this.email,
       codigoRecuperacao: this.codigoRecuperacao,
       novaSenha: this.novaSenha
