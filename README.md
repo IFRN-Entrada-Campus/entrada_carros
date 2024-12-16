@@ -1,4 +1,4 @@
-# Sistema de cadastro de carros e motoristas
+# Sistema de cadastro de carros e motoristas Versão 2
 
 ## Sobre
 A aplicação é essencialmente um sistema de cadastro de carros associados a seus motorista com suporte a leitura e validação de QRcode e recebimento de mensagens via MQTT.
