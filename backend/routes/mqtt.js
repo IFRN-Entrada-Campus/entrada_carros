@@ -7,7 +7,6 @@ const fs = require('fs');
 const path = require('path');
 const moment = require('moment');
 
-let ultimaMensagem = null;
 /**
  * @swagger
  * tags:
@@ -110,11 +109,6 @@ client.on('message', function (topic, message) {
                         }
                         if (result.affectedRows > 0) {
                             console.log('Registro incluído com sucesso!');
-                            ultimaMensagem = [{
-                                "placa": dados.placa,
-                                "dataHora": dataHora,
-                                "img": nomeArquivo
-                            }];
                         } else {
                             console.log('Erro ao incluir registro.');
                         }
@@ -130,20 +124,31 @@ client.on('message', function (topic, message) {
     }
 });
 
-/**
- * @swagger
- * /api/mqtt:
- *  get:
- *      summary: Retorna última mensagem
- *      description: Retorna última mensagem enviada ao tópico MQTT
- *      tags: [MQTT]
- */
-router.get('/ult-msg', verificarToken, function (req, res) {
-    if (ultimaMensagem) {
-        res.status(200).send(ultimaMensagem);
-    } else {
-        res.status(404).send({ message: 'Nenhuma mensagem disponível' });
-    }
+router.get('/ult-msg', verificarToken, (req, res) => {
+    con.getConnection(function (erroConexao, conexao) {
+        if (erroConexao) {
+            console.error('Erro ao conectar ao banco:', erroConexao);
+            return res.status(500).send('Erro ao conectar ao banco.');
+        }
+        const query = 'SELECT * FROM vwHistoricoPessoa ORDER BY idHistoricoEntrada DESC LIMIT 1;';
+        conexao.query(query, function (erroConsulta, resultados) {
+            conexao.release();
+
+            if (erroConsulta) {
+                console.error('Erro ao executar a consulta:', erroConsulta);
+                return res.status(500).send('Erro ao executar a consulta.');
+            }
+
+            if (resultados && resultados.length > 0) {
+                ultimaMensagem = resultados[0];  // Atualiza a variável com a última mensagem do banco
+                console.log('Última entrada encontrada com sucesso:', ultimaMensagem);
+                return res.status(200).send(ultimaMensagem); // Retorna a última mensagem
+            } else {
+                console.log('Nenhuma entrada encontrada na tabela vwHistoricoPessoa');
+                return res.status(404).send({ message: 'Nenhuma entrada encontrada.' });
+            }
+        });
+    });
 });
 
 function removerImagensAntigas() {

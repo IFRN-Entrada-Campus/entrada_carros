@@ -1,2 +1,4 @@
 #Certificados
 /certificados
+/mosquitto/certificados
+.env

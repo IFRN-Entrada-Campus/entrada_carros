@@ -1,9 +1,6 @@
-<body>
+<section class="main">
 <app-menu></app-menu>
-<div *ngIf="!admin">
-    <h1>Você não tem permissão para acessar esta página.</h1>
-</div>
-<div *ngIf="admin" class="form">
+<div *ngIf="admin">
     <h1>Cadastro de novo usuário</h1>
     <br>
     <p *ngIf="formInvalid" class="error-message">O formulário contém erros. Preencha todos os campos.</p>
@@ -31,4 +28,4 @@
         </tr>
     </table>
 </div>
-</body>
+</section>

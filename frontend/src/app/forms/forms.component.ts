@@ -14,7 +14,8 @@ import { LoginService } from '../login.service';
 
 export class FormsComponent implements OnInit {
   dado: Dados = { modeloCarro: '', marcaCarro: '', anoCarro: '', nomePessoa: '',tipoId: '', idPessoa: '', vinculo: '', codigoEtiqueta: 0, validadeEtiqueta: new Date(), CNHvalida: '', placaCarro: '' };
-
+  identificacao: Array<string>;
+  vinculo: Array<string>
   usuarioJaCadastrado: boolean = false;
   idPessoas: any[] = []; // variavel para armazenar as identificações das pessoas
   formInvalid = false;  // variavel para mostrar o alerta de erro
@@ -24,7 +25,8 @@ export class FormsComponent implements OnInit {
   admin = false; // variavel para verificar se o usuário é admin ou não
 
   constructor(private dadosService: DadosService, private router: Router, private sharedData: SharedDataService, private loginService: LoginService) {
-
+    this.identificacao = ['Matrícula', 'CPF', 'CNPJ'];
+    this.vinculo = ['Discente', 'Servidor', 'Visitante'];
   }
 
   ngOnInit(): void {

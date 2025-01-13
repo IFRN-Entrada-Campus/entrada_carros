@@ -3,5 +3,7 @@ export interface Mensagem {
   placa: string;
   dataHora: string;
   nomePessoa: string;
+  tipoId: string;
+  idPessoa: string;
   vinculo: string;
 }

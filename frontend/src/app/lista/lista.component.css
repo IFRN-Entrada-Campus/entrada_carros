@@ -1,29 +1,37 @@
 h2 {
+    color: #595959;
     text-align: center;
+}
+.main {
+    display: flex;
+    flex-direction: row;
+    font-family: "Roboto", sans-serif;
+    justify-content: flex-start;
+    gap: 5%;
+    padding: 20px 20px 0px 20px;
 }
 
 .input-group input {
     width: 100%;
     flex: 1
 }
-body {
-    font-family: "Roboto", sans-serif;
-    color: black;
-
-  }
 .input-group {
-    display:flex;
+    display: flex;
+    gap: 8px;
     align-items: center;
-    justify-content: center;   
-    margin: 0px 0px 10px 10px;
+    justify-content: center;
+    margin-bottom: 10px;
     width: 100%;
+    padding: auto;
 }
+.p-input-icon-left{
+    width: 30%;
+}
+
 .input-group p-button{
-    margin-left: 10px;
     background-color: #21AF6D;
-}
-.p-input-icon-left {
-    width: 40%;
+    height: 35px;
+    border-radius: 2px;
 }
 .botoes {
     display: flex;

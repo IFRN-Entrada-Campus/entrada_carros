@@ -1,27 +1,12 @@
-<app-menu></app-menu>
-<br>
-<br>
-<!-- Seção de carregamento -->
-<div *ngIf="carregando">
-    <h2>Aguarde, carregando dados...</h2>
-    <h2><p-progressSpinner></p-progressSpinner></h2>
-</div>
-
-<!-- Se não estiver carregando, exibe o conteúdo -->
-<div *ngIf="!carregando">
-<!--
-    <div class="mensagem">
-        <h2 clss="p-titulo">Último veículo detectado</h2>
-        <div class="message-container" *ngIf="mensagem">
-            <div class="message-item">
-                <img [src]="mensagem.img" alt="Imagem Recebida" style="max-width: 400px;">
-                <p>Carro com placa {{ mensagem.placa }} às {{ mensagem.dataHora }}</p>
-                <p>Motorista: {{ mensagem.nomePessoa }}, Vínculo: {{ mensagem.vinculo }}</p>
-            </div>
-        </div>  
+<section class="main">
+    <app-menu></app-menu>
+    <div *ngIf="!carregando">  
+        <app-ultima-msg></app-ultima-msg>
     </div>
--->
-    <!-- Histórico de entrada de carros -->
+</section>
+
+<div>
+    <br>
     <h2>Histórico de entrada de carros:</h2>
     <p-table [value]="dados" styleClass="p-datatable-gridlines" [rows]="10" [paginator]="true" [showCurrentPageReport]="true"
         currentPageReportTemplate="{first} a {last} de {totalRecords}" [rowsPerPageOptions]="[10, 20, 30]">
@@ -49,12 +34,3 @@
         </ng-template>
     </p-table>
 </div>
-
-<!-- 
-<div class="container">
-  <label for="fileInput">Mensagem para envio:</label>
-  <input type="file" (change)="handleFileInput($event)" accept="image/*" id="fileInput">
-  <br>
-  <p-button (click)="enviarMensagem()" label="Enviar"></p-button>
-</div>
--->
