@@ -5,4 +5,5 @@ export interface Mensagem {
   nomePessoa: string;
   tipoId: string;
   idPessoa: string;
+  vinculo: string;
 }

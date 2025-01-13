@@ -1,13 +1,11 @@
 <div class="botoes">
+    <div class="p-titulo">Menu</div>
     <div class="links">
-        <p-button *ngIf="admin" [text]="true" (click)="cadastrar()" id="cadastrar" label="Cadastrar registro" icon="pi pi-plus"></p-button>
-        <p-button *ngIf="admin" [text]="true" (click)="usuario()" id="usuario" label="Cadastrar usuário" icon="pi pi-plus"></p-button>
-        <p-button [text]="true" severity="secondary" (click)="lista()" id="lista" label="Lista" icon="pi pi-list"></p-button>
-        <p-button [text]="true" severity="secondary" (click)="mqtt()" id="mensagens" label="Mensagens" icon="pi pi-info"></p-button>
-        <p-button [text]="true" severity="secondary" (click)="scanner()" id="scanner" label="Pesquisa com QRcode" icon="pi pi-qrcode"></p-button>
-    </div>
-    <div class="logout">
-        <p-button [text]="true" [raised]="true" severity="danger" (click)="logout()" id="logout" label="Sair" icon="pi pi-sign-out"></p-button>
+        <button *ngIf="admin" pButton pRipple class="p-button-secundary" (click)="cadastrar()" id="cadastrar" label="Cadastrar registro" icon="pi pi-plus"></button>
+        <button *ngIf="admin" pButton pRipple class="p-button-secundary" (click)="usuario()" id="usuario" label="Cadastrar usuário" icon="pi pi-plus"></button>
+        <button pButton pRipple class="p-button-secundary" (click)="lista()" id="lista" label="Lista" icon="pi pi-list"></button>
+        <button pButton pRipple class="p-button-secundary" (click)="mqtt()" id="mensagens" label="Mensagens" icon="pi pi-info"></button>
+        <button pButton pRipple class="p-button-secundary" (click)="scanner()" id="scanner" label="Pesquisa com QRcode" icon="pi pi-qrcode"></button>
+        <button pButton pRipple class="p-button-secundary" (click)="logout()" id="logout" label="Sair" icon="pi pi-sign-out"></button>
     </div>
 </div>
-<hr>

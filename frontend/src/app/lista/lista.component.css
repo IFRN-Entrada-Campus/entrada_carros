@@ -1,20 +1,38 @@
 h2 {
+    color: #595959;
     text-align: center;
+}
+.main {
+    display: flex;
+    flex-direction: row;
+    font-family: "Roboto", sans-serif;
+    justify-content: flex-start;
+    gap: 5%;
+    padding: 20px 20px 0px 20px;
 }
 
 .input-group input {
     width: 100%;
     flex: 1
 }
-
 .input-group {
     display: flex;
+    gap: 8px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     margin-bottom: 10px;
     width: 100%;
+    padding: auto;
+}
+.p-input-icon-left{
+    width: 30%;
 }
 
+.input-group p-button{
+    background-color: #21AF6D;
+    height: 35px;
+    border-radius: 2px;
+}
 .botoes {
     display: flex;
     align-items: center;

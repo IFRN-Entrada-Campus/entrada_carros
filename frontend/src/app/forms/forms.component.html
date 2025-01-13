@@ -1,10 +1,6 @@
-<app-menu></app-menu>
-<br>
-<br>
-<div *ngIf="!admin">
-    <h1>Você não tem permissão para acessar esta página.</h1>
-</div>
-<div *ngIf="admin">
+<section class="main">
+    <app-menu></app-menu>
+    <div *ngIf="admin">
     <h1>Cadastro de dados</h1>
     <p *ngIf="formInvalid" class="error-message">O formulário contém erros. Preencha todos os campos e verifique se: O ano do carro está entre 1900 e o ano atual. A placa está digitada no padrão(LLL1111 ou LLL11L1).</p>
     <p *ngIf="erroSQL" class="error-message">Não foi possível cadastrar. Verifique se não há dados incorretos e tente novamente.</p>
@@ -17,48 +13,58 @@
             <td><p-checkbox [(ngModel)]="usuarioJaCadastrado" [binary]="true" inputId="cadastro"> </p-checkbox> </td>
         </tr>
         <tr>
-            <td><label htmlFor="marca">Marca do carro: </label></td>
-            <td><input pInputText class="p-inputtext-sm" id="marca" [(ngModel)]="dado.marcaCarro" required></td>
+            <td><label htmlFor="marca">Marca do veículo: </label></td>
+            <td><input pInputText id="marca" [(ngModel)]="dado.marcaCarro" required></td>
         </tr>
         <tr>
-            <td><label htmlFor="modelo">Modelo do carro: </label></td>
-            <td><input pInputText class="p-inputtext-sm" id="modelo" [(ngModel)]="dado.modeloCarro" required></td>
+            <td><label htmlFor="modelo">Modelo do veículo: </label></td>
+            <td><input pInputText id="modelo" [(ngModel)]="dado.modeloCarro" required></td>
         </tr>
         <tr>
-            <td><label htmlFor="placa">Placa do carro: </label></td>
-            <td><input pInputText class="p-inputtext-sm" id="placa" [(ngModel)]="dado.placaCarro" required></td>
+            <td><label htmlFor="placa">Placa do veículo: </label></td>
+            <td><input pInputText id="placa" [(ngModel)]="dado.placaCarro" required></td>
         </tr>
         <tr>
-            <td><label htmlFor="ano">Ano do carro: </label></td>
-            <td><p-inputNumber class="p-inputtext-sm" id="ano" [(ngModel)]="dado.anoCarro"
+            <td><label htmlFor="ano">Ano do veículo: </label></td>
+            <td><p-inputNumber id="ano" [(ngModel)]="dado.anoCarro"
                     [useGrouping]="false"></p-inputNumber></td>
         </tr>
         <tr *ngIf="!usuarioJaCadastrado">
-            <td><label htmlFor="nome">Nome completo do condutor: </label></td>
-            <td><input pInputText class="p-inputtext-sm" id="nome" [(ngModel)]="dado.nomePessoa" required></td>
+            <td><label htmlFor="nome">Nome do condutor: </label></td>
+            <td><input pInputText id="nome" [(ngModel)]="dado.nomePessoa" required></td>
         </tr>
         <tr *ngIf="!usuarioJaCadastrado">
-            <td><label htmlFor="tipoId">tipoId: </label></td>
-            <td><input pInputText class="p-inputtext-sm" id="tipoId" [(ngModel)]="dado.tipoId" required></td>
+            <td><label htmlFor="tipoId">Tipo Identificação: </label></td>
+            <td><p-dropdown 
+                id="tipoId"
+                [options]="identificacao" 
+                [(ngModel)]="dado.tipoId" 
+                placeholder="Selecione Identificação"/>
+            </td>
         </tr>
         <tr *ngIf="!usuarioJaCadastrado">
-            <td><label htmlFor="vinculo">vinculo: </label></td>
-            <td><input pInputText class="p-inputtext-sm" id="vinculo" [(ngModel)]="dado.vinculo" required></td>
+            <td><label htmlFor="vinculo">Vinculo: </label></td>
+            <td><p-dropdown 
+                id="vinculo"
+                [options]="vinculo" 
+                [(ngModel)]="dado.vinculo" 
+                placeholder="Selecione Vínculo"/>
+            </td>
         </tr>
 
         <tr>
-            <td><label htmlFor="idPessoa"> Identificação </label></td>
-            <td><p-inputNumber class="p-inputtext-sm" id="idPessoa" [(ngModel)]="dado.idPessoa"
+            <td><label htmlFor="idPessoa"> Identificação: </label></td>
+            <td><p-inputNumber  id="idPessoa" [(ngModel)]="dado.idPessoa"
                     [useGrouping]="false"></p-inputNumber></td>
         </tr>
         <tr>
             <td><label htmlFor="codigo">Código da etiqueta: </label></td>
-            <td><input pInputText class="p-inputtext-sm" id="codigo" [(ngModel)]="dado.codigoEtiqueta"></td>
+            <td><input pInputText  id="codigo" [(ngModel)]="dado.codigoEtiqueta"></td>
         </tr>
         <tr>
             <td><label htmlFor="validade">Validade da etiqueta: </label></td>
-            <td><p-calendar id="validade" [(ngModel)]="dado.validadeEtiqueta" [showIcon]="true" [showTime]="true" [showSeconds]="true"
-                    dateFormat="yy-mm-dd"></p-calendar></td>
+            <td><p-calendar id="validade" [(ngModel)]="dado.validadeEtiqueta"
+                dateFormat="yy-mm-dd"></p-calendar></td>
         </tr>
         <tr>
         <td><label htmlFor="cnh">CNH é válida?</label></td>
@@ -73,3 +79,4 @@
         </tr>
     </table>
 </div>
+</section>

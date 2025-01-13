@@ -1,6 +1,9 @@
-<app-menu></app-menu>
-<br>
-<br>
+<section class="main">
+    <app-menu></app-menu>
+    <div *ngIf="!carregando_ult_msg">  
+        <app-ultima-msg></app-ultima-msg>
+    </div>
+</section>
 <div *ngIf="carregando_ult_msg">
     <h2>
         Aguarde, carregando dados...
@@ -9,10 +12,6 @@
         <p-progressSpinner></p-progressSpinner>
     </h2>
 </div>
-<div *ngIf="!carregando_ult_msg">  
-    <app-ultima-msg></app-ultima-msg>
-</div>
-<br>
 <h2>Veículos registrados</h2>
 <br>
 <br>

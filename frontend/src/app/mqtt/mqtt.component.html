@@ -1,13 +1,11 @@
-<app-menu></app-menu>
-<br>
-<br>
-<div *ngIf="carregando">
-    <h2>Aguarde, carregando dados...</h2>
-    <h2><p-progressSpinner></p-progressSpinner></h2>
-</div>
+<section class="main">
+    <app-menu></app-menu>
+    <div *ngIf="!carregando">  
+        <app-ultima-msg></app-ultima-msg>
+    </div>
+</section>
 
-<div *ngIf="!carregando">
-    <app-ultima-msg></app-ultima-msg>
+<div>
     <br>
     <h2>Histórico de entrada de carros:</h2>
     <p-table [value]="dados" styleClass="p-datatable-gridlines" [rows]="10" [paginator]="true" [showCurrentPageReport]="true"

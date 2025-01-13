@@ -1,11 +1,15 @@
-<h2>Último carro detectado:</h2>
-<!-- Último carro detectado -->
+<div class="title">
+    <a>Último carro detectado:</a>
+</div>
 <div class="message-container" *ngIf="mensagem">
-    <div class="message-item">
+    <div class="message-img">
         <img [src]="mensagem.img" alt="Imagem Recebida" style="max-width: 400px;">
-        <p>{{mensagem.tipoId}}: {{mensagem.idPessoa}}</p>
+    </div>
+    <div class="message-dados">
         <p>Motorista: {{ mensagem.nomePessoa }}</p>
-        <p>Placa {{ mensagem.placa }} </p>
+        <p>Vínculo: {{mensagem.vinculo}} </p>
+        <p>{{mensagem.tipoId}}: {{mensagem.idPessoa}}</p>
+        <p>Placa: {{ mensagem.placa }} </p>
         <p>Entrada: {{ mensagem.dataHora }}</p>
     </div>
 </div>  
