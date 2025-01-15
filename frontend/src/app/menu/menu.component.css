@@ -5,7 +5,6 @@
     justify-content: space-between;
     width: 100%;
     flex-wrap: wrap;
-
 }
 .links {
     display: flex;
@@ -14,14 +13,14 @@
     padding: 7px;
     align-items:start;
     justify-content: flex-start;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     flex-wrap: wrap;
 }
 .p-titulo{
-    color: black;
+    color:#595959;
     padding: 6px 30px 6px 30px;
     background-color: #D9D9D9;
     border-radius: 15px 15px 0px 0px;
-
 }
 .p-button-secundary{
     background-color: #DDDDDD;

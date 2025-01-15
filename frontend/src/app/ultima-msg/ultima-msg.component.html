@@ -1,6 +1,4 @@
-<div class="title">
-    <a>Último carro detectado:</a>
-</div>
+<div class="p-titulo">Último veículo detectado:</div>
 <div class="message-container" *ngIf="mensagem">
     <div class="message-img">
         <img [src]="mensagem.img" alt="Imagem Recebida" style="max-width: 400px;">
@@ -13,3 +11,8 @@
         <p>Entrada: {{ mensagem.dataHora }}</p>
     </div>
 </div>  
+<div *ngIf="!mensagem">
+    <div class="message-container">
+        <p>Nenhum veículo reconhecido</p>
+    </div>
+</div>
