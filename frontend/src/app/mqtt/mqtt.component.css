@@ -3,6 +3,7 @@
 }
 h2 {
   text-align: center;
+  color:#595959;
 }
 body {
   margin: 0;
@@ -16,6 +17,20 @@ body {
   justify-content: flex-start;
   gap: 5%;
   padding: 20px 20px 0px 20px;
+}
+.cardHistorico{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  background-color: #FFFFFF;
+  color: #595959;
+  padding: 20px;
+}
+
+.cardHistorico ul li{
+  list-style: none;
+  margin-bottom: 10px;
+  background-color: #FFFFFF;
 }
 .container {
   text-align: center;

@@ -1,36 +1,31 @@
 <section class="main">
     <app-menu></app-menu>
     <div *ngIf="!carregando">  
-        <app-ultima-msg></app-ultima-msg>
+        <div>
+            <br>
+            <h2>Histórico de entrada de carros:</h2>
+            <p-table [value]="dados" [tableStyle]="{ 'max-width': '50rem'}" [rows]="10" [paginator]="true" [showCurrentPageReport]="true"
+                 [rowsPerPageOptions]="[10, 20, 30]">
+                <ng-template pTemplate="body" class="bodyTable" let-dado>
+                    <tr>
+                        <td class="cardHistorico">
+                            <div class="img">
+                                <img [src]="dado.img" alt="Imagem capturada do carro" style="max-width: 200px;">
+                            </div>
+                            <div class="dados">
+                                <ul >
+                                    <li>Motorista: {{ dado.nomePessoa }}</li>
+                                    <li>Vínculo {{ dado.vinculo }}</li>
+                                    <li>{{ dado.tipoId }}: {{ dado.idPessoa }}</li>
+                                    <li>Placa: {{ dado.placa }}</li>
+                                    <li>Horário de chegada: {{ dado.dataHora }}</li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
     </div>
 </section>
 
-<div>
-    <br>
-    <h2>Histórico de entrada de carros:</h2>
-    <p-table [value]="dados" styleClass="p-datatable-gridlines" [rows]="10" [paginator]="true" [showCurrentPageReport]="true"
-        currentPageReportTemplate="{first} a {last} de {totalRecords}" [rowsPerPageOptions]="[10, 20, 30]">
-        <ng-template pTemplate="header">
-            <tr>
-                <th> Imagem do carro </th>
-                <th> Placa </th>
-                <th> Data/Hora </th>
-                <th> Motorista </th>
-                <th> Tipo de Identificação </th>
-                <th> Identificação </th>
-                <th> Vinculo </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-dado>
-            <tr>
-                <td><img [src]="dado.img" alt="Imagem capturada do carro" style="max-width: 200px;"></td>
-                <td>{{ dado.placa }}</td>
-                <td>{{ dado.dataHora }}</td>
-                <td>{{ dado.nomePessoa }}</td>
-                <td>{{ dado.tipoId }}</td>
-                <td>{{ dado.idPessoa }}</td>
-                <td>{{ dado.vinculo }}</td>
-            </tr>
-        </ng-template>
-    </p-table>
-</div>
