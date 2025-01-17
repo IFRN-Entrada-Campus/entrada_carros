@@ -30,7 +30,7 @@
               }
             ],
             "styles": [
-              "node_modules/primeng/resources/themes/lara-dark-blue/theme.css",
+              "node_modules/primeng/resources/themes/saga-green/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "src/styles.css"
             ],

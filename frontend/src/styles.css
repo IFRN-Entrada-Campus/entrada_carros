@@ -1,8 +1,4 @@
-@import "./assets/themes/theme.css";
-@import "primeng/resources/primeng.css";
-@import "primeicons/primeicons.css";
-@import "primeflex/primeflex.css";
 body {
     font-family: var(--font-family);
-    background-color: #F6F6F6;
+    background-color: #f6f6f6;
 }

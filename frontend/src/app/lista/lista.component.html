@@ -20,7 +20,7 @@
         <input [(ngModel)]="placaPesquisada" (keyup)="filtrarPlacas()" class="pesquisar" pInputText
             placeholder="Pesquisar por placa...">
     </span>
-    <p-button [raised]="true" [text]="true" severity="secondary" label="Mudar filtro" (click)="trocarPesquisa()">
+    <p-button [raised]="true" [text]="true" severity="sucess" label="Mudar filtro" (click)="trocarPesquisa()">
     </p-button>
 </div>
 <div *ngIf="tipo_pesquisa == 2" class="input-group">
@@ -29,7 +29,7 @@
         <input pInputText placeholder="Pesquisar por etiqueta..." class="pesquisar" [(ngModel)]="etiquetaPesquisada"
             (keyup)="filtrarEtiquetas()">
     </span>
-    <p-button [raised]="true" [text]="true" severity="secondary" label="Mudar filtro" (click)="trocarPesquisa()">
+    <p-button [raised]="true" [text]="true" severity="sucess" label="Mudar filtro" (click)="trocarPesquisa()">
     </p-button>
 </div>
 <div *ngIf="tipo_pesquisa == 3" class="input-group">
@@ -37,7 +37,7 @@
         <i class="pi pi-search"></i>
         <input pInputText placeholder="Pesquisar por nome..." class="pesquisar" [(ngModel)]="nomePesquisado" (keyup)="filtrarNome()">
     </span>
-    <p-button [raised]="true"[text]="true" severity="secondary" label="Mudar filtro" (click)="trocarPesquisa()">
+    <p-button [raised]="true"[text]="true" severity="sucess" label="Mudar filtro" (click)="trocarPesquisa()">
     </p-button>
 </div>
 <div *ngIf="carregando">
@@ -48,54 +48,59 @@
         <p-progressSpinner></p-progressSpinner>
     </h2>
 </div>
-<div *ngIf="!carregando">  
+<div *ngIf="!carregando" class="listaVeiculos">  
     <br>
     <p-table [value]="dadosFormulario" styleClass="p-datatable-gridlines" [rows]="100" [paginator]="true" [showCurrentPageReport]="true"
         currentPageReportTemplate="{first} a {last} de {totalRecords}" [rowsPerPageOptions]="[100, 200, 400]"
         selectionMode="single" [(selection)]="dadoSelecionado" dataKey="idPessoa">
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="Modelo">Modelo do carro <p-sortIcon field="Modelo"></p-sortIcon>
+                <th pSortableColumn="Placa"> Dados do Veículo<p-sortIcon field="Modelo"></p-sortIcon>
                 </th>
-                <th pSortableColumn="Marca">Marca do carro <p-sortIcon field="Marca"></p-sortIcon>
+                <th pSortableColumn="nomePessoa" style="width:30%">Motorista<p-sortIcon field="Marca"></p-sortIcon>
                 </th>
-                <th pSortableColumn="Placa">Placa do carro <p-sortIcon field="Placa"></p-sortIcon>
+                <th pSortableColumn="codigoEtiqueta" style="width:15%">Etiqueta<p-sortIcon field="Placa"></p-sortIcon>
                 </th>
-                <th pSortableColumn="Ano">Ano do carro <p-sortIcon field="Ano"></p-sortIcon>
-                </th>
-                <th pSortableColumn="nomePessoa">Nome da Pessoa <p-sortIcon field="nomePessoa"></p-sortIcon>
-                </th>
-                <th pSortableColumn="tipoId"> Tipo de Identificação <p-sortIcon field="tipoId"></p-sortIcon>
-                </th>
-                <th pSortableColumn="idPessoa"> Identificação <p-sortIcon field="idPessoa"></p-sortIcon>
-                </th>
-                <th pSortableColumn="vinculo"> Vínculo <p-sortIcon field="vinculo"></p-sortIcon>
-                </th>
-                <th pSortableColumn="codigoEtiqueta">Código da etiqueta <p-sortIcon field="codigoEtiqueta"></p-sortIcon>
-                </th>
-                <th pSortableColumn="validadeEtiqueta">Validade da etiqueta <p-sortIcon field="validadeEtiqueta">
-                    </p-sortIcon>
-                </th>
-                <th pSortableColumn="CNHvalida">CNH válida <p-sortIcon field="CNHvalida"></p-sortIcon>
-                </th>
-                <th *ngIf="admin">
+                <th *ngIf="admin" style="width:5%">
                     Opções
                 </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-dados>
-            <tr [pSelectableRow]="dadosFormulario">
-                <td> {{ dados.Modelo }} </td>
-                <td> {{ dados.Marca }}</td>
-                <td> {{ dados.Placa }}</td>
-                <td> {{ dados.Ano }} </td>
-                <td> {{ dados.nomePessoa }} </td>
-                <td> {{ dados.tipoId }}</td>
-                <td> {{ dados.idPessoa }} </td>
-                <td> {{ dados.vinculo }}</td>
-                <td> {{ dados.codigoEtiqueta }} </td>
-                <td> {{ dados.validadeEtiqueta }} </td>
-                <td> {{ dados.CNHvalida }} </td>
+            <tr [pSelectableRow]="dadosFormulario" >
+                <td>
+                    <div class="dados">
+                        <p>Modelo</p> 
+                        {{ dados.Modelo }}
+                        <p>Marca</p>
+                        {{ dados.Marca }}
+                        <p>Placa</p>
+                        {{ dados.Placa }}
+                        <p>Ano</p>
+                        {{ dados.Ano }}
+                    </div>
+                </td>
+                <td>
+                    <div class="dados">
+                        <p>Nome:</p>
+                       {{ dados.nomePessoa }} 
+                       <p>{{ dados.tipoId }}</p>
+                       {{ dados.idPessoa }}
+                       <p>Vínculo:</p>
+                       {{ dados.vinculo }}
+                       <p>CNH Válida:</p>
+                       {{ dados.CNHvalida }}
+                    </div>
+                </td>
+                <td>
+                    <div class="dadosEtiqueta">
+                        <qrcode [qrdata]="dados.codigoEtiqueta"></qrcode>
+                        {{ dados.codigoEtiqueta }}
+                        <p>Válido até:</p>
+                        {{ dados.validadeEtiqueta }}
+                    </div>
+                </td>
+                
                 <td *ngIf="admin">
                     <p-button *ngIf="admin" (click)="editarDados(dados.Placa)" label="Editar" [text]="true" icon="pi pi-file-edit">
                     </p-button>

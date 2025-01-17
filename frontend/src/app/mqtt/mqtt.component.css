@@ -18,13 +18,14 @@ body {
   gap: 5%;
   padding: 20px 20px 0px 20px;
 }
+
 .cardHistorico{
   display: flex;
   flex-direction: row;
-  gap: 10px;
   background-color: #FFFFFF;
   color: #595959;
   padding: 20px;
+
 }
 
 .cardHistorico ul li{

@@ -20,6 +20,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import {AccordionModule} from 'primeng/accordion';     
+import {MenuItem} from 'primeng/api'; 
 import { HttpClientModule } from '@angular/common/http';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CalendarModule } from 'primeng/calendar';
@@ -31,6 +33,7 @@ import { MenuComponent } from './menu/menu.component';
 import { NovousuarioComponent } from './novousuario/novousuario.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { UltimaMsgComponent } from './ultima-msg/ultima-msg.component';
+import { QRCodeModule } from 'angularx-qrcode';
 
 LOAD_WASM().subscribe();
 
@@ -56,7 +59,9 @@ LOAD_WASM().subscribe();
     FormsModule,
     CheckboxModule,
     TableModule,
+    QRCodeModule,
     ButtonModule,
+    AccordionModule,
     HttpClientModule,
     InputNumberModule,
     MqttModule.forRoot({

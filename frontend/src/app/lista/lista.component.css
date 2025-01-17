@@ -29,7 +29,6 @@ h2 {
 }
 
 .input-group p-button{
-    background-color: #21AF6D;
     height: 35px;
     border-radius: 2px;
 }
@@ -54,7 +53,30 @@ h2{
     align-items: center;
     justify-content: flex-end;
 }
+.listaVeiculos{
+    width: 85%;
+    margin: auto;
+    justify-content: center;
+}
+.special-cell {
+    width: 100px;  /* Modificando a largura das células dessa linha */
+  }
+.dadosEtiqueta {
+    color:#595959;
+    text-align: center;
 
+
+}
+.dadosEtiqueta p{
+    font-weight: bold;
+}
+
+.dados {
+    color:#595959
+}
+.dados p{
+    font-weight: bold;
+}
 @media only screen and (max-width: 600px) {
     .input-group {
         flex-direction: column; /* Empilhar elementos na vertical em telas menores */
