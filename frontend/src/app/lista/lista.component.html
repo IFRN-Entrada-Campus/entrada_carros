@@ -20,7 +20,7 @@
         <input [(ngModel)]="placaPesquisada" (keyup)="filtrarPlacas()" class="pesquisar" pInputText
             placeholder="Pesquisar por placa...">
     </span>
-    <p-button [raised]="true" [text]="true" severity="sucess" label="Mudar filtro" (click)="trocarPesquisa()">
+    <p-button [raised]="true" [ngStyle]="{backgroundColor:'#459e48', color: 'white'}" label="Mudar filtro" (click)="trocarPesquisa()">
     </p-button>
 </div>
 <div *ngIf="tipo_pesquisa == 2" class="input-group">
@@ -29,7 +29,7 @@
         <input pInputText placeholder="Pesquisar por etiqueta..." class="pesquisar" [(ngModel)]="etiquetaPesquisada"
             (keyup)="filtrarEtiquetas()">
     </span>
-    <p-button [raised]="true" [text]="true" severity="sucess" label="Mudar filtro" (click)="trocarPesquisa()">
+    <p-button [raised]="true" [ngStyle]="{backgroundColor:'#459e48', color: 'white'}" label="Mudar filtro" (click)="trocarPesquisa()">
     </p-button>
 </div>
 <div *ngIf="tipo_pesquisa == 3" class="input-group">
@@ -37,7 +37,7 @@
         <i class="pi pi-search"></i>
         <input pInputText placeholder="Pesquisar por nome..." class="pesquisar" [(ngModel)]="nomePesquisado" (keyup)="filtrarNome()">
     </span>
-    <p-button [raised]="true"[text]="true" severity="sucess" label="Mudar filtro" (click)="trocarPesquisa()">
+    <p-button [ngStyle]="{backgroundColor:'#459e48', color: 'white'}"label="Mudar filtro" (click)="trocarPesquisa()" [raised]="true">
     </p-button>
 </div>
 <div *ngIf="carregando">

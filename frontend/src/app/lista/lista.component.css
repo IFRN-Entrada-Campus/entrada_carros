@@ -8,12 +8,12 @@ h2 {
     font-family: "Roboto", sans-serif;
     justify-content: flex-start;
     gap: 5%;
-    padding: 20px 20px 0px 20px;
+    padding: 20px 00% 0px 8%;
 }
 
 .input-group input {
     width: 100%;
-    flex: 1
+    flex: 1;
 }
 .input-group {
     display: flex;
@@ -24,14 +24,14 @@ h2 {
     width: 100%;
     padding: auto;
 }
+.input-group p-button{
+    border-radius: 25px;
+}
+
 .p-input-icon-left{
     width: 30%;
 }
 
-.input-group p-button{
-    height: 35px;
-    border-radius: 2px;
-}
 .botoes {
     display: flex;
     align-items: center;

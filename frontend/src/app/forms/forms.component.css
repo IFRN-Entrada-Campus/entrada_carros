@@ -5,10 +5,11 @@
     font-family: "Roboto", sans-serif;
     align-items:start;
     justify-content: flex-start;
+    padding: 20px 00% 0px 8%;
   }
   
   h1 {
-    text-align: start;
+    text-align: center;
     font-size: 24px;
     color: #595959;
     margin-bottom: 10px;
