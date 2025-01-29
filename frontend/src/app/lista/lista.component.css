@@ -10,7 +10,38 @@ h2 {
     gap: 5%;
     padding: 20px 00% 0px 8%;
 }
+.sub-main{
+    display: flex;
+    flex-direction: column;
+    gap: 10%;
+}
+.alerta{
+    font-size: 15px;
+    display: flex;
+    flex-direction: row;
+    gap: 2%;
+    border: none;
+    background-color: transparent;
+}
 
+.icon{
+    background-color: #D54C5B;
+    width: 35px;
+    height: 35px;
+    border-radius: 4px;
+    justify-items: center;
+    text-align: center;
+    padding-top: 4px;
+}
+.mensagem-alerta{
+    background-color: #F1D6D9;
+    width: 300px;
+    height: 35px;
+    border-radius: 4px;
+    padding: 2px;
+    text-align: center;
+    padding-top: 8px;
+}
 .input-group input {
     width: 100%;
     flex: 1;
@@ -70,7 +101,9 @@ h2{
 .dadosEtiqueta p{
     font-weight: bold;
 }
-
+.listaVeiculos{
+    border-color: #595959;
+}
 .dados {
     color:#595959
 }

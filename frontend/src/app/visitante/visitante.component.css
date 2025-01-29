@@ -1,0 +1,19 @@
+.main {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    font-family: "Roboto", sans-serif;
+    justify-content: flex-start;
+    gap: 5%;
+    padding: 20px 00% 0px 8%;
+}
+
+.listaVeiculos{
+    width: 80%;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.dados{
+    width: 100%;
+}

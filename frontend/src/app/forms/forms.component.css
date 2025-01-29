@@ -6,6 +6,8 @@
     align-items:start;
     justify-content: flex-start;
     padding: 20px 00% 0px 8%;
+    gap: 10%
+    
   }
   
   h1 {
@@ -44,6 +46,10 @@
 
   table.forms p-calendar{
       background-color:#ff0000;
+  }
+
+  .forms{
+
   }
   
 

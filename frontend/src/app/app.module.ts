@@ -34,6 +34,7 @@ import { NovousuarioComponent } from './novousuario/novousuario.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { UltimaMsgComponent } from './ultima-msg/ultima-msg.component';
 import { QRCodeModule } from 'angularx-qrcode';
+import { VisitanteComponent } from './visitante/visitante.component';
 
 LOAD_WASM().subscribe();
 
@@ -49,7 +50,8 @@ LOAD_WASM().subscribe();
     AnaliseComponent,
     MenuComponent,
     NovousuarioComponent,
-    UltimaMsgComponent
+    UltimaMsgComponent,
+    VisitanteComponent
   ],
   imports: [
     BrowserModule,

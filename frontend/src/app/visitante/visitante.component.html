@@ -1,0 +1,42 @@
+<section class="main">
+    <app-menu></app-menu>
+    <div class="dados">
+        <h1>Visitas agendadas para hoje</h1>
+        <div class="listaVeiculos">
+    <!-- Adiciona campo [value] e [(selection)] -->
+<p-table showGridlines styleClass="p-datatable-gridlines" [rows]="100" [paginator]="true" [showCurrentPageReport]="true"
+        currentPageReportTemplate="{first} a {last} de {totalRecords}" [rowsPerPageOptions]="[100, 200, 400]"
+        selectionMode="single"  dataKey="idPessoa">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="Placa"> Dados do Veículo<p-sortIcon field="Modelo"></p-sortIcon>
+                </th>
+                <th pSortableColumn="nomePessoa" style="width:4'0%">Motorista<p-sortIcon field="Marca"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-dados>
+            <tr [pSelectableRow]="" >
+                <td>
+                    <div class="dados">
+                        <p>Modelo</p> 
+                        <p>Marca</p>
+                        <p>Placa</p>
+                        <p>Ano</p>
+                        
+                    </div>
+                </td>
+                <td>
+                    <div class="dados">
+                        <p>Nome:</p> 
+                       <p></p>
+                       <p>Vínculo:</p>
+                       <p>CNH Válida:</p>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+    </div>
+</section>

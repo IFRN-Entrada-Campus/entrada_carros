@@ -1,6 +1,6 @@
 <section class="main">
     <app-menu></app-menu>
-    <div *ngIf="admin">
+    <div class="forms" *ngIf="admin">
     <h1>Cadastro de dados</h1>
     <p *ngIf="formInvalid" class="error-message">O formulário contém erros. Preencha todos os campos e verifique se: O ano do carro está entre 1900 e o ano atual. A placa está digitada no padrão(LLL1111 ou LLL11L1).</p>
     <p *ngIf="erroSQL" class="error-message">Não foi possível cadastrar. Verifique se não há dados incorretos e tente novamente.</p>
@@ -38,9 +38,14 @@
             <td><p-dropdown 
                 id="tipoId"
                 [options]="identificacao" 
-                [(ngModel)]="dado.tipoId" 
+                [(ngModel)]="dado.tipoId"
                 placeholder="Selecione Identificação"/>
             </td>
+        </tr>
+        <tr>
+            <td><label htmlFor="idPessoa"> Identificação: </label></td>
+            <td><p-inputNumber  id="idPessoa" [(ngModel)]="dado.idPessoa"
+                    [useGrouping]="false"></p-inputNumber></td>
         </tr>
         <tr *ngIf="!usuarioJaCadastrado">
             <td><label htmlFor="vinculo">Vinculo: </label></td>
@@ -51,20 +56,19 @@
                 placeholder="Selecione Vínculo"/>
             </td>
         </tr>
-
-        <tr>
-            <td><label htmlFor="idPessoa"> Identificação: </label></td>
-            <td><p-inputNumber  id="idPessoa" [(ngModel)]="dado.idPessoa"
-                    [useGrouping]="false"></p-inputNumber></td>
-        </tr>
-        <tr>
+        <tr *ngIf="dado.vinculo !== 'Visitante'">
             <td><label htmlFor="codigo">Código da etiqueta: </label></td>
             <td><input pInputText  id="codigo" [(ngModel)]="dado.codigoEtiqueta"></td>
         </tr>
-        <tr>
+        <tr *ngIf="dado.vinculo !== 'Visitante'">
             <td><label htmlFor="validade">Validade da etiqueta: </label></td>
             <td><p-calendar id="validade" [(ngModel)]="dado.validadeEtiqueta"
                 dateFormat="yy-mm-dd"></p-calendar></td>
+        </tr>
+        <tr>
+        <tr *ngIf="dado.vinculo == 'Visitante'">
+            <td>Visitante recorente</td>
+            <td><p-checkbox [binary]="true" inputId="cnh"></p-checkbox></td>
         </tr>
         <tr>
         <td><label htmlFor="cnh">CNH é válida?</label></td>
