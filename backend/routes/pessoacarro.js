@@ -295,6 +295,13 @@ router.put('/carro/:placaCarro', verificarAdmin, function (req, res) { // altera
         const placaCarro = req.body.placaCarro;
         console.log(`PUT carro: ${placaCarro}`);
 
+        // Verificar se idPessoaRel existe antes de fazer o UPDATE
+        if (!idPessoaRel) {
+            return res.status(400).json({ 
+                message: 'ID da pessoa é obrigatório para atualizar o carro'
+            });
+        }
+
         const sql = `UPDATE carro 
         SET marcaCarro = ?,
         modeloCarro = ?,
@@ -305,13 +312,15 @@ router.put('/carro/:placaCarro', verificarAdmin, function (req, res) { // altera
         idPessoaRel = ?,
         placaCarro = ?
         WHERE placaCarro = ?`;
+        
         con.query(
             sql,
             [marcaCarro, modeloCarro, anoCarro, codigoEtiqueta, validadeEtiqueta, validaCnh, idPessoaRel, placaCarro, placaCarroAntiga],
             function (erroComandoSQL, result, fields) {
                 conexao.release();
                 if (erroComandoSQL) {
-                    throw erroComandoSQL;
+                    console.error('Erro SQL:', erroComandoSQL);
+                    return res.status(500).json({ message: 'Erro no banco de dados: ' + erroComandoSQL.message });
                 }
 
                 if (result.affectedRows > 0) {

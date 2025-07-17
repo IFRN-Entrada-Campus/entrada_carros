@@ -15,11 +15,10 @@ const moment = require('moment');
  */
 
 const client = mqtt.connect({
-    protocol: 'wss',
+    protocol: 'mqtt', 
     host: 'broker-mqtt',
-    port: 8883,
-    path: '/',
-    rejectUnauthorized: false,  // Para ignorar erros de certificado durante o desenvolvimento
+    port: 1884,      
+    rejectUnauthorized: false,
 });
 
 client.on('connect', () => {
@@ -31,7 +30,7 @@ client.on('error', (err) => {
     console.log('Erro ao conectar no broker:', err);
 })
 
-var con = mysql.createPool({ //cria pool com o banco de dados
+var con = mysql.createPool({ 
     host: 'db',
     user: 'root',
     password: '',
@@ -40,7 +39,7 @@ var con = mysql.createPool({ //cria pool com o banco de dados
     connectTimeout: 30000,
 });
 
-function verificarToken(req, res, next) { //verifica se o token é válido
+function verificarToken(req, res, next) {
     const token = req.headers['x-access-token'];
     if (!token) {
         res.status(401).json({
@@ -72,17 +71,13 @@ client.on('message', function (topic, message) {
                 throw erroConexao;
             }
             const dados = JSON.parse(payload);
-
-            // Decodifica a imagem base64
+            
             const imgBuffer = Buffer.from(dados.img, 'base64');
 
-            // Caminho para salvamento da imagem
             const nomeArquivo = `imagem_${Date.now()}.png`
             const caminhoArquivo = `/imagens/${nomeArquivo}`
             fs.writeFileSync(caminhoArquivo, imgBuffer);
             
-
-            // Busca o idCarro
             const get_id = 'SELECT idCarro FROM carro WHERE placaCarro = ?';
             con.query(get_id, [dados.placa], function (erroComandoSQL, result, fields) {
                 if (erroComandoSQL) {
@@ -91,12 +86,10 @@ client.on('message', function (topic, message) {
                 }
 
                 console.log(result);
-
-                // Verifica se o resultado da consulta é válido
+                
                 if (result.length > 0 && result[0].idCarro !== null) {
                     const id = result[0].idCarro;
 
-                    // Insere os dados no banco de dados
                     const query = 'INSERT INTO historicoEntrada(placa, dataHora, img, idCarroRel) VALUES (?, ?, ?, ?)';
                     const dataHora = new Date();
                     const valores = [dados.placa, dataHora, nomeArquivo, id];
@@ -140,9 +133,9 @@ router.get('/ult-msg', verificarToken, (req, res) => {
             }
 
             if (resultados && resultados.length > 0) {
-                ultimaMensagem = resultados[0];  // Atualiza a variável com a última mensagem do banco
+                ultimaMensagem = resultados[0]; 
                 console.log('Última entrada encontrada com sucesso:', ultimaMensagem);
-                return res.status(200).send(ultimaMensagem); // Retorna a última mensagem
+                return res.status(200).send(ultimaMensagem); 
             } else {
                 console.log('Nenhuma entrada encontrada na tabela vwHistoricoPessoa');
                 return res.status(404).send({ message: 'Nenhuma entrada encontrada.' });

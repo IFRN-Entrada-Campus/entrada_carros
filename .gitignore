@@ -1,3 +1,4 @@
 #Certificados
 /certificados
-.env
+.envmosquitto/data/
+mosquitto/log/

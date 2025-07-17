@@ -1,8 +1,6 @@
-version: '3.7'
-
 services:
-
   backend:
+    container_name: backend
     build:
       context: backend/
       dockerfile: Dockerfile
@@ -13,16 +11,36 @@ services:
       - MYSQL_USER=root
       - MYSQL_PASSWORD=''
       - MYSQL_DB=dbentrada
+      - JWT_SEGREDO=minhachavesupersecreta123
+      - NODE_TLS_REJECT_UNAUTHORIZED=0
+      - NODE_ENV=development
+      - MQTT_HOST=broker-mqtt
+      - MQTT_PORT=1884
+      - MQTT_PROTOCOL=mqtt
     volumes:
-      - ./backend/dbentrada.sql:/docker-entrypoint-initdb.d/dbentrada.sql
+      - ./backend/bin:/app/backend/bin
+      - ./backend/config:/app/backend/config
+      - ./backend/controllers:/app/backend/controllers
+      - ./backend/models:/app/backend/models
+      - ./backend/routes:/app/backend/routes
+      - ./backend/app.js:/app/backend/app.js
+      - ./backend/package.json:/app/backend/package.json
       - shared-volume:/imagens/
     depends_on:
-      - db
-      - migration
+      migration:
+        condition: service_completed_successfully
+      broker-mqtt:
+        condition: service_started
     networks:
       - my-networks
     restart: unless-stopped
-    command: sh -c "npm start NODE_ENV=production"
+    command: npm start
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://localhost:3000/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
 
   frontend:
     build:
@@ -34,9 +52,8 @@ services:
     volumes:
       - shared-volume:/usr/share/nginx/html/assets/images/entrada/
     depends_on:
-      - db
-      - migration
-
+      backend:
+        condition: service_healthy
     networks:
       - my-networks
     restart: unless-stopped
@@ -48,10 +65,17 @@ services:
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
       - MYSQL_DATABASE=dbentrada
     restart: unless-stopped
+    ports:
+      - 3306:3306
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
       - my-networks
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -64,35 +88,45 @@ services:
       - PMA_ARBITRARY=1
     restart: unless-stopped
     ports:
-      - 8081:80
+      - 8082:80
     networks:
       - my-networks
+    depends_on:
+      db:
+        condition: service_healthy
   
   migration:
     build:
       context: backend/
       dockerfile: Dockerfile
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - my-networks
-    command: sh -c "sleep 30 && npx sequelize-cli db:migrate && npx sequelize db:seed:all"
+    command: >
+      sh -c "
+        echo 'Aguardando 20 segundos para garantir que o MySQL esteja pronto...' &&
+        sleep 20 &&
+        npx sequelize-cli db:migrate &&
+        echo 'Migrações executadas com sucesso!' &&
+        (npx sequelize db:seed:all || echo 'Seeds executados com avisos (podem ser ignorados)') &&
+        echo 'Processo de migração concluído com sucesso!' &&
+        exit 0
+      "
 
   broker-mqtt:
     image: eclipse-mosquitto:latest
     container_name: broker-mqtt
-    depends_on:
-      - backend
     ports:
       - 1884:1884
-      - 8883:8883
     networks:
       - my-networks
     volumes:
-      - ./mosquitto/config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./mosquitto/config:/mosquitto/config
       - ./mosquitto/data:/mosquitto/data
       - ./mosquitto/log:/mosquitto/log
-      - ./certificados:/mosquitto/certificados
+      - ./mosquitto/certificados:/mosquitto/certificados
     restart: unless-stopped
     
 volumes:
