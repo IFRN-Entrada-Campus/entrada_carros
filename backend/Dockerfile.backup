@@ -1,0 +1,22 @@
+FROM ubuntu:22.04
+
+RUN apt-get update && apt-get install -y \
+    cron \
+    tar \
+    gzip \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /app/scripts /imagens /backups
+
+COPY scripts/backup.sh /app/scripts/
+RUN chmod +x /app/scripts/backup.sh
+
+RUN echo "0 0 * * * /app/scripts/backup.sh >> /backups/backup.log 2>&1" > /etc/cron.d/backup-cron \
+    && chmod 0644 /etc/cron.d/backup-cron \
+    && crontab /etc/cron.d/backup-cron
+
+COPY scripts/entrypoint.sh /app/scripts/
+RUN chmod +x /app/scripts/entrypoint.sh
+
+ENTRYPOINT ["/app/scripts/entrypoint.sh"]

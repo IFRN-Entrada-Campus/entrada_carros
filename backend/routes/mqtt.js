@@ -72,12 +72,34 @@ client.on('message', function (topic, message) {
             }
             const dados = JSON.parse(payload);
             
+            // Decodifica a imagem base64
             const imgBuffer = Buffer.from(dados.img, 'base64');
-
-            const nomeArquivo = `imagem_${Date.now()}.png`
-            const caminhoArquivo = `/imagens/${nomeArquivo}`
-            fs.writeFileSync(caminhoArquivo, imgBuffer);
             
+            // Cria diretório se não existir
+            if (!fs.existsSync('/imagens')) {
+                fs.mkdirSync('/imagens', { recursive: true });
+            }
+
+            // Cria subdiretórios por ano/mês para melhor organização
+            const dataAtual = new Date();
+            const ano = dataAtual.getFullYear();
+            const mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
+            
+            const subDir = `/imagens/${ano}/${mes}`;
+            
+            if (!fs.existsSync(subDir)) {
+                fs.mkdirSync(subDir, { recursive: true });
+            }
+
+            // Salva a imagem com timestamp
+            const timestamp = Date.now();
+            const nomeArquivo = `imagem_${dados.placa}_${timestamp}.png`;
+            const caminhoCompleto = `${subDir}/${nomeArquivo}`;
+            const caminhoRelativo = `${ano}/${mes}/${nomeArquivo}`;
+            
+            fs.writeFileSync(caminhoCompleto, imgBuffer);
+            
+            // Busca o idCarro
             const get_id = 'SELECT idCarro FROM carro WHERE placaCarro = ?';
             con.query(get_id, [dados.placa], function (erroComandoSQL, result, fields) {
                 if (erroComandoSQL) {
@@ -90,10 +112,11 @@ client.on('message', function (topic, message) {
                 if (result.length > 0 && result[0].idCarro !== null) {
                     const id = result[0].idCarro;
 
+                    // Insere os dados no banco de dados com o caminho relativo da imagem
                     const query = 'INSERT INTO historicoEntrada(placa, dataHora, img, idCarroRel) VALUES (?, ?, ?, ?)';
                     const dataHora = new Date();
-                    const valores = [dados.placa, dataHora, nomeArquivo, id];
-                    console.log(valores)
+                    const valores = [dados.placa, dataHora, caminhoRelativo, id];
+                    console.log(valores);
 
                     con.query(query, valores, function (erroComandoSQL, result, fields) {
                         conexao.release();
@@ -144,38 +167,4 @@ router.get('/ult-msg', verificarToken, (req, res) => {
     });
 });
 
-function removerImagensAntigas() {
-    const folderPath = path.join(__dirname, 'imagens');
-
-    fs.readdir(folderPath, (err, files) => {
-        if (err) {
-            console.error('Erro ao ler a pasta de imagens:', err)
-            return;
-        }
-
-        files.forEach((file) => {
-            const filePath = path.join(folderPath, file);
-
-            fs.stat(filePath, (err, stats) => {
-                if (err) {
-                    console.error(`Erro ao obter estatísticas do arquivo ${file}.`);
-                    return;
-                }
-
-                const diffDias = moment().diff(moment(stats.mtime), 'days');
-
-                if (diffDias > 100) {
-                    fs.unlink(filePath, (err) => {
-                        if (err) {
-                            console.error(`Erro ao apagar o arquivo ${file}.`);
-                          } else {
-                            console.log(`Arquivo ${file} removido com sucesso.`);
-                          }
-                    });
-                }
-            });
-        });
-    });
-}
-
-module.exports = router, client;
+module.exports = router;

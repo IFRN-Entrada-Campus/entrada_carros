@@ -17,15 +17,18 @@ services:
       - MQTT_HOST=broker-mqtt
       - MQTT_PORT=1884
       - MQTT_PROTOCOL=mqtt
+      - BACKUP_RETENTION_DAYS=90
     volumes:
       - ./backend/bin:/app/backend/bin
       - ./backend/config:/app/backend/config
       - ./backend/controllers:/app/backend/controllers
       - ./backend/models:/app/backend/models
       - ./backend/routes:/app/backend/routes
+      - ./backend/scripts:/app/backend/scripts
       - ./backend/app.js:/app/backend/app.js
       - ./backend/package.json:/app/backend/package.json
       - shared-volume:/imagens/
+      - backup-volume:/backups/
     depends_on:
       migration:
         condition: service_completed_successfully
@@ -129,8 +132,24 @@ services:
       - ./mosquitto/certificados:/mosquitto/certificados
     restart: unless-stopped
     
+  backup:
+    container_name: backup-service
+    build:
+      context: backend/
+      dockerfile: Dockerfile.backup
+    volumes:
+      - shared-volume:/imagens/
+      - backup-volume:/backups/
+    networks:
+      - my-networks
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    
 volumes:
   mysql-data:
   shared-volume:
+  backup-volume:
 networks:
   my-networks:
